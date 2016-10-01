@@ -1,0 +1,39 @@
+---
+layout: default
+---
+<div class="container docs-container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar hidden-print" role="complementary">
+        <h1>导航</h1>
+        <div id="navigation">
+          <ul id="toc" class="ztree">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9" role="main">
+      <div class="panel docs-content">
+        <div class="wrapper">
+            <header class="post-header">
+            </header>
+            <article class="post-content">
+              {{ content }}
+            </article>
+            <br />
+            <footer>
+              <div class="meta" style="text-align: right;">
+                Posted on <span class="postdate">{{ page.date | date: "%b %d, %Y" }}</span> By <a target="_blank" href="{{site.url}}">{{ site.author }}</a>
+              </div>
+            </footer>
+        </div>
+      </div>
+      <div class="panel docs-content">
+        <article class="post-content">
+          <div class="wrapper">
+            {% include extention/comments %}
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>

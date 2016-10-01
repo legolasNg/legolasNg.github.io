@@ -1,0 +1,40 @@
+# 基本配置
+name: Legolas Blogs
+email: wujianye3@gmail.com
+author: LegolasNg
+url: https://legolasng.github.io/
+resume_site: https://github.com/legolasNg/
+github: https://github.com/legolasNg/
+baseurl: ""
+description: keep it simple, stupid !
+meta_description: legolas;个人博客;
+motto: Talk is cheap, Show me the code !
+banner: 
+
+#permalink: /:categories/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
+paginate: 10
+
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
+
+github_username: legolasNg
+
+# markdown解析器
+markdown: kramdown
+kramdown:
+    input: GFM
+highlighter: rouge
+
+# 评论区设置
+FB:
+  comments :
+    provider : duoshuo
+    duoshuo:
+        short_name : legolasng
+    disqus :
+        short_name : legolasng
+    # facebook :
+    #   appid : 123
+    #   num_posts: 5
+    #   width: 580
+    #   colorscheme: light
