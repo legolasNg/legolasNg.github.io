@@ -27,6 +27,21 @@ layout: default
             </footer>
         </div>
       </div>
+      <div class="pagination clearfix">
+            <ul class = "pull-right">
+            {% if page.previous %}
+              <li class="prev"><a class="fa fa-arrow-circle-left" href="{{ page.previous.url | prepend: site.baseurl}}" title="{{ page.previous.title }}"> 前一篇</a></li>
+            {% else %}
+              <li class="prev disabled" ><a class="fa fa-arrow-circle-left"> 前一篇</a></li>
+            {% endif %}
+              <li><a class="fa fa-th" href="{{ '/blogs' | prepend: site.baseurl }}"> 所有日志</a></li>
+            {% if page.next %}
+              <li class="next"><a  href="{{ page.next.url | prepend: site.baseurl}}" title="{{ page.next.title }}">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+            {% else %}
+              <li class="next disabled"><a >后一篇 <span class="fa fa-arrow-circle-right">  </span></a>
+            {% endif %}
+            </ul>
+      </div>
       <div class="panel docs-content">
         <article class="post-content">
           <div class="wrapper">

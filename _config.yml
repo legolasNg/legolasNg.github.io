@@ -9,11 +9,14 @@ baseurl: ""
 description: keep it simple, stupid !
 meta_description: legolas;个人博客;
 motto: Talk is cheap, Show me the code !
-banner: 
+banner:
 
 #permalink: /:categories/:year/:month/:day/:title/
 permalink: /:year/:month/:day/:title/
+gems: [jekyll-paginate]
 paginate: 10
+paginate_path: "page:num"
+display_num: 30
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
 
