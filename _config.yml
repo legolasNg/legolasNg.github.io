@@ -33,9 +33,9 @@ FB:
   comments :
     provider : duoshuo
     duoshuo:
-        short_name : legolasng
-    disqus :
-        short_name : legolasng
+        short_name : legolas
+    # disqus :
+    #     short_name : legolasng
     # facebook :
     #   appid : 123
     #   num_posts: 5

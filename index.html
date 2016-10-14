@@ -2,45 +2,20 @@
 layout: default
 ---
 <div>
-	<div class="panel docs-content">
-		{% for post in paginator.posts %}
-		<div class = "card">
-			<div  class = "date_label">
-				<div class="day_month">
-						{{ post.date | date:"%m/%d" }}
-				</div>
-				<div class="year">
-						{{ post.date | date:"%Y" }}
-				</div>
+	{% for post in site.posts offset: 0 limit: 10  %}
+	<div class="container">
+		<div class="docs-content">
+			<header class="post-header">
+				<h3><i>{{ post.date | date:"%Y/%m/%d" }}</i><strong>{{ post.title }}</strong></h3>
+			</header>
+			<article class="ztree">
+				{{ post.content | markdownify | truncatewords: site.display_num }}
+			</article>
+			<div class="heading" style="text-align: right;">
+				<a href="{{ site.baseurl }}{{ post.url }}">Read More</a>
 			</div>
 		</div>
-		<article class="post-content">
-			{{ post.content | truncatewords: site.display_num }}
-		</article>
-		<div class="heading" style="text-align: right;"><a href="{{ site.baseurl }}{{ post.url }}">Read More</a></div>
-		<hr>
-		{% endfor %}
 	</div>
-
-	<div class="meta" style="text-align: center;">
-	{% if paginator.total_pages > 1 %}
-		{% if paginator.previous_page %}
-				<a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="previous">PREV</a>
-		{% endif %}
-		{% for page in (1..paginator.total_pages) %}
-				{% if page == paginator.page %}
-					<span class="active">{{ page }}</span>
-				{% elsif page == 1 %}
-					<a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
-				{% else %}
-					<a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
-				{% endif %}
-		{% endfor %}
-
-		{% if paginator.next_page %}
-				<a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="next">NEXT</a>
-		{% endif %}
-	{% endif %}
-	</div>
-
+	<hr>
+	{% endfor %}
 </div>

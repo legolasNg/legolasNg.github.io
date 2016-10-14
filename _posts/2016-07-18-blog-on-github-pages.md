@@ -6,11 +6,6 @@ category: github
 tags:     [ 'gh-pages', 'blog']
 ---
 
-{:toc}
-* content
-
-# 使用Github Pages搭建自己的博客
-
 ## *GitHub Page* 简介
 
 [Github](https://github.com)是一个利用`Git`进行版本控制、专门用于存放软件代码与内容的共享虚拟主机服务。 [1]
