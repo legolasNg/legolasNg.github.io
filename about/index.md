@@ -4,6 +4,14 @@ title:    个人简介
 header:   About
 ---
 
+<header class="post-header" style="text-align:center;">
+	<h1 class="post-title"><p align="center">
+		<img src="/styles/images/legolas.jpg" alt="我的头像" height="50" width="50">
+	个人简介</p></h1>
+</header>
+
+---
+
 ### 个人信息
 
 ````
@@ -14,16 +22,12 @@ header:   About
 Github:        https://github.com/legolasNg/
 ````
 
-### 头像
-
-![我的头像](/styles/images/legolas.jpg)
-
 ### 技能
 
-|   领域  |   技能  |
-| -----   | :----: |
-| 编程语言| C/C++、PHP、Python、Bash、Javascript|
-| 业余爱好| 篮球、羽毛球、dota |
+````
+编程语言:		C/C++、PHP、Python、Bash、Javascript
+业余爱好:		篮球、羽毛球、dota
+````
 
 ### 不擅长
 
