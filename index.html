@@ -6,7 +6,12 @@ layout: default
 	<div class="container">
 		<div class="docs-content">
 			<header class="post-header">
-				<h3><i>{{ post.date | date:"%Y/%m/%d" }}</i><strong>{{ post.title }}</strong></h3>
+				<div style="text-align: left;">
+					<h3>{{ post.title }}</h3>
+				</div>
+				<div style="text-align: right;">
+					<strong>{{ post.date | date:"%Y/%m/%d" }}</strong>
+				</div>
 			</header>
 			<article class="ztree">
 				{{ post.content | markdownify | truncatewords: site.display_num }}
