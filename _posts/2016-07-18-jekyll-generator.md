@@ -6,9 +6,10 @@ category: jekyll
 tags:     [ 'gh-pages', 'jekyll']
 ---
 
-## *Jekyll* 简介
+**[Jekyll](http://jekyllcn.com/)** 是一个简单的博客形态的<u>静态站点</u>生成器。
+它有一个模版目录，其中包含原始文本格式的文档，通过`Markdown`（或者`Textile`） 以及`Liquid`转化成一个完整的可发布的静态网站，你可以发布在任何你喜爱的服务器上。
 
-**[Jekyll](http://jekyllcn.com/)** 是一个简单的博客形态的<u>静态站点</u>生成器。它有一个模版目录，其中包含原始文本格式的文档，通过`Markdown`（或者`Textile`） 以及`Liquid`转化成一个完整的可发布的静态网站，你可以发布在任何你喜爱的服务器上。
+## *Jekyll* 简介
 
 **Jekyll** 特点:
 

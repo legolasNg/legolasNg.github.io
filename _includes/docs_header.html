@@ -1,7 +1,7 @@
 <div class="docs-header" id="content">
   <div class="container">
-  	{% if page.title%}
-		    <h1>{{ site.motto }}</h1>
+  	{% if page.title <> site.name %}
+		<h2>{{ site.motto }}</h2>
     {% else %}
 	    <h1>{{ site.name }}</h1>
 	    <p>{{ site.description }}</p>

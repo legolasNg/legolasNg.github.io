@@ -6,11 +6,10 @@ category: github
 tags:     [ 'gh-pages', 'blog']
 ---
 
-## *GitHub Page* 简介
-
 [Github](https://github.com)是一个利用`Git`进行版本控制、专门用于存放软件代码与内容的共享虚拟主机服务。 [1]
-
 **Github Pages** 是依托`Github`本身的技术服务经验开发出来的一款产品，配合Wiki、Graph、Pulse、Issue、Pull requests等功能，解决的是分布式的内容版本管理问题。用户通过git仓库创建、托管在github上的静态网站或静态博客，让用户通过该功能分享、诠释自己项目和作品。
+
+## *GitHub Page* 简介
 
 **Github Pages** 特点:
 

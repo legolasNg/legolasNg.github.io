@@ -1,5 +1,6 @@
 ---
 layout: default
+title:	Legolas' Blog
 ---
 <div>
 	{% for post in site.posts offset: 0 limit: 10  %}
@@ -13,7 +14,7 @@ layout: default
 					<strong>{{ post.date | date:"%Y/%m/%d" }}</strong>
 				</div>
 			</header>
-			<article class="ztree">
+			<article>
 				{{ post.content | markdownify | truncatewords: site.display_num }}
 			</article>
 			<div class="heading" style="text-align: right;">

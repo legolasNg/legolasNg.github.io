@@ -1,5 +1,5 @@
 # 基本配置
-name: Legolas Blogs
+name: Legolas' Blog
 email: wujianye3@gmail.com
 author: LegolasNg
 url: https://legolasng.github.io/
@@ -7,16 +7,16 @@ resume_site: https://github.com/legolasNg/
 github: https://github.com/legolasNg/
 baseurl: ""
 description: keep it simple, stupid !
-meta_description: legolas;个人博客;
+meta_description: 请叫我"小叶子/legolas"！
 motto: Talk is cheap, Show me the code !
-banner:
+banner: legolas
 
 #permalink: /:categories/:year/:month/:day/:title/
 permalink: /:year/:month/:day/:title/
 gems: [jekyll-paginate]
 paginate: 10
 paginate_path: "page:num"
-display_num: 30
+display_num: 5
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
 
