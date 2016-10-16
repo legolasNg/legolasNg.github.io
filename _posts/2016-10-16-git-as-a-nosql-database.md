@@ -35,6 +35,7 @@ $ git show master:1.json
 Git是一套内容寻址(content-addressable)文件系统，从核心上来看不过是简单地存储键值对(key-value)。它允许插入任意类型的内容，并会返回一个可检索到该内容的键值，通过该键值可以在任何时候再取出该内容。
 
 我们来创建一些内容:
+
 ````bash
 # 初始化一个仓库
 $ mkdir MyRepo && cd MyRepo
@@ -55,7 +56,8 @@ $ echo {"id": 1, "name": "kenneth"} | git hash-object -w --stdin
 
 该命令输出长度为40个字符的校验和。这是个`SHA-1`哈希值--其值为要存储的数据加上一种头信息的校验和。如果你按照上面的命令在你机器上执行，将会返回相同的sha-1哈希值。
 
- Git存储数据内容的方式--为每份内容生成一个文件，取得该内容与头信息的`SHA-1`校验和，创建以该校验和前两个字符为名称的子目录，并以(校验和)剩下38个字符为文件命名 (保存至子目录下)。
+Git存储数据内容的方式--为每份内容生成一个文件，取得该内容与头信息的`SHA-1`校验和，创建以该校验和前两个字符为名称的子目录，并以(校验和)剩下38个字符为文件命名 (保存至子目录下)。
+
 ````bash
 # 查看.git目录下保存的文件
 $ find .git/objects -type f
@@ -63,6 +65,7 @@ $ find .git/objects -type f
 ````
 
 通过传递`SHA-1`值给`cat-file`命令可以让Git返回任何对象的内容和类型()该命令是查看Git对象的瑞士军刀)。传入`-p`参数美观地打印对象的内容，`-t`参数显示对象类型:
+
 ````bash
 # 读取内容
 $ git cat-file -p da95f8264a0ffe3df10e94eed6371ea83aee9a4d
@@ -97,6 +100,7 @@ Trees对象解决了两个问题:
 - 保存一系列文件的可能性
 
 考虑tree的最好办法是类似于文件系统中的文件夹，按照下面的步骤创建一个tree:
+
 ````bash
 # 创建一个文件，并暂存在暂存区(staging area)
 $ git update-index --add --cacheinfo 100644 da95f8264a0ffe3df10e94eed6371ea83aee9a4d 1.json
@@ -107,6 +111,7 @@ git write-tree
 ````
 
 这样也将返回一个sha哈希值，我们可以根据该哈希值读取tree:
+
 ````bash
 $ git cat-file -p d6916d3e27baa9ef2742c2ba09696f22e41011a1
 => 100644 blob da95f8264a0ffe3df10e94eed6371ea83aee9a4d 1.json
@@ -117,6 +122,7 @@ $ git cat-file -p d6916d3e27baa9ef2742c2ba09696f22e41011a1
 ![git_trees_1](/styles/images/git_as_a_nosql_database/git_trees_1.png)
 
 我们可以按照下面的步骤修改这个文件:
+
 ````bash
 # 新增一个blob对象
 $ echo "{"id": 1, "name": "kenneth truyers"}" | git hash-object -w --stdin
@@ -161,6 +167,7 @@ $ git write-tree
 5. 一条或者多条以前的commit(现在我们可以简单认为:commit只拥有单个父commit，拥有多个父commit的commit是合并提交(merge commit))
 
 那我们来提交上面的那些tree:
+
 ````bash
 # 提交第一个tree(没有父commit)
 $ echo "commit 1st version" | git commit-tree d6916d3
@@ -176,6 +183,7 @@ $ echo "Commit 2nd version" | git commit-tree 2c59068 -p 05c1cec5
 ![git_commits_1](/styles/images/git_as_a_nosql_database/git_commits_1.png)
 
 现在我们已经建立了关于这个文件的完整历史记录。使用任何git客户端打开这个仓库，都将看到1.json文件被正确跟踪。为了正面这一点，我们来看运行`git log`的输出:
+
 ````bash
 $ git log --stat 9918e46
 =>	9918e46dfc4241f0782265285970a7c16bf499e4 "Commit 2nd version"
@@ -185,11 +193,14 @@ $ git log --stat 9918e46
 		1.json | 1 +
 		1 file changed, 1 insertion(+)
 ````
+
 我们可以这样获得文件内容:
+
 ````bash
 $ git show 9918e46:1.json
 =>	{"id": 1, "name": "kenneth truyers"}
 ````
+
 这仍然没有达到要求，因为我们还是需要记住最后一次commit的哈希值。到目前为止，我们创建的所有对象都是git对象数据库的一部分，该数据库的特征是只存储不可变对象。一旦你写入一个blob、tree或者commit，我们并不能在不改变key的情况下修改该value。你也不能删除这些对象(至少不是直接删除他们，`git gc`命令可以删除悬空的(dangling)对象)。
 
 ## Data efficiency
