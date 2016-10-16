@@ -113,6 +113,7 @@ $ git cat-file -p d6916d3e27baa9ef2742c2ba09696f22e41011a1
 ````
 
 到现在，我们存储在数据库中的对象如下:
+
 ![git_trees_1](/styles/images/git_as_a_nosql_database/git_trees_1.png)
 
 我们可以按照下面的步骤修改这个文件:
@@ -130,6 +131,7 @@ $ git write-tree
 ````
 
 现在数据库中是这样的情况:
+
 ![git_trees_2](/styles/images/git_as_a_nosql_database/git_trees_2.png)
 
 现在数据库中有两个代表该文件不同状态的tree，这对于我们仍然没有太多帮助，因为我们还是需要记住tree的sha-1哈希值来获取内容。
@@ -152,11 +154,11 @@ $ git write-tree
 ## Git References
 
 同一级别，我们commit(提交)内容。一个commit包含5个关键信息:
-- 1. 提交的作者
-- 2. 创建的日期(时间戳)
-- 3. 为什么创建它(提交信息)
-- 4. 它所指向的单条tree对象
-- 5. 一条或者多条以前的commit(现在我们可以简单认为:commit只拥有单个父commit，拥有多个父commit的commit是合并提交(merge commit))
+1. 提交的作者
+2. 创建的日期(时间戳)
+3. 为什么创建它(提交信息)
+4. 它所指向的单条tree对象
+5. 一条或者多条以前的commit(现在我们可以简单认为:commit只拥有单个父commit，拥有多个父commit的commit是合并提交(merge commit))
 
 那我们来提交上面的那些tree:
 ````bash
@@ -170,6 +172,7 @@ $ echo "Commit 2nd version" | git commit-tree 2c59068 -p 05c1cec5
 ````
 
 现在数据库中是下面的情况:
+
 ![git_commits_1](/styles/images/git_as_a_nosql_database/git_commits_1.png)
 
 现在我们已经建立了关于这个文件的完整历史记录。使用任何git客户端打开这个仓库，都将看到1.json文件被正确跟踪。为了正面这一点，我们来看运行`git log`的输出:
@@ -193,6 +196,7 @@ $ git show 9918e46:1.json
 
 
 
+[noms](https://github.com/attic-labs/noms)是一个基于Git思想的分布式数据库
 
 来源：
 	[Git as a NoSql database](https://www.kenneth-truyers.net/2016/10/13/git-nosql-database/)
