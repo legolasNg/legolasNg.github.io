@@ -159,7 +159,7 @@ $ git write-tree
 
 ## Git References
 
-同一级别，我们commit(提交)内容。一个commit包含5个关键信息:
+我们进一步，commit(提交)内容。一个commit包含5个关键信息:
 1. 提交的作者
 2. 创建的日期(时间戳)
 3. 为什么创建它(提交信息)
@@ -204,6 +204,71 @@ $ git show 9918e46:1.json
 这仍然没有达到要求，因为我们还是需要记住最后一次commit的哈希值。到目前为止，我们创建的所有对象都是git对象数据库的一部分，该数据库的特征是只存储不可变对象。一旦你写入一个blob、tree或者commit，我们并不能在不改变key的情况下修改该value。你也不能删除这些对象(至少不是直接删除他们，`git gc`命令可以删除悬空的(dangling)对象)。
 
 ## Data efficiency
+
+更进一步，是Git引用(references)。references不是对象数据库的一部分，它们是引用数据库(reference database)的一部分，并且是可变的。Git拥有不同类型的reference，例如branches、tags和remotes。它们本质相同，但是有一点细微的差异。现在，我们来研究下branches。分支(branch)是一个指向commit的指针。我们可以通过创建一条新的分支(branch)，将commit的哈希值写入文件系统:
+
+````bash
+$ echo "05c1cec5685bbb84e806886dba0de5e2f120ab2a" > .git/refs/heads/master
+````
+
+现在我们已经创建好了一个新分支(branch)，指向我们的第一条commit。想要移动分支(branch)，我们可以执行下面的命令:
+
+````bash
+$ git update-ref refs/heads/master 9918e46
+````
+
+现在我们就得到下面这样的图像:
+
+![git_references_1](/styles/images/git_as_a_nosql_database/git_references_1.png)
+
+最后，我们可以读取该文件的当前状态:
+
+````bash
+$ git show master:1.json
+=>  {"id": 1, "name": "kenneth truyers"}
+````
+
+即使我们添加新版本的文件、一系列的tree和commit，只要我们将branch指针指向最新的commit，上面的命令仍将继续有效。
+
+对于简单的键值存储来说，上面的这些操作似乎有点复杂。然而，我们可以抽象这些，以便于客户端只需要指定一个branch和一个key。不过这些，我会在以后的文章中讲述。现在我们来讨论"使用Git作为Nosql数据库"的潜在优点和缺点
+
+## Data efficiency
+
+Git用来存储数据时效率是非常高的。如前所述，相同内容的blob只会存储一次，因为计算出的哈希值一致。我们可以尝试将一大堆相同内容的文件添加到一个空仓库，然后检查`.git`目录的大小和文件在磁盘的大小。你将会发现，`.git`目录相当小。
+
+但是不仅仅是这些，Git处理tree也是一样。如果你修改一个子级树(subtree)中的文件，git将只创建一个新的tree，并且只引用其他没有受影响的tree。下面的示例，显示了一个指向具有两个子目录的层次结构的commit:
+
+![data_efficiency_1](/styles/images/git_as_a_nosql_database/data_efficiency_1.png)
+
+如果我们现在想要去替换blob`4658ea84`，git将只替换那些修改的项目，并且保留那些没有修改的项目作为reference。用不同的文件替换blob合并提交更改后，图像将如下所示(新的对象被标记为红色):
+
+![data_efficiency_2](/styles/images/git_as_a_nosql_database/data_efficiency_2.png)
+
+由此可见，git只是替换了一些必须的部分，并且引用了已存在的项目。
+
+虽然git在引用已存在数据方面非常高效，但是如果每一个小修改都将产生一个完整的副本，那么一段时间之后我们将会得到一个非常大的仓库。为了缓解这一点，Git拥有一个自动垃圾回收处理。当运行`git gc`时，它会检查你的blob。在可能时，它会删除这些blobs，取而代之的是存储一个基础数据的单独副本，连同blob的每个版本的修改。这样，git仍然能检索每个不同的版本，而不需要多次存储这些数据。
+
+## Versioning
+
+我们可以免费获得完整的版本控制系统。这样的版本控制具有不删除数据的优点。我们在SQL数据库中见过这样的例子:
+
+````
+id  |   name    |   deleted
+1   |   kenneth |   1
+````
+
+像这样的简单记录是没问题的，但是这通常只是冰山一角。数据可能对其他数据有依赖关系(是否是外键只是一个实现细节)，当你想要恢复数据时，可能在隔离数据上存在风险。对于gi而言，只是一系列指向不同的commit的分支，能以数据库级别而不是记录级别将数据恢复到正确状态。
+
+我们来看另外一个:
+
+````
+id  |   street  |   lastUpdate
+1   |   town rd |   20161012
+````
+
+这种例子很少碰到:你知道它已经被更新，但是没有任何信息关于实际更新内容以及以前的数值。每当你更新数据，你其实是在删除数据，并且插入了一条新的数据，旧的数据就永远丢失了。使用Git，你可以对于任何文件运行`git log`，可以看到什么被修改，谁修改了它，什么时候修改，以及为什么修改。
+
+## Git tooling
 
 
 
