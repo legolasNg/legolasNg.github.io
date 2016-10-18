@@ -96,7 +96,9 @@ $ git cat-file -t da95f8264a0ffe3df10e94eed6371ea83aee9a4d
 ## Git Trees
 
 Trees对象解决了两个问题:
+
 - 记住每个对象哈希值以及每个版本的需求
+
 - 保存一系列文件的可能性
 
 考虑tree的最好办法是类似于文件系统中的文件夹，按照下面的步骤创建一个tree:
@@ -143,6 +145,7 @@ $ git write-tree
 现在数据库中有两个代表该文件不同状态的tree，这对于我们仍然没有太多帮助，因为我们还是需要记住tree的sha-1哈希值来获取内容。
 
 *Git根据某一时刻暂存区(即`index`区域,下同)所表示的状态创建并记录一个对应的树对象,如此重复便可依次记录(某个时间段内)一系列的树对象。*
+
 > 通过底层命令`update-index`为一个单独文件的某个版本创建一个暂存区。
 
 > 必须指定`--add`选项，因为此前该文件并不在暂存区中。
@@ -270,7 +273,71 @@ id  |   street  |   lastUpdate
 
 ## Git tooling
 
+Git拥有丰富的工具集，用以浏览和操作数据。其中大部分工具服务于代码，但并不意味着不能用来处理其他数据。以下是一些我能想到的不太详尽的工具概览:
 
+使用这些基础的Git命令:
+
+- 使用`git diff`查找两个commit/branch/tag等之间的确切变化。
+- 使用`git bisect`来查明某些由于数据更改而导致不能正常运行的原因。
+- 使用`git hooks`来获取自动更改通知、构建全文检索、更新缓存、发布数据等。
+- 还有`git revert`, `git branch`, `git merge`...
+
+除此之外还有些外部工具:
+
+- 可以使用Git客户端来浏览可视化数据
+- 可以使用Github上的"pull requests"，在合并前检查数据变更
+- Gitinspector: 基于git仓库的统计分析
+
+任何能搭配git工具，都能用在数据库上。
+
+## NoSQL
+
+由于是键值(key-value)存储，可以得到NoSQL存储的常见优点，例如无模式数据库。可以存储任何想要保存的数据，甚至不一定是JSON格式。
+
+## Transactions
+
+在上面的例子中，我们提交了文件的每一次更改。不一定非要这么做，你也可以将多次变更作为一个commit提交。这样以后可以很容易原子性回滚。
+
+事务持久化(long lived)也是可以实现的:可以创建一个branch，提交若干更改，然后合并(或者丢弃)。
+
+## Backups and replication
+
+对于传统数据库而言，创建一个全备份和增量备份定时任务，通常有点麻烦。由于Git存储的是整个历史，数据库不需要做全备份。此外，备份其实就是一次简单的`git push`。这些推送可以到达任何地方，GitHub、BitBucket或者自托管的git服务器。
+
+复制也同样简单。使用`git hooks`,你可以设置一个触发器，在每次commit之后运行`git push`:
+
+````bash
+$ git remote add replica git@replica.server.com:app.git
+$ cat .git/hooks/post-commit
+    #!/bin/sh
+    ...
+$ git push replica
+````
+
+这些简直太棒了，我们应该从现在开始全部使用Git作为数据库！稍等。还有一些缺点。
+
+## Querying
+
+## Concurrency
+
+![concurrency_1](/styles/images/git_as_a_nosql_database/concurrency_1.png)
+
+## Speed
+
+## Tree sizes
+
+![tree_sizes_1](/styles/images/git_as_a_nosql_database/tree_sizes_1.png)
+
+![tree_sizes_2](/styles/images/git_as_a_nosql_database/tree_sizes_2.png)
+
+![tree_sizes_3](/styles/images/git_as_a_nosql_database/tree_sizes_3.png)
+
+
+### Combining values into transactions
+
+## Merging
+
+## Conclusion
 
 [noms](https://github.com/attic-labs/noms)是一个基于Git思想的分布式数据库
 
