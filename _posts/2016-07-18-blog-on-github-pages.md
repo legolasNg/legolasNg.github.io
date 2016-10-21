@@ -2,7 +2,7 @@
 layout:   post
 title:    使用Github Pages搭建自己的博客
 date:     2016-07-18 01:00:00 +0800
-category: github
+category: jekyll
 tags:     [ 'gh-pages', 'blog']
 ---
 
