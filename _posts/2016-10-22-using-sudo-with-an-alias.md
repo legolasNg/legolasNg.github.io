@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Using sudo with an alias
+title:      别名和sudo一起使用
 date:       2016-10-22 00:35:00 +0800
 category:   bash
 tags:       ["sudo", "alias"]

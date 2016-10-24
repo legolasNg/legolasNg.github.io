@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Git as a Nosql database
+title:      将Git用作NoSQL数据库
 date:       2016-10-16 22:22:00 +0800
 category:   git
 tags:       ["git", "Nosql"]
