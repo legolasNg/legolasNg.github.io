@@ -397,9 +397,12 @@ $ git push replica
 
 以上就是如何使用Git作为NoSQL数据库。
 
-
+----
+推荐
 
 [noms](https://github.com/attic-labs/noms)是一个基于Git思想的分布式数据库
 
-来源：
-	[Git as a NoSql database](https://www.kenneth-truyers.net/2016/10/13/git-nosql-database/)
+----
+来源:
+
+[Git as a NoSql database](https://www.kenneth-truyers.net/2016/10/13/git-nosql-database/)

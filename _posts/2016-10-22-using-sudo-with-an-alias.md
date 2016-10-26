@@ -13,7 +13,7 @@ $ sudo ll
 =>	sudo: ll: command not found
 ````
 
-## Solution 1
+## 解决方案1
 
 我们给`shutdown`命令创建一个别名，当`rotorrent`运行的时候尝试输入这个别名去关机，我们可以看到系统不会关机。想要运行`/sbin/shutdown`需要root权限，然而`sudo`会完全忽略`shutdown`的这个别名。解决办法是，我们需要添加另一个别名:
 
@@ -26,7 +26,7 @@ $ alias sudo='sudo '
 > If the last character of the alias value is a blank, then the next command word following the alias is also checked for alias expansion.
 > 如果别名值的最后一个字符是空格，将会检查"跟在别名后的下一个命令"是否也是别名扩展。
 
-## Solution 2
+## 解决方案2
 
 现在在`shutdown`的别名前加`sudo`，终于可以关机了。还有另一个解决办法(也是别名)，听说有效但没尝试过，因为上面的那个办法很实用并且我还没弄懂下面的这个原理:
 
@@ -46,14 +46,15 @@ alias l='ls'
 alias c='clear'
 alias x='exit'
 alias q='exit'
- 
+
 # Don't run shutdown if rtorrent is running - as long as there's a screen with "tor" in its name, shutdown won't run (unless you call /sbin/shutdown, or unalias it)
 alias shutdown='/home/james/scripts/safe.shutdown.sh'
- 
+
 # When using sudo, use alias expansion (otherwise sudo ignores your aliases)
 alias sudo='sudo '
 ````
 
+----
 来源:
 
 [Using sudo with an alias](http://www.shellperson.net/using-sudo-with-an-alias/)

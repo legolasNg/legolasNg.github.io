@@ -6,25 +6,26 @@ category: jekyll
 tags:     [ 'gh-pages', 'blog']
 ---
 
-[Github](https://github.com)是一个利用`Git`进行版本控制、专门用于存放软件代码与内容的共享虚拟主机服务。 [1]
-**Github Pages** 是依托`Github`本身的技术服务经验开发出来的一款产品，配合Wiki、Graph、Pulse、Issue、Pull requests等功能，解决的是分布式的内容版本管理问题。用户通过git仓库创建、托管在github上的静态网站或静态博客，让用户通过该功能分享、诠释自己项目和作品。
+Github是一个利用`Git`进行版本控制、专门用于存放软件代码与内容的共享虚拟主机服务。
 
-## *GitHub Page* 简介
+`Github Pages`是依托`Github`本身的技术服务经验开发出来的一款产品，配合Wiki、Graph、Pulse、Issue、Pull requests等功能，解决的是分布式的内容版本管理问题。用户通过git仓库创建、托管在github上的静态网站或静态博客，让用户通过该功能分享、诠释自己项目和作品。
 
-**Github Pages** 特点:
+## GitHub Page简介
 
-> * 由Github免费托管，支持由git版本管理、Github多人协作
-> * 只支持静态页面
-> * 默认支持Jekyll生成器，允许Github站内生成或者用户上传
-> * 可以绑定专有域名，或者使用Github提供的子域名
+`Github Pages`特点:
+
+- 由Github免费托管，支持由git版本管理、Github多人协作
+- 只支持静态页面
+- 默认支持Jekyll生成器，允许Github站内生成或者用户上传
+- 可以绑定专有域名，或者使用Github提供的子域名
 
 当然，我们也可以使用其他静态站点生成器，例如:
 
- - [Jekyll(ruby)](http://jekyllcn.com/)
- - [Pelican(python)](http://docs.getpelican.com/)
- - [Hexo(nodejs)](https://hexo.io/)
- - [Octopress(基于jekyll)](http://octopress.org/s)
- - [Hugo(go)](http://gohugo.org/)
+- [Jekyll(ruby)](http://jekyllcn.com/)
+- [Pelican(python)](http://docs.getpelican.com/)
+- [Hexo(nodejs)](https://hexo.io/)
+- [Octopress(基于jekyll)](http://octopress.org/s)
+- [Hugo(go)](http://gohugo.org/)
 
 由于`GitHub Page`默认只支持Jekyll，其它生成器需要在本地生成好静态页面在上传，而不能在Github站内生成。
 
@@ -54,10 +55,11 @@ tags:     [ 'gh-pages', 'blog']
 
 ### 5. github pages类型和分支切换
 
-*GitHub Pages* 有两种基本类型:
+`GitHub Pages`有两种基本类型:
 
-> * User/Organization Pages(用户/组织站点)，对应`master`分支，对应域名是`username.github.io`或者`orgname.github.io`
-> * Project Pages(项目站点)，对应`gh-pages`分支，对应域名为`username.github.io/projectname`或者`orgname.github.io/projectname`
+1. User/Organization Pages(用户/组织站点)，对应`master`分支，对应域名是`username.github.io`或者`orgname.github.io`。
+
+2. Project Pages(项目站点)，对应`gh-pages`分支，对应域名为`username.github.io/projectname`或者`orgname.github.io/projectname`。
 
 将仓库克隆到本地，根据需要切换分支(默认`gh-pages`分支)
 
@@ -75,8 +77,8 @@ git branch master && git checkout master
 
 *GitHub Page* 项目有两种方式:
 
-> * 直接提交静态页面(静态页面可以由任何静态站点生成器生成，或者自己编辑)到某分支，然后push到GitHub的对应分支
-> * 提交`Jekyll`代码到某分支，然后push到GitHub的对应分支，GitHub会自动生成pages项目的静态页面
+- 直接提交静态页面(静态页面可以由任何静态站点生成器生成，或者自己编辑)到某分支，然后push到GitHub的对应分支
+- 提交`Jekyll`代码到某分支，然后push到GitHub的对应分支，GitHub会自动生成pages项目的静态页面
 
 ```
 echo "My Page" > index.html
@@ -100,6 +102,6 @@ git push origin :gh-pages
 
 引用:
 
-[1]https://zh.wikipedia.org/wiki/GitHub
+[GitHub Wikipedia](https://zh.wikipedia.org/wiki/GitHub)
 
-[2]https://github.com/blog/272-github-pages
+[github-pages](https://github.com/blog/272-github-pages)
