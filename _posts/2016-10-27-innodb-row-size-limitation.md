@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      '[译] innodb行的大小限制'
-2016-10-27-innodb-row-size-limitation
 date:       2016-10-27 16:15:00 +0800
 category:   mysql
 tags:       ["innodb", "row-size-limit"]
