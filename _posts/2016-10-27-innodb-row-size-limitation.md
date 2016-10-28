@@ -6,7 +6,12 @@ category:   mysql
 tags:       ["innodb", "row-size-limit"]
 ---
 
-最近服务器偶尔会出现数据存储失败，出现问题的服务器看似随机，但是却都有些相同点:运行了一段时间而不是新搭建。在查看了mysql的`error.log`文件和服务器脚本日志之后，发现出现问题的服务器都会报下面的错误：
+最近服务器偶尔会出现数据存储失败，出现问题的服务器看似随机，但是却都有些相同点:
+
+- 运行了一段时间的服务，而不是新搭建的服务
+- 部分用户会出现该问题，尤其是数据量较大的
+
+在查看了mysql的`error.log`文件和服务器脚本日志之后，发现出现问题的服务器在出错时都会报下面的错误：
 
 ````
 ERROR 1118 (42000): Row size too large (> 8126). Changing some columns to TEXT or BLOB or using ROW_FORMAT=DYNAMIC or ROW_FORMAT=COMPRESSED may help. In current row format, BLOB prefix of 768 bytes is stored inline.
