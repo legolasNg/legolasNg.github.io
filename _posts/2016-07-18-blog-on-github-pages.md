@@ -91,7 +91,7 @@ git commit -a -m "First pages commit"
 git push origin gh-pages
 ```
 
-如果想删除本地和远程的`gh-pages`分支，只保留`master`分支，从而是的域名变成`orgname.github.io`。
+如果想删除本地和远程的`gh-pages`分支，只保留`master`分支，从而使得域名变成`orgname.github.io`。
 
 ```
 #查看分支
