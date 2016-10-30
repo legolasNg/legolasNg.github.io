@@ -2,39 +2,48 @@
 layout: default
 title:	Legolas Blogs
 ---
-<div class="container">
-	{% for item in site.posts offset: 0 limit: 10  %}
-	<div class="docs-content">
-		<header class="post-header">
-			<div style="text-align: left;">
-				<a href="{{ site.baseurl }}{{ item.url }}" title="{{ item.title }}">
-					<h2>{{ item.title }}</h2>
-				</a>
+
+<div class="container docs-container">
+    <div class="row">
+        <div class="col-md-9">
+			{% for item in site.posts offset: 0 limit: 10  %}
+			<div class="docs-content">
+				<header class="post-header">
+					<div style="text-align: left;">
+						<a href="{{ site.baseurl }}{{ item.url }}" title="{{ item.title }}">
+							<h2>{{ item.title }}</h2>
+						</a>
+					</div>
+					<div style="text-align: right;">
+						<p>
+							<span class="postdate">Posted on {{ item.date | date: "%F" }} </span>
+							By <a type="_blank" href="{{ site.url }}">{{ site.author }}</a>
+						</p>
+					</div>
+				</header>
+				<article>	
+					{% if item.excerpt %}
+						{{ item.excerpt }}
+					{% else %}
+						{{ item.content | slice: 0,100 }}
+					{% endif %}
+				</article>
+				<footer>
+					<div class="pager">
+						<div class="previous">
+							<a href="{{ site.baseurl }}{{ post.url }}">Read More</a>
+						</div>
+						<div class="next">
+						
+						</div>
+					</div>
+				</footer>
 			</div>
-			<div style="text-align: right;">
-                <p>
-					<span class="postdate">Posted on {{ item.date | date: "%F" }} </span>
-					By <a type="_blank" href="{{ site.url }}">{{ site.author }}</a>
-				</p>
-            </div>
-		</header>
-		<article>	
-			{% if item.excerpt %}
-				{{ item.excerpt }}
-			{% else %}
-				{{ item.content | slice: 0,100 }}
-			{% endif %}
-		</article>
-		<footer>
-			<div class="pager">
-                <div class="previous">
-                	<a href="{{ site.baseurl }}{{ post.url }}">Read More</a>
-                </div>
-                <div class="next">
-				
-                </div>
-            </div>
-		</footer>
-	</div>
-	{% endfor %}
+			{% endfor %}
+        </div>
+
+		<div class="col-md-3">
+			{% include profile.html %}
+        </div>
+    </div>
 </div>

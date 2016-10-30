@@ -1,10 +1,7 @@
 <div class="docs-header" id="content" style="text-align:center;">
-    <div class="container">
-         {% if page.title <> site.name %}
-         <h2>{{ site.motto }}</h2>
-         {% else %}
-         <h1>{{ site.name }}</h1>
-         <p>{{ site.description }}</p>
-         {% endif %}
-    </div>
+    {% if page.title <> site.name %}
+        <h2>{{ site.motto }}</h2>
+    {% else %}
+        <h1>{{ site.name }}</h1>
+    {% endif %}
 </div>

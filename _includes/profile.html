@@ -1,0 +1,30 @@
+<div class="left-col">
+    <div class="overlay">
+
+    </div>
+
+    <div class="intrude-less">
+	    <header id="header" class="inner">
+            <a href="{{ site.url }}" class="profilepic">	
+                <img src="/styles/images/legolas.jpg" class="js-avatar">
+            </a>
+            <hgroup>
+                <h1 class="header-author"><a href="{{ '/about/' | prepend: site.baseurl }}">{{ site.author }}</a></h1>
+            </hgroup>
+            <p class="header-subtitle">{{ site.description }}</p>
+            <nav class="header-smart-menu">
+                <a href="{{ '/archives' | prepend: site.baseurl }}">Archive</a>
+                <a href="{{ '/categories/' | prepend: site.baseurl }}">Category</a>
+                <a href="{{ '/tags' | prepend: site.baseurl }}">Tags</a>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    <a class="weibo" target="_blank" href="{{ site.weibo }}" title="weibo">weibo</a>
+                    <a class="github" target="_blank" href="{{ site.github }}" title="github">github</a>
+                    <a class="facebook" target="_blank" href="{{ site.facebook }}" title="facebook">facebook</a>
+                    <a class="twitter" target="_blank" href="{{ site.github }}" title="twitter">twitter</a>
+                </div>
+            </nav>
+	    </header>
+    </div>
+</div>
