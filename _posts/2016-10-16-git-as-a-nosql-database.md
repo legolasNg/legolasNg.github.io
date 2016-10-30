@@ -3,6 +3,7 @@ layout:     post
 title:      "[译] 将Git用作NoSQL数据库"
 date:       2016-10-16 22:22:00 +0800
 category:   git
+excerpt:  	'在Git的手册上是这么描述的，它是一个傻瓜式的内容跟踪系统(stupid content tracker)。Git应该是世界上使用最广的版本控制系统，令人奇怪的是，官方并没有将Git描述成"源码控制系统"。事实上，Git可以跟踪任何类型的内容'
 tags:       ["git", "Nosql"]
 ---
 

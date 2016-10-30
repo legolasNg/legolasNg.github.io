@@ -16,7 +16,6 @@ permalink: /:year/:month/:day/:title/
 gems: [jekyll-paginate]
 paginate: 10
 paginate_path: "page:num"
-display_num: 5
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
 

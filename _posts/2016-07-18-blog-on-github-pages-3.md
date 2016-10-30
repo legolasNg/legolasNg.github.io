@@ -1,9 +1,10 @@
 ---
-layout:   post
-title:    "使用Github Pages搭建博客(3) -- Jekyll"
-date:     2016-07-18 01:00:00 +0800
-category: "blog"
-tags:     "Jekyll"
+layout:     post
+title:      "使用Github Pages搭建博客(3) -- Jekyll"
+date:       2016-07-18 01:00:00 +0800
+category:   "blog"
+excerpt:    "Jekyll是一个简单的博客形态的静态站点生成器。它有一个模版目录，其中包含原始文本格式的文档，通过Markdown(或者Textile)以及Liquid转化成一个完整的可发布的静态网站，你可以发布在任何你喜爱的服务器上。"
+tags:       "Jekyll"
 ---
 
 ### 简介

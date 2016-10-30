@@ -1,9 +1,10 @@
 ---
-layout:   post
-title:    "使用Github Pages搭建博客(1) -- 前言"
-date:     2016-07-18 01:00:00 +0800
-category: "blog"
-tags:     "preface"
+layout:     post
+title:      "使用Github Pages搭建博客(1) -- 前言"
+date:       2016-07-18 01:00:00 +0800
+category:   "blog"
+excerpt:    "我也不太清楚自己为什么想写博客，大概是为了记录自己工作中的积累和心得，亦或是为了记录自己的生活中的琐碎和随想"
+tags:       "preface"
 ---
 
 我也不太清楚自己为什么想写博客，大概是为了记录自己工作中的积累和心得，亦或是为了记录自己的生活中的琐碎和随想。

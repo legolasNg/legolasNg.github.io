@@ -2,26 +2,39 @@
 layout: default
 title:	Legolas Blogs
 ---
-<div>
-	{% for post in site.posts offset: 0 limit: 10  %}
-	<div class="container">
-		<div class="docs-content">
-			<header class="post-header">
-				<div style="text-align: left;">
-					<h3>{{ post.title }}</h3>
-				</div>
-				<div style="text-align: right;">
-					<strong>{{ post.date | date:"%Y/%m/%d" }}</strong>
-				</div>
-			</header>
-			<article>
-				{{ post.content | markdownify | truncatewords: site.display_num }}
-			</article>
-			<div class="heading" style="text-align: right;">
-				<a href="{{ site.baseurl }}{{ post.url }}">Read More</a>
+<div class="container">
+	{% for item in site.posts offset: 0 limit: 10  %}
+	<div class="docs-content">
+		<header class="post-header">
+			<div style="text-align: left;">
+				<a href="{{ site.baseurl }}{{ item.url }}" title="{{ item.title }}">
+					<h2>{{ item.title }}</h2>
+				</a>
 			</div>
-		</div>
+			<div style="text-align: right;">
+                <p>
+					<span class="postdate">Posted on {{ item.date | date: "%F" }} </span>
+					By <a type="_blank" href="{{ site.url }}">{{ site.author }}</a>
+				</p>
+            </div>
+		</header>
+		<article>	
+			{% if item.excerpt %}
+				{{ item.excerpt }}
+			{% else %}
+				{{ item.content | slice: 0,100 }}
+			{% endif %}
+		</article>
+		<footer>
+			<div class="pager">
+                <div class="previous">
+                	<a href="{{ site.baseurl }}{{ post.url }}">Read More</a>
+                </div>
+                <div class="next">
+				
+                </div>
+            </div>
+		</footer>
 	</div>
-	<hr>
 	{% endfor %}
 </div>

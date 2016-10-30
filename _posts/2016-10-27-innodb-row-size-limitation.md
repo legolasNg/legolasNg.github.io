@@ -3,6 +3,7 @@ layout:     post
 title:      "innodb行的大小限制"
 date:       2016-10-27 16:15:00 +0800
 category:   mysql
+excerpt:    "最近服务器偶尔会出现数据存储失败，出现问题的服务器看似随机，但是却都有些相同点: 运行了一段时间的服务，而不是新搭建的服务;部分用户会出现该问题，尤其是数据量较大的。"
 tags:       ["innodb", "row-size-limit"]
 ---
 
