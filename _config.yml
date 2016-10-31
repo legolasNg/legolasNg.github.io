@@ -1,15 +1,21 @@
 # 基本配置
 name: "Legolas Blogs"
-email: wujianye3@gmail.com
 author: LegolasNg
 url: https://legolasng.github.io/
 resume_site: https://github.com/legolasNg/
-github: https://github.com/legolasNg/
 baseurl: ""
 description: keep it simple, stupid !
-meta_description: 请叫我"小叶子/legolas"！
+meta_description: 请叫我"小叶子"！
 motto: Talk is cheap, Show me the code !
 banner: legolas
+
+# social
+github:     https://github.com/legolasNg/
+weibo:      http://weibo.com/wujianye
+facebook:   
+twitter:    
+linkedin:   
+email:      wujianye3@gmail.com
 
 #permalink: /:categories/:year/:month/:day/:title/
 permalink: /:year/:month/:day/:title/

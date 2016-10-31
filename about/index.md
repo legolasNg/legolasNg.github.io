@@ -4,14 +4,6 @@ title:    个人简介
 header:   About
 ---
 
-<header class="post-header" style="text-align:center;">
-	<h1 class="post-title"><p align="center">
-		<img src="/styles/images/legolas.jpg" alt="我的头像" height="50" width="50">
-	个人简介</p></h1>
-</header>
-
----
-
 ### 个人信息
 
 ````

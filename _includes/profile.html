@@ -1,30 +1,43 @@
-<div class="left-col sidebar hidden-print">
-    <div class="overlay">
+<div class="sidebar hidden-print" role="complementary" style="">
+    <div>
 
     </div>
-
-    <div class="intrude-less">
-	    <header id="header" class="inner">
-            <a href="{{ site.url }}" class="profilepic">
-                <img src="/styles/images/legolas.jpg" class="js-avatar">
+    <div class="sidebar-item" style="text-align: center;">
+        <div>
+            <a href="{{ site.url }}">
+                <img src="/styles/images/legolas99x99.jpg" class="img-circle">
             </a>
-            <hgroup>
-                <h1 class="header-author"><a href="{{ '/about/' | prepend: site.baseurl }}">{{ site.author }}</a></h1>
-            </hgroup>
-            <p class="header-subtitle">{{ site.description }}</p>
-            <nav class="header-smart-menu">
-                <a href="{{ '/archives' | prepend: site.baseurl }}">Archive</a>
-                <a href="{{ '/categories/' | prepend: site.baseurl }}">Category</a>
-                <a href="{{ '/tags' | prepend: site.baseurl }}">Tags</a>
-            </nav>
-            <nav class="header-nav">
-                <div class="social">
-                    <a class="weibo" target="_blank" href="{{ site.weibo }}" title="weibo">weibo</a>
-                    <a class="github" target="_blank" href="{{ site.github }}" title="github">github</a>
-                    <a class="facebook" target="_blank" href="{{ site.facebook }}" title="facebook">facebook</a>
-                    <a class="twitter" target="_blank" href="{{ site.github }}" title="twitter">twitter</a>
-                </div>
-            </nav>
-	    </header>
+        </div>
+        <div>
+            <h1><a href="{{ '/about/' | prepend: site.baseurl }}">{{ site.author }}</a></h1>
+            <h4>{{ site.meta_description }}</h4>
+            <h4>{{ site.description }}</h4>
+        </div>
+        <div class="btn-group">
+            <ul>
+                <a type="button" href="{{ site.weibo }}" class="btn" title="weibo">
+                    <i class="fa fa-weibo"></i>
+                </a>
+                <a type="button" href="{{ site.facebook }}" class="btn" title="facebook">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a type="button" href="{{ site.twitter }}" class="btn" title="twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a type="button" href="{{ site.github }}" class="btn" title="github">
+                    <i class="fa fa-github"></i>
+                </a>
+                <a type="button" href="{{ site.linkedin }}" class="btn" title="linkedin">
+                    <i class="fa fa-linkedin"></i>
+                </a>
+            </ul>
+        </div>
+        <div class="btn-group">
+            <ul>
+                <a type="button" href="{{ site.email }}" class="btn" title="email">
+                    <i class="fa fa-envelope"></i>
+                </a>
+            </ul>
+        </div>
     </div>
 </div>
