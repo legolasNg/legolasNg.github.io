@@ -27,7 +27,7 @@
             </a>
         </ul>
         <ul>
-            <a type="button" href="{{ site.email }}" class="btn btn-primary btn-sm" title="email">
+            <a type="button" href="{{ site.email | | prepend: 'mailto:' }}" class="btn btn-primary btn-sm" title="email">
                 <i class="fa fa-envelope"></i>
             </a>
         </ul>
