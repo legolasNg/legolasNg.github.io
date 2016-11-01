@@ -5,9 +5,9 @@ title:	Legolas Blogs
 
 <div class="container docs-container">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9" role="main">
 			{% for item in site.posts offset: 0 limit: 10  %}
-			<div class="docs-content">
+			<div class="panel docs-content">
 				<header class="post-header">
 					<div style="text-align: left;">
 						<a href="{{ site.baseurl }}{{ item.url }}" title="{{ item.title }}">

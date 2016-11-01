@@ -1,6 +1,6 @@
 ---
 layout:   about
-title:    个人简介
+title:    About
 header:   About
 ---
 
