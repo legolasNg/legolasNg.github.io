@@ -12,6 +12,8 @@ tags:       ["innodb", "row-size-limit"]
 - 运行了一段时间的服务，而不是新搭建的服务
 - 部分用户会出现该问题，尤其是数据量较大的
 
+## 查找原因
+
 在查看了mysql的`error.log`文件和服务器脚本日志之后，发现出现问题的服务器在出错时都会报下面的错误：
 
 ````
@@ -29,12 +31,16 @@ innodb引擎支持的文件格式包括Antelope(羚羊)、Barracuda(梭子鱼)
 - Barracuda除此之外提供Dynamic(动态)和 Compressed(压缩)
 
 压缩InnoDB的缓冲池的索引页
+
+## 解决方案
+
 ````
 SET GLOBAL innodb_file_format=Barracuda;
 ALTER TABLE [tableName] ENGINE=InnoDB ROW_FORMAT=COMPRESSED KEY_BLOCK_SIZE=8;
 ````
 
 每张表一个文件，不建议使用
+
 ````
 innodb_file_per_table=1
 innodb_file_format=Barracuda
