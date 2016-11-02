@@ -1,21 +1,17 @@
-/*!
- * Adapted from Bootstrap docs JavaScript
- */
- //toc.js实现
- $(document).ready(function() {
+$(document).ready(function() {
      $('#toc').toc({
-       listType: 'ul',
-       title: '',
-       noBackToTopLinks: true,
+       noBackToTopLinks: false,
        minimumHeaders: 2,
-       showEffect: 'slideDown',
-       classes: {
-         list: 'lorem ipsum',
-         item: 'dolor sit amet'
-       },
-       showSpeed: 0
+       headers: 'h1, h2, h3, h4, h5, h6',
+       listType: 'ul', // values: [ol|ul]
+       showEffect: 'show', // values: [show|slideDown|fadeIn|none]
+       showSpeed: 0, // set to 0 to deactivate effect
+       title: '',
+      //  classes: {
+      //    list: 'clickable-header',
+      //    item: 'clickable-header:hover'
+      //  },
      });
-     $("#markdown-toc").remove();
  });
 
 !function ($) {
