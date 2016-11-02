@@ -21,13 +21,15 @@ layout: default
                     </header>
                     <div class="post-title" style="text-align: center;">
 						<a><i class="glyphicon glyphicon-paperclip"></i></a>
+                        &nbsp;
 						{% for category in page.categories %}
-							<a href="{{ category | prepend: '/categories#' | append: '-ref' }}">&nbsp;{{ category }}&nbsp;</a>
+							<a href="{{ category | prepend: '/categories#' | append: '-ref' }}">{{ category }}&nbsp;</a>
 						{% endfor %}
 						&nbsp;
 						<a><i class="glyphicon glyphicon-tags"></i></a>
+                        &nbsp;
 						{% for tag in page.tags %}
-							<a href="{{ tag | prepend: '/tags#' | append: '-ref' }}">&nbsp;{{ tag }}&nbsp;</a>
+							<a href="{{ tag | prepend: '/tags#' | append: '-ref' }}">{{ tag }}&nbsp;</a>
 						{% endfor %}
 					</div>
                     <hr>
