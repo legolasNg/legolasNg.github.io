@@ -7,10 +7,10 @@ $(document).ready(function() {
        showEffect: 'show', // values: [show|slideDown|fadeIn|none]
        showSpeed: 0, // set to 0 to deactivate effect
        title: '',
-      //  classes: {
-      //    list: 'clickable-header',
-      //    item: 'clickable-header:hover'
-      //  },
+       classes: {
+         list: 'clickable-header',
+         item: 'clickable-header:hover'
+       },
      });
  });
 
