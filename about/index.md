@@ -8,17 +8,17 @@ header:   About
 
 ````
 名字:           legolas
-性别            男
+性别:           男
 昵称:           小叶子
 主页:           https://legolasng.github.io/
-Github:        https://github.com/legolasNg/
 ````
 
 ### 技能
 
 ````
-编程语言:		C/C++、PHP、Python、Bash、Javascript
+编程语言:		C/C++、PHP、Python、Bash、Javascript、C#、Pascal
 业余爱好:		篮球、羽毛球、dota
+
 ````
 
 ### 不擅长
@@ -30,3 +30,7 @@ Github:        https://github.com/legolasNg/
 - ~~盗号~~
 - ~~越狱~~
 - ~~刷机~~
+
+### 乱扯几句
+
+我是一个越长越丑，越学越笨的人。

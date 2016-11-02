@@ -8,36 +8,39 @@ title:	Legolas Blogs
         <div class="col-md-9" role="main">
 			{% for item in site.posts offset: 0 limit: 10  %}
 			<div class="panel docs-content">
-				<header class="post-header">
-					<div style="text-align: left;">
-						<a href="{{ site.baseurl }}{{ item.url }}" title="{{ item.title }}">
-							<h2>{{ item.title }}</h2>
+				<header class="post-title">
+					<a href="{{ site.baseurl }}{{ item.url }}" title="{{ item.title }}">
+						<h3>{{ item.title }}</h3>
+					</a>
+					<div class="post-title">
+						<a>
+							<i class="glyphicon glyphicon-calendar"></i>
+							&nbsp;{{ item.date | date: "%B %e, %Y" }}&nbsp;
 						</a>
-					</div>
-					<div style="text-align: right;">
-						<p>
-							<span class="postdate">Posted on {{ item.date | date: "%F" }} </span>
-							By <a type="_blank" href="{{ site.url }}">{{ site.author }}</a>
-						</p>
+						&nbsp;
+						<a><i class="glyphicon glyphicon-paperclip"></i></a>
+						{% for category in item.categories %}
+							<a href="{{ category | prepend: '/categories#' | append: '-ref' }}">&nbsp;{{ category }}&nbsp;</a>
+						{% endfor %}
+						&nbsp;
+						<a><i class="glyphicon glyphicon-tags"></i></a>
+						{% for tag in item.tags %}
+							<a href="{{ tag | prepend: '/tags#' | append: '-ref' }}">&nbsp;{{ tag }}&nbsp;</a>
+						{% endfor %}
 					</div>
 				</header>
-				<article>	
+				<article>
 					{% if item.excerpt %}
-						{{ item.excerpt }}
+						<p>{{ item.excerpt }}</p>
 					{% else %}
-						{{ item.content | slice: 0,100 }}
+						<p>{{ item.content | slice: 0,100 }}</p>
 					{% endif %}
-				</article>
-				<footer>
-					<div class="pager">
-						<div class="previous">
-							<a href="{{ site.baseurl }}{{ post.url }}">Read More</a>
-						</div>
-						<div class="next">
-						
-						</div>
+					<div style="text-align: right;">
+						<a href="{{ site.baseurl }}{{ post.url }}">
+							<u>Read More</u>&nbsp;&nbsp;&nbsp;&nbsp;
+						</a>
 					</div>
-				</footer>
+				</article>
 			</div>
 			{% endfor %}
         </div>
