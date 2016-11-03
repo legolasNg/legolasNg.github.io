@@ -14,19 +14,16 @@ title:	Legolas Blogs
 					</a>
 					<div class="post-title">
 						<a><i class="glyphicon glyphicon-calendar"></i></a>
-						&nbsp;
-						<a>{{ item.date | date: "%B %e, %Y" }}&nbsp;</a>
+						<a class="tag" href="{{ item.date | date:"month_%Y_%B" | prepend: '/archives/#' }}">{{ item.date | date: "%B %e, %Y" }}&nbsp;</a>
 						&nbsp;
 						<a><i class="glyphicon glyphicon-paperclip"></i></a>
-						&nbsp;
 						{% for category in item.categories %}
-							<a href="{{ category | prepend: '/categories#' | append: '-ref' }}">{{ category }}&nbsp;</a>
+							<a class="tag" href="{{ category | prepend: '/categories/#' | append: '-ref' }}">{{ category }}&nbsp;</a>
 						{% endfor %}
 						&nbsp;
 						<a><i class="glyphicon glyphicon-tags"></i></a>
-						&nbsp;
 						{% for tag in item.tags %}
-							<a href="{{ tag | prepend: '/tags#' | append: '-ref' }}">{{ tag }}&nbsp;</a>
+							<a class="tag" href="{{ tag | prepend: '/tags/#' | append: '-ref' }}">{{ tag }}&nbsp;</a>
 						{% endfor %}
 					</div>
 				</header>

@@ -6419,6 +6419,9 @@ hr {
   border: none;
   border-radius: 0 0 4px 4px;
 }
+.docs-content{
+	margin-bottom: 10px;
+}
 .docs-content .container-fluid {
   padding: 0;
 }
@@ -7115,4 +7118,15 @@ td.visible-print {
   td.hidden-print {
     display: none !important;
   }
+}
+.tag {
+    display: inline-block;
+    padding: 0 8px;
+    color: #017e66;
+    background-color: rgba(1,126,102,.08);
+    height: 24px;
+    line-height: 24px;
+    font-weight: 400;
+    font-size: 13px;
+    text-align: center;
 }
