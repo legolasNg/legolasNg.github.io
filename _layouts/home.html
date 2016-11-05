@@ -1,0 +1,49 @@
+---
+layout: default
+---
+
+<div class="container docs-container">
+    <div class="row">
+        <div class="col-md-9" role="main">
+			{% for item in site.posts offset: 0 limit: 10  %}
+			<div class="panel docs-content">
+				<header class="post-title">
+					<a href="{{ site.baseurl }}{{ item.url }}" title="{{ item.title }}">
+						<h3>{{ item.title }}</h3>
+					</a>
+					<div class="post-title">
+						<a><i class="glyphicon glyphicon-calendar"></i></a>
+						<a class="tag" href="{{ item.date | date:"month_%Y_%B" | prepend: '/archives/#' }}">{{ item.date | date: "%B %e, %Y" }}&nbsp;</a>
+						&nbsp;
+						<a><i class="glyphicon glyphicon-paperclip"></i></a>
+						{% for category in item.categories %}
+							<a class="tag" href="{{ category | prepend: '/categories/#' | append: '-ref' }}">{{ category }}&nbsp;</a>
+						{% endfor %}
+						&nbsp;
+						<a><i class="glyphicon glyphicon-tags"></i></a>
+						{% for tag in item.tags %}
+							<a class="tag" href="{{ tag | prepend: '/tags/#' | append: '-ref' }}">{{ tag }}&nbsp;</a>
+						{% endfor %}
+					</div>
+				</header>
+				<article>
+					{% if item.excerpt %}
+						<p>{{ item.excerpt | markdownify }}</p>
+					{% else %}
+						<p>{{ item.content | slice: 0,100 }}</p>
+					{% endif %}
+					<div style="text-align: right;">
+						<a href="{{ site.baseurl }}{{ post.url }}">
+							<u>Read More</u>&nbsp;&nbsp;&nbsp;&nbsp;
+						</a>
+					</div>
+				</article>
+			</div>
+			{% endfor %}
+        </div>
+
+		<div class="col-md-3">
+			{% include profile.html %}
+        </div>
+    </div>
+</div>

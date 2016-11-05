@@ -5,10 +5,26 @@
             <img src="/styles/images/legolas99x99.jpg" class="img-circle">
         </a>
         <h1>{{ site.author }}</h1>
+        <div class="row">
+            <a class="tag" href="{{ '/archives' | prepend: site.baseurl }}">
+                <i class="glyphicon glyphicon-book"></i>
+                归档({{ site.posts | size }})
+            </a>
+            <a class="tag" href="{{ '/categories' | prepend: site.baseurl }}">
+                <i class="glyphicon glyphicon-paperclip"></i>
+                分类({{ site.categories | size }})
+            </a>
+            <a class="tag" href="{{ '/tags' | prepend: site.baseurl }}">
+                <i class="glyphicon glyphicon-tags"></i>
+                标签({{ site.tags | size }})
+            </a>
+        </div>
+    </div>
+    <div class="navigation">
         <h4 class="bg bg-info">{{ site.meta_description }}</h4>
         <h4>{{ site.description }}</h4>
     </div>
-    <div class="navigation btn-group">
+    <div class="navigation">
         <ul>
             <a type="button" href="{{ site.weibo }}" class="btn btn-primary btn-sm" title="weibo">
                 <i class="fa fa-weibo"></i>
