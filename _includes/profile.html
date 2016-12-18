@@ -1,51 +1,49 @@
-<div class="sidebar hidden-print" style="text-align: center;" role="complementary">
-    <div class="navigation">
-        <h1></h1>
+<div class="sidebar hidden-print affix-top" role="complementary">
+    <div class="navigation" style="text-align: center;">
+        <br>
         <a href="{{ site.url }}">
             <img src="/styles/images/legolas99x99.jpg" class="img-circle">
         </a>
+        
         <h1>{{ site.author }}</h1>
-        <div class="row">
-            <a class="tag" href="{{ '/archives' | prepend: site.baseurl }}">
+        
+        <div>
+            <a class="tag col-md-4" href="{{ '/archives' | prepend: site.baseurl }}">
                 <i class="glyphicon glyphicon-book"></i>
-                归档({{ site.posts | size }})
+                归档{{ site.posts | size }}
             </a>
-            <a class="tag" href="{{ '/categories' | prepend: site.baseurl }}">
+            <a class="tag col-md-4" href="{{ '/categories' | prepend: site.baseurl }}">
                 <i class="glyphicon glyphicon-paperclip"></i>
-                分类({{ site.categories | size }})
+                分类{{ site.categories | size }}
             </a>
-            <a class="tag" href="{{ '/tags' | prepend: site.baseurl }}">
+            <a class="tag col-md-4" href="{{ '/tags' | prepend: site.baseurl }}">
                 <i class="glyphicon glyphicon-tags"></i>
-                标签({{ site.tags | size }})
+                标签{{ site.tags | size }}
             </a>
         </div>
-    </div>
-    <div class="navigation">
-        <h4 class="bg bg-info">{{ site.meta_description }}</h4>
+
+        <h4>{{ site.meta_description }}</h4>
         <h4>{{ site.description }}</h4>
-    </div>
-    <div class="navigation">
-        <ul>
-            <a type="button" href="{{ site.weibo }}" class="btn btn-primary btn-sm" title="weibo">
+        
+        <div class="btn-group">
+            <a type="button" href="{{ site.weibo }}" class="btn btn-primary btn-sm col-md-2" title="weibo">
                 <i class="fa fa-weibo"></i>
             </a>
-            <a type="button" href="{{ site.facebook }}" class="btn btn-primary btn-sm" title="facebook">
+            <a type="button" href="{{ site.facebook }}" class="btn btn-primary btn-sm col-md-2" title="facebook">
                 <i class="fa fa-facebook"></i>
             </a>
-            <a type="button" href="{{ site.twitter }}" class="btn btn-primary btn-sm" title="twitter">
+            <a type="button" href="{{ site.twitter }}" class="btn btn-primary btn-sm col-md-2" title="twitter">
                 <i class="fa fa-twitter"></i>
             </a>
-            <a type="button" href="{{ site.github }}" class="btn btn-primary btn-sm" title="github">
+            <a type="button" href="{{ site.github }}" class="btn btn-primary btn-sm col-md-2" title="github">
                 <i class="fa fa-github"></i>
             </a>
-            <a type="button" href="{{ site.linkedin }}" class="btn btn-primary btn-sm" title="linkedin">
+            <a type="button" href="{{ site.linkedin }}" class="btn btn-primary btn-sm col-md-2" title="linkedin">
                 <i class="fa fa-linkedin"></i>
             </a>
-        </ul>
-        <ul>
-            <a type="button" href="{{ site.email | | prepend: 'mailto:' }}" class="btn btn-primary btn-sm" title="email">
+            <a type="button" href="{{ site.email | | prepend: 'mailto:' }}" class="btn btn-primary btn-sm col-md-2" title="email">
                 <i class="fa fa-envelope"></i>
             </a>
-        </ul>
+        </div>
     </div>
 </div>
