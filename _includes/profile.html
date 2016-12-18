@@ -21,27 +21,28 @@
                 标签{{ site.tags | size }}
             </a>
         </div>
-
+        <br>
+        <br>
         <h4>{{ site.meta_description }}</h4>
         <h4>{{ site.description }}</h4>
         
         <div class="btn-group">
-            <a type="button" href="{{ site.weibo }}" class="btn btn-primary btn-sm col-md-2" title="weibo">
+            <a type="button" href="{{ site.weibo }}" class="btn col-md-2" title="weibo">
                 <i class="fa fa-weibo"></i>
             </a>
-            <a type="button" href="{{ site.facebook }}" class="btn btn-primary btn-sm col-md-2" title="facebook">
+            <a type="button" href="{{ site.facebook }}" class="btn col-md-2" title="facebook">
                 <i class="fa fa-facebook"></i>
             </a>
-            <a type="button" href="{{ site.twitter }}" class="btn btn-primary btn-sm col-md-2" title="twitter">
+            <a type="button" href="{{ site.twitter }}" class="btn col-md-2" title="twitter">
                 <i class="fa fa-twitter"></i>
             </a>
-            <a type="button" href="{{ site.github }}" class="btn btn-primary btn-sm col-md-2" title="github">
+            <a type="button" href="{{ site.github }}" class="btn col-md-2" title="github">
                 <i class="fa fa-github"></i>
             </a>
-            <a type="button" href="{{ site.linkedin }}" class="btn btn-primary btn-sm col-md-2" title="linkedin">
+            <a type="button" href="{{ site.linkedin }}" class="btn col-md-2" title="linkedin">
                 <i class="fa fa-linkedin"></i>
             </a>
-            <a type="button" href="{{ site.email | | prepend: 'mailto:' }}" class="btn btn-primary btn-sm col-md-2" title="email">
+            <a type="button" href="{{ site.email | | prepend: 'mailto:' }}" class="btn col-md-2" title="email">
                 <i class="fa fa-envelope"></i>
             </a>
         </div>
