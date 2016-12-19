@@ -3,11 +3,18 @@ layout:     post
 title:      "ssh连接超时问题"
 date:       2016-12-19 18:13:00 +0800
 category:   "linux"
-excerpt:    "敬请期待"
+excerpt:    "使用`ssh -vv`查看ssh连接时的debug信息，分析耗时具体在哪个环节，然后去修改`/etc/ssh/sshd_config`中的相关配置。然后`service sshd restart`或者`systemctl restart sshd`重启sshd服务"
 tags:       "ssh"
 ---
 
-使用`ssh -vv`查看ssh连接时的debug信息，分析耗时具体在哪个环节，然后去修改`/etc/ssh/sshd_config`中的相关配置。
+ssh客户端和服务端的通讯认证流程:
+
+- 双方协商SSH版本号和协议,协商过程数据不加密
+- 双方协商RSA/DSA主机密钥,数据加密算法,消息摘要
+- 服务端对客户端提供的密码等信息进行校验
+- 验证成功后等到一个新的session,及设置环境变量等,最后得到一个shell
+
+使用`ssh -vv`查看ssh连接时的debug信息，分析耗时具体在哪个环节，然后去修改`/etc/ssh/sshd_config`中的相关配置。然后`service sshd restart`或者`systemctl restart sshd`重启sshd服务。
 
 ## Authentications方式冗余
 
@@ -48,9 +55,3 @@ UseDNS no
 ````
 
 使用了上面两种措施之后，ssh连接速度都会明显加快。如果有另外的情况，需要另作分析。
-ssh客户端和服务端的通讯认证流程:
-
-- 双方协商SSH版本号和协议,协商过程数据不加密
-- 双方协商RSA/DSA主机密钥,数据加密算法,消息摘要
-- 服务端对客户端提供的密码等信息进行校验
-- 验证成功后等到一个新的session,及设置环境变量等,最后得到一个shell
