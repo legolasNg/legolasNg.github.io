@@ -25,7 +25,7 @@ debug1: Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mi
 PasswordAuthentication yes
 # 质疑-应答认证(ssh的时候会返回challenge，然后根据challenge生成response，用response登录)，可以禁用
 ChallengeResponseAuthentication no
-# 使用基于GSSAPI的用户认证，可以禁用
+# 使用基于GSSAPI的用户认证，可以禁用(登陆的时候客户端需要对服务器端的IP地址进行反解析，如果服务器的IP地址没有配置PTR记录，就容易在这里卡住了)
 GSSAPIAuthentication no
 # 用户退出登录后自动销毁用户凭证缓存
 GSSAPICleanupCredentials no
@@ -48,4 +48,9 @@ UseDNS no
 ````
 
 使用了上面两种措施之后，ssh连接速度都会明显加快。如果有另外的情况，需要另作分析。
+ssh客户端和服务端的通讯认证流程:
 
+- 双方协商SSH版本号和协议,协商过程数据不加密
+- 双方协商RSA/DSA主机密钥,数据加密算法,消息摘要
+- 服务端对客户端提供的密码等信息进行校验
+- 验证成功后等到一个新的session,及设置环境变量等,最后得到一个shell
