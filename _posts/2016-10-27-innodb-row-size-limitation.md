@@ -66,7 +66,7 @@ innodb引擎支持的文件格式包括Antelope(羚羊)、Barracuda(梭子鱼)
 - Antelope提供Redundant（冗长）、Compact（紧凑）文件格式
 - Barracuda除此之外提供Dynamic(动态)和 Compressed(压缩)
 
-在标准(Antelope)格式中，blob、text和varchar的前768字节保存在行中，其余部分保存在行外的page上。Redundant和Compact行格式的innodb引擎会尽可能地将整个数据存储在
+在标准(Antelope)格式中，blob、text和varchar的前768字节保存在行中，其余部分保存在行外的page上。Redundant和Compact行格式的innodb引擎会尽可能地将整个数据存储在一个innodb page上，
 
 压缩InnoDB的缓冲池的索引页
 
