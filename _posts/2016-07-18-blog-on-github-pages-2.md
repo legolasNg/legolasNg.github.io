@@ -3,8 +3,8 @@ layout:     post
 title:      "使用Github Pages搭建博客(2) -- GitHub Page"
 date:       2016-07-18 01:00:00 +0800
 category:   "blog"
-excerpt:    "Github Pages是依托Github本身的技术服务经验开发出来的一款产品，配合Wiki、Graph、Pulse、Issue、Pull requests等功能，解决的是分布式的内容版本管理问题。用户通过git仓库创建、托管在github上的静态网站或静态博客，让用户通过该功能分享、诠释自己项目和作品。"
 tags:       "gh-pages"
+excerpt:    "Github Pages是依托Github本身的技术服务经验开发出来的一款产品，配合Wiki、Graph、Pulse、Issue、Pull requests等功能，解决的是分布式的内容版本管理问题。用户通过git仓库创建、托管在github上的静态网站或静态博客，让用户通过该功能分享、诠释自己项目和作品。"
 ---
 
 ### 简介

@@ -3,8 +3,8 @@ layout:     post
 title:      "[译] 别名和sudo一起使用"
 date:       2016-10-22 00:35:00 +0800
 category:   bash
-excerpt:    "一般来说，`sudo`会忽略通过`.bashrc`文件、`.bash_aliases`文件或者`alias`命令设置的别名命令(aliased commands)。比如，我们经常将`ll`用作`ls -lh`命令的别名。然后，我们输入`ll`，终端将会返回一个关于当前目录的长列表。但是，当我们输入`sudo ll`时，终端将会返回"
 tags:       ["sudo", "alias"]
+excerpt:    "一般来说，`sudo`会忽略通过`.bashrc`文件、`.bash_aliases`文件或者`alias`命令设置的别名命令(aliased commands)。比如，我们经常将`ll`用作`ls -lh`命令的别名。然后，我们输入`ll`，终端将会返回一个关于当前目录的长列表。但是，当我们输入`sudo ll`时，终端将会返回"
 ---
 
 一般来说，`sudo`会忽略通过`.bashrc`文件、`.bash_aliases`文件或者`alias`命令设置的别名命令(aliased commands)。

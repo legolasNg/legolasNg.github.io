@@ -3,8 +3,8 @@ layout:     post
 title:      "ssh连接超时问题"
 date:       2016-12-19 18:13:00 +0800
 category:   "linux"
-excerpt:    "使用`ssh -vv`查看ssh连接时的debug信息，分析耗时具体在哪个环节，然后去修改`/etc/ssh/sshd_config`中的相关配置。然后`service sshd restart`或者`systemctl restart sshd`重启sshd服务"
 tags:       "ssh"
+excerpt:    "使用`ssh -vv`查看ssh连接时的debug信息，分析耗时具体在哪个环节，然后去修改`/etc/ssh/sshd_config`中的相关配置。然后`service sshd restart`或者`systemctl restart sshd`重启sshd服务"
 ---
 
 ssh客户端和服务端的通讯认证流程:
