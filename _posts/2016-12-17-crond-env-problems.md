@@ -32,16 +32,18 @@ excerpt:    "`cron`是类UNIX系统中，用于设置周期性被执行的指令
 
 使用`crontab`命令来管理定时任务。
 
-### `crontab [-u user]` file
+### crontab [-u user] file
 
 将指定文件中的计划任务表达式添加到`cron`计划任务。可以使用`-u user`指定用户，默认为当前用户。
 原理：将文件交给cron进程，创建一个该文件的副本，保存在`/var/spool/cron/`下，文件名为指定用户。
 
-### `crontab [-u user]` [-l | -r | -e ]
+### crontab [-u user] [-l | -r | -e ]
 
 管理计划任务，`crontab [-u user] -l`查看指定用户计划任务，`crontab [-u user] -r`删除指定用户的计划任务，`crontab [-u user] -e`编辑或者新增指定用户的计划任务。可以使用`-u user`指定用户，默认为当前用户。
 还可以配合`-i`使用，在删除或者编辑前提示用户。
 原理：删除/查看`/var/spool/cron/`目录下指定用户的计划任务文件；或者使用编辑器创建一个临时文件，编辑完成以后交给cron进程，将文件保存在`/var/spool/cron/`下。
+
+当然，我们还可以在`/etc/crontab`文件后面添加计划任务，但是不太建议；尽量使用`crontab -e`来设置计划任务，因为这样会有语法检查；如果需要脚本处理某些问题，不太可能打开编辑器去添加的情况下，可以使用`crontab file`。
 
 ## crontab中的环境变量问题
 
