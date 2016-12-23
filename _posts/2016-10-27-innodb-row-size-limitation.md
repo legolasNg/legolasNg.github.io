@@ -4,26 +4,64 @@ title:      "innodb行的大小限制"
 date:       2016-10-27 16:15:00 +0800
 category:   mysql
 tags:       ["innodb", "row-size-limit"]
-excerpt:    "最近服务器偶尔会出现数据存储失败，出现问题的服务器看似随机，但是却都有些相同点: 运行了一段时间的服务，而不是新搭建的服务;部分用户会出现该问题，尤其是数据量较大的。"
+excerpt:    "下面是线上项目中的一张主要的表`t_test`，这张表存储的字段较多，且记录条目也比较多，一些字段和索引也是经过精心测试和优化的。由于业务逻辑逐渐复杂，表中的数据也逐渐增多，所以我们将表中的三个字段声明为text类型。"
 ---
 
-最近服务器偶尔会出现数据存储失败，出现问题的服务器看似随机，但是却都有些相同点:
+下面是线上项目中的一张主要的表`t_test`，这张表存储的字段较多，且记录条目也比较多，一些字段和索引也是经过精心测试和优化的。由于业务逻辑逐渐复杂，表中的数据也逐渐增多，所以我们将表中的三个字段声明为text类型。
 
-- 运行了一段时间的服务，而不是新搭建的服务
-- 部分用户会出现该问题，尤其是数据量较大的
+````
+CREATE TABLE IF NOT EXISTS `t_test` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    ...
+    `success_content` text,
+    `fail_content` text,
+    ...
+    `big_data` text,
+    `desc` varchar(200) NOT NULL DEFAULT '',
+    `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+````
 
-## 查找原因
+## 问题排查
 
-在查看了mysql的`error.log`文件和服务器脚本日志之后，发现出现问题的服务器在出错时都会报下面的错误：
+某业务上线后一直运行良好，但是最近逐渐有用户反馈部分操作失败。只有少量用户遇到这个问题，也不是一定能复现，一度让我很头疼。
+
+查看了mysql的`error.log`日志，发现有多次如下的报错；根据服务日志，在报错逻辑的代码行中打上log，记录下可能导致mysql报错的sql语句，将sql语句手动拼接之后，复制粘贴到命令行执行，发现mysql报了下面同样的错。
 
 ````
 ERROR 1118 (42000): Row size too large (> 8126). Changing some columns to TEXT or BLOB or using ROW_FORMAT=DYNAMIC or ROW_FORMAT=COMPRESSED may help. In current row format, BLOB prefix of 768 bytes is stored inline.
 ````
 
+经过分析和排查之后，我们基本锁定是mysql的插入导致的报错。
+
+## 错误分析
+
+根据报错信息，mysql提示是行的数据过大，应该将一些字段类型声明为TEXT或者BLOB，再或者将`ROW_FORMAT`(行格式)设置为DYNAMIC或者COMPRESSED。根据这个信息，我们查看一下mysql数据库的一些变量参数信息：
+
 ````
-show variables like '%innodb_file_format%';
+# 查看所有表的状态
 show table status;
++--------+--------+---------+------------+------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+-------------------+----------+----------------+---------+
+| Name   | Engine | Version | Row_format | Rows | Avg_row_length | Data_length | Max_data_length | Index_length | Data_free | Auto_increment | Create_time         | Update_time | Check_time | Collation         | Checksum | Create_options | Comment |
++--------+--------+---------+------------+------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+-------------------+----------+----------------+---------+
+| t_test | InnoDB |      10 | Dynamic    |    0 |              0 |       16384 |               0 |        32768 |         0 |           NULL | 2016-12-23 21:50:01 | NULL        | NULL       | latin1_swedish_ci |     NULL |                |         |
++--------+--------+---------+------------+------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+-------------------+----------+----------------+---------+
+
+# 查看当前数据库innodb引擎的文件格式
+show variables like '%innodb_file_format%';
++--------------------------+-----------+
+| Variable_name            | Value     |
++--------------------------+-----------+
+| innodb_file_format       | Barracuda |
+| innodb_file_format_check | ON        |
+| innodb_file_format_max   | Barracuda |
++--------------------------+-----------+
 ````
+
+mysql的innodb引擎存储blob/text类型字段的行为，取决于三个因素：字段大小、整行(row)大小、innodb行格式。
+
+
 
 innodb引擎支持的文件格式包括Antelope(羚羊)、Barracuda(梭子鱼)
 
@@ -47,7 +85,7 @@ innodb_file_format=Barracuda
 ````
 
 ----
-来源:
+参考:
 
 [Innodb row size limitation](https://www.percona.com/blog/2011/04/07/innodb-row-size-limitation/)
 
