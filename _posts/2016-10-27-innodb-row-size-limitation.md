@@ -9,7 +9,7 @@ excerpt:    "下面是线上项目中的一张主要的表`t_test`，这张表�
 
 下面是线上项目中的一张主要的表`t_test`，这张表存储的字段较多，且记录条目也比较多，一些字段和索引也是经过精心测试和优化的。由于业务逻辑逐渐复杂，表中的数据也逐渐增多，所以我们将表中的三个字段声明为text类型。
 
-````
+```sql
 CREATE TABLE IF NOT EXISTS `t_test` (
     `id` bigint(20) NOT NULL AUTO_INCREMENT,
     ...
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `t_test` (
     `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-````
+```
 
 ## 问题排查
 
