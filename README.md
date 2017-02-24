@@ -1,4 +1,4 @@
-# ![favicon](/styles/images/favicon.jpg) [legolasNg.github.io](legolasNg.github.io)
+# ![favicon](/styles/images/favicon.jpg) [legolasNg.github.io](https://legolasNg.github.io)
 
 ## 简介
 
