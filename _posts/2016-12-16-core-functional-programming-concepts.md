@@ -42,24 +42,24 @@ excerpt:    "最近几年，函数式编程已然成为热门话题，但是这�
 
 我们在JAVA中声明一个3+5的函数:
 
-````
+```java
 public int addNumbers(){
   return 3 + 5;
 }
  
 addNumbers() // 8
 8            // 8
-````
+```
 
 很明显，我在任何地方调用addNumbers()函数，我都可以很容易用返回值8来代替这个函数调用，所以这个函数引用是透明的。下面这个例子是引用不透明的：
 
-````
+```java
 public void printText(){
   System.out.println("Hello World");
 }
  
 printText()   // Returns nothing, but prints "Hello World"
-````
+```
 
 这是一个void类型的函数，它被调用时不返回任何返回值。因此，为了使函数引用透明，我们应该能使用空代替函数被调用的值 -- 显然这样行不通。该函数通过输出改变了控制台的状态，所以它不是引用透明的。
 

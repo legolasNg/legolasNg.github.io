@@ -62,7 +62,7 @@ excerpt:    "Github Pages是依托Github本身的技术服务经验开发出来�
 
 将仓库克隆到本地，根据需要切换分支(默认`gh-pages`分支)
 
-```
+```bash
 git clone https://github.com/username/username.github.io
 cd username.github.io
 git checkout -b master
@@ -79,7 +79,7 @@ git branch master && git checkout master
 - 直接提交静态页面(静态页面可以由任何静态站点生成器生成，或者自己编辑)到某分支，然后push到GitHub的对应分支
 - 提交`Jekyll`代码到某分支，然后push到GitHub的对应分支，GitHub会自动生成pages项目的静态页面
 
-```
+```bash
 echo "My Page" > index.html
 git add index.html
 git commit -a -m "First pages commit"
@@ -88,7 +88,7 @@ git push origin gh-pages
 
 如果想删除本地和远程的`gh-pages`分支，只保留`master`分支，从而使得域名变成`orgname.github.io`。
 
-```
+```bash
 #查看分支
 git branch -a
 #删除远程分支

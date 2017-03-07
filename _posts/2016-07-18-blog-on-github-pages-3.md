@@ -24,25 +24,7 @@ excerpt:    "Jekyll是一个简单的博客形态的静态站点生成器。它�
 
 一个基本的`Jekyll`网站的目录结构一般是像这样的:
 
-```
-.
-├── _config.yml
-├── _drafts
-|   ├── begin-with-the-crazy-ideas.textile
-|   └── on-simplicity-in-technology.markdown
-├── _includes
-|   ├── footer.html
-|   └── header.html
-├── _layouts
-|   ├── default.html
-|   └── post.html
-├── _posts
-|   ├── 2007-10-29-why-every-programmer-should-play-nethack.textile
-|   └── 2009-04-26-barcamp-boston-4-roundup.textile
-├── _site
-├── .jekyll-metadata
-└── index.html
-```
+
 更多文档，可以访问Jekyll中文官网[jekyllcn.com/docs/home](http://jekyllcn.com/docs/home/)。
 
 ## 未完待续
