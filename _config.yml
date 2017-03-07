@@ -23,8 +23,6 @@ gems: [jekyll-paginate]
 paginate: 10
 paginate_path: "page:num"
 
-exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
-
 github_username: legolasNg
 
 # markdown解析器
