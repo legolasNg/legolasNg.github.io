@@ -5800,6 +5800,45 @@ body {
   margin-top: 10px;
   overflow: auto;
 }
+/*		  /*
+ - * Code snippets
+ - *
+ - * Generated via Pygments and Jekyll, these are snippets of HTML, CSS, and JS.
+ - */
+ -.highlight {
+ -  padding: 9px 14px;
+ -  margin-bottom: 14px;
+ -  background-color: #f7f7f9;
+ -  border: 1px solid #e1e1e8;
+ -  border-radius: 4px;
+ -}
+ -.highlight pre {
+ -  padding: 0;
+ -  margin-top: 0;
+ -  margin-bottom: 0;
+ -  background-color: transparent;
+ -  border: 0;
+ -  white-space: nowrap;
+ -}
+ -.highlight pre code {
+ -  font-size: inherit;
+ -  color: #333;
+ -  /* Effectively the base text color */
+ -}
+ -.highlight pre .lineno {
+ -  display: inline-block;
+ -  width: 22px;
+ -  padding-right: 5px;
+ -  margin-right: 10px;
+ -  text-align: right;
+ -  color: #bebec5;
+ -}
+ -/* Show code snippets when we have the space */
+ -@media (min-width: 481px) {
+ -  .highlight {
+ -    display: block;
+ -  }
+ -}
 /*
  * Responsive tests
  *
@@ -5981,7 +6020,65 @@ body {
   margin-top: 15px;
   margin-bottom: 5px;
 }
-
+/*		 +
+ -    Code coloring (minimalistic (sort of) scheme)
+ -    Assuming we only highlight the following languages:
+ -    less, css, html, js and "generic shell"
+ -*/
+ -pre code {
+ -  display: block;
+ -  padding: 0.5em;
+ -  color: #657b83;
+ -}
+ -.hljs-comment {
+ -  color: #93a1a1;
+ -  font-style: italic;
+ -}
+ -.hljs-id {
+ -  color: #268bd2;
+ -}
+ -.hljs-class {
+ -  color: #284a80;
+ -}
+ -.hljs-tag {
+ -  color: #4b5e64;
+ -}
+ -.hljs-variable {
+ -  color: #4b5e64;
+ -}
+ -.hljs-attribute {
+ -  color: #4b5e64;
+ -}
+ -.hljs-keyword {
+ -  color: #4b5e64;
+ -}
+ -.hljs-built_in {
+ -  color: #4b5e64;
+ -}
+ -.hljs-value {
+ -  color: #2aa198;
+ -}
+ -.hljs-number {
+ -  color: #2aa198;
+ -}
+ -.hljs-hexcolor {
+ -  color: #2aa198;
+ -}
+ -.hljs-literal {
+ -  color: #2aa198;
+ -}
+ -.hljs-string {
+ -  color: #2aa198;
+ -}
+ -.hljs-attr_selector {
+ -  color: #d33682;
+ -}
+ -.hljs-at_rule {
+ -  color: #cb4b16;
+ -}
+ -.lang-less .hljs-built_in {
+ -  color: #859900;
+ -}
 h1,
 h2,
 h3 {
