@@ -34,11 +34,11 @@ highlighter: rouge
 # 评论区设置
 FB:
   comments :
-    provider : duoshuo
-    duoshuo:
-        short_name : legolas
+    provider : disqus
     disqus :
         short_name : legolasng
+    # duoshuo:
+    #     short_name : legolas
     # facebook :
     #   appid : 123
     #   num_posts: 5
