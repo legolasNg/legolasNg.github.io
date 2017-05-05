@@ -1,10 +1,10 @@
 ---
 layout:     post
 title:      "将评论从多说迁移到disqus"
-date:       2017-03-03 16:48:00 +0800
+date:       2017-05-05 17:00:00 +0800
 category:   "comment"
 tags:       ["duoshuo", "disqus"]
-excerpt:    "在搭建这个站点时候，由于考虑到国内无法访问"Disqus"，最后选择国内相对好用的"多说"。最近，由于业务调整--"多说要关闭评论业务"，所以无奈只能迁移到"Disqus"，被墙也没办法了。"
+excerpt:    "在搭建这个站点时候，由于考虑到国内无法访问`Disqus`，最后选择国内相对好用的`多说`。最近，由于业务调整[多说要关闭评论业务](http://dev.duoshuo.com/threads/58d1169ae293b89a20c57241)，所以无奈只能迁移到`Disqus`，被墙也没办法了"
 ---
 
 ## 评论插件
@@ -37,14 +37,14 @@ excerpt:    "在搭建这个站点时候，由于考虑到国内无法访问"Dis
 
 ### Jekyll中添加Disqus
 
-1. 在jekyll的配置文件`config.yaml`新增一项配置，用来控制模版中评论的显示
+在jekyll的配置文件`config.yaml`新增一项配置，用来控制模版中评论的显示
 
-```yaml
+```
 comments :
     short_name : test
 ```
 
-2. 在响应的页面模版中，添加代码来显示评论插件
+在响应的页面模版中，添加代码来显示评论插件
 
 ```html
 {% if page.comments %}
