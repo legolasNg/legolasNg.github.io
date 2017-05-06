@@ -76,6 +76,8 @@ systemctl restart sshd
 ```bash
 # 这个操作是在本地机器，来连接远程服务器
 ssh -i id_rsa -p [your_ssh_port] [your_user]@[your_ip_addr]
+# 如果连接失败，提示"Permissions 0664 for '***' are too open."，可能是你私钥文件的权限过大导致
+chmod 600 id_rsa
 ```
 
 ### 3.安装防火墙
@@ -273,4 +275,7 @@ export http_proxy="http://127.0.0.1:1080"
 source ~/.zshrc
 ```
 
-本站点"legolasng.github.io"的评论插件已经替换为Disqus，需要FQ才能使用。
+
+---
+
+**本站点`legolasng.github.io`的评论插件已经替换为Disqus，需要FQ才能使用。**
