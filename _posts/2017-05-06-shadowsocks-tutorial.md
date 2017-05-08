@@ -48,7 +48,8 @@ ssh-keygen -t rsa
 mkdir -p /home/[new_user]/.ssh/
 chmod 0700 /home/[new_user]/.ssh/
 cat id_rsa.pub >> /home/[new_user]/.ssh/authorized_keys
-chmod 0600 ~/.ssh/authorized_keys
+chmod 0600 /home/[new_user]/.ssh/authorized_keys
+chown -R [new_group]:[new_user] /home/[new_user]/.ssh/
 ```
 
 编辑`/etc/ssh/sshd_config`，来修改ssh端口和登录配置。搬瓦工在安装系统时就配置了非默认端口，所以我们也可以不修改端口。修改端口和登录方式的原因是，防止被人通过默认端口和密码暴力破解。
@@ -114,10 +115,9 @@ systemctl restart sshd
 
 ```bash
 # 安装python的包管理器
-yum install python python-setuptools
-easy_install pip
+yum install python python-pip
 # 安装shadowsocks
-pip install shadowsocks 
+pip install shadowsocks
 ```
 
 可以安装gevent来提高Shadowsock性能
