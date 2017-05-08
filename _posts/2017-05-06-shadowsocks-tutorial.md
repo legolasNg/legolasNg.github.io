@@ -274,8 +274,3 @@ export http_proxy="http://127.0.0.1:1080"
 # 修改shell配置之后，使其生效
 source ~/.zshrc
 ```
-
-
----
-
-**本站点`legolasng.github.io`的评论插件已经替换为Disqus，需要FQ才能使用。**
