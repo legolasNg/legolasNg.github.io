@@ -97,12 +97,9 @@ git branch -r -d origin/gh-pages
 git push origin :gh-pages
 ```
 
-## 未完待续
-
 ----
 
 引用:
 
 [GitHub Wikipedia](https://zh.wikipedia.org/wiki/GitHub)
-
 [github-pages](https://github.com/blog/272-github-pages)
