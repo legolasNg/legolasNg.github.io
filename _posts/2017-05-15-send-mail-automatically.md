@@ -56,7 +56,15 @@ sed -i "s/\r/\r\n/g" "result-${savetime}.csv"
 
 _sed工具如果机器上没有，通过`yum install sed`安装。如果还有其他需求，还可以通过其他工具来处理。_
 
-## 4.发送邮件
+## 4.文件压缩
+
+如果数据量过大，导致生成的数据文件过大，邮件发送可能会出现问题(附件大小限制)，我们可以通过压缩文件来解决：
+
+```bash
+tar zcvf "result-${savetime}.tar.gz" "result-${savetime}.csv"
+```
+
+## 5.发送邮件
 
 `mailx`一个电子邮件发送和读取的简单程序。默认情况下，`mailx`将邮件发送到本地的MTA(Mail Transfer Agent)，比如`SendMail`、`Qmail`、`Postfix`等提供的服务。如果我们不搭建邮件服务器，想使用其他主机提供的邮件服务(比如163邮箱、QQ邮箱)，通过修改文件`/etc/nail.rc`即可配置指定邮件服务器。
 
