@@ -89,10 +89,10 @@ jekyll build --source _source --destination _deploy
 
 - `_config.yml`，配置文件，可以设置一些jekyll配置，或者保存一些复用的数据和变量。
 - `_drafts`，未发布的文章。
-- `_includes`，部分可以重用的html代码或者数据，通过标签`{% include file.ext %}`来包含文件`_includes/file.ext`。
-- `_layouts`，包裹在文章外部的模板，可以使用`{{ content }}`标签将文章内容插入页面。
+- `_includes`，部分可以重用的html代码或者数据，通过标签`{ % include file.ext % }`来包含文件`_includes/file.ext`。
+- `_layouts`，包裹在文章外部的模板，可以使用`{ { content } }`标签将文章内容插入页面。
 - `_posts`，保存文章，文件名格式必须是`YEAR-MONTH-DAY-title.MARKUP`。
-- `_data`，保存格式化的站点数据，jekyll会自动加载该目录下文件(`.yml`或`.yaml`)，可以使用标签`{{ site.data.members }}`来访问该目录下`members.yml`文件。
+- `_data`，保存格式化的站点数据，jekyll会自动加载该目录下文件(`.yml`或`.yaml`)，可以使用标签`{ { site.data.members } }`来访问该目录下`members.yml`文件。
 - `_site`，jekyll转换完成之后，生成的静态页面。
 - `index.html`、其他html文件、Markdown文件，如果包含yaml头信息，这些文件将自动被转换。
 - 其他例如`css`、`images`文件夹，`favicon.ico`文件等，都会被完全复制到生成的site中，可以在html中直接使用。
