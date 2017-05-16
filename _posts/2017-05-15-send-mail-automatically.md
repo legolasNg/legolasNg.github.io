@@ -95,7 +95,7 @@ set smtp-auth=login
 echo "[content]" | mail -r [from_address] -s [subject] -a [attach_file] [to_address]
 ```
 
-## 5.添加定时任务
+## 6.添加定时任务
 
 之前的文章 [《crond环境变量问题》](/2016/12/16/crond-env-problems/) 有详细说明crontab的使用，我们如果使用脚本添加定时任务，是不可能通过`crontab -e`来开启编辑器添加，所以我们可以通过管道来添加:
 
