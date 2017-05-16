@@ -4,7 +4,7 @@ title:      "WannaCryptor防御"
 date:       2017-05-15 20:48:00 +0800
 category:   "windows"
 tags:       ["WannaCryptor", "smb"]
-excerpt:    "最近爆发了一种"WannaCryptor"蠕虫病毒，该病毒通过利用NSA开发的ETERNALBLUE(永恒之蓝)攻击工具 -- 对应远程命令执行漏洞MS17-010，攻击window的smbv1协议，然后加密本地所有文件来感染电脑。其实我对windows并不熟悉，这篇文章只是总结下别人的防御方案，来帮需要的人来避免被病毒攻击感染。"
+excerpt:    "最近爆发了一种'WannaCryptor'蠕虫病毒，该病毒通过利用NSA开发的ETERNALBLUE(永恒之蓝)攻击工具 -- 对应远程命令执行漏洞MS17-010，攻击window的smbv1协议，然后加密本地所有文件来感染电脑。其实我对windows并不熟悉，这篇文章只是总结下别人的防御方案，来帮需要的人来避免被病毒攻击感染。"
 ---
 
 最近爆发了一种"WannaCryptor"蠕虫病毒，该病毒通过利用NSA开发的ETERNALBLUE(永恒之蓝)攻击工具 -- 对应远程命令执行漏洞MS17-010，攻击window的smbv1协议，然后加密本地所有文件来感染电脑。其实我对windows并不熟悉，这篇文章只是总结下别人的防御方案，来帮需要的人来避免被病毒攻击感染。
