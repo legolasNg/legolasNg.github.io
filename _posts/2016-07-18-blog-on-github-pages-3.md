@@ -116,20 +116,26 @@ title: My Blog
 
 在两行三虚线中，可以设置一些预定义的变量或者自定义变量。然后在接下来的文件、页面或者模板中，都可以通过`liquid标签`来使用这些变量。
 
+```
+# 文章yaml头信息中定义的变量
+{{ page.title }}
+
+# 配置中定义的变量
+{{ site.comments }}
+```
+
+#### 预定义的全局变量
+
 在页面`yaml头信息`使用预定义的全局变量:
 
-- `layout`
-- `permalink`
-- `published`
-- `category` / `categories`
-- `tags`
+- `layout`，指定模版文件(不需要扩展名)，模版文件需要放在`_layouts`目录下
+- `permalink`，用于指定文章的URL地址，默认值为`/year/month/day/title.html`，可以不设置
+- `published`，用于设置该文章是否展示，true是展示，false是隐藏
 
 #### 自定义变量
 
-----
+在文章yaml头信息中可以增加自定义变量：
 
-引用:
-
-[GitHub Wikipedia](https://zh.wikipedia.org/wiki/GitHub)
-
-[github-pages](https://github.com/blog/272-github-pages)
+- `date`，日期的具体格式为"YYYY-MM-DD HH:MM:SS +/-TTTT"，时，分，秒和时区都是可选的。会覆盖文章名字(文件名)中的日期，可以用来保证文章排序。
+- `category` / `categories`，指定文章一个或多个分类属性。当站点生成后，可以根据该属性对文章进行分类。
+- `tags`，指定文章一个或多个标签属性，与`category`类似。

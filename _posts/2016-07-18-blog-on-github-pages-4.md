@@ -26,6 +26,7 @@ excerpt:    "未完待续"
 - [创始人John Gruber的Markdown语法说明](http://daringfireball.net/projects/markdown/syntax)
 - [Markdown语法说明(简体中文版)](http://wowubuntu.com/markdown/)
 - [Github的Markdown语法说明](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)
+- [基本写作和格式化语法](https://help.github.com/articles/basic-writing-and-formatting-syntax/)
 
 ### 标题
 
@@ -125,7 +126,7 @@ __test line__   粗体(对应<strong>标签)
 
 ### 代码
 
-在文本中使用` ` `包裹的内容，会被识别成行内代码；使用` ``` `包裹的多行内容，会被识别成代码：
+在文本中使用" \` "包裹的内容，会被识别成行内代码；使用" \`\`\` "包裹的多行内容，会被识别成代码：
 
 ````
  `document.getElementById()`
@@ -136,3 +137,98 @@ __test line__   粗体(对应<strong>标签)
  var c = a + b;
  ```
 ````
+
+### 忽略markdown格式
+
+有时候，我们需要使用Markdown语法中的几个关键字，但是会被识别成Markdown语法。我们只需要在Markdown字符前使用`\`来转义即可
+
+```
+Let's rename \*our-new-project\* to \*our-old-project\*.
+```
+
+## GFM语法
+
+GFM(GitHub Flavored Markdown)，也就是github风格的markdown格式，是Github 拓展的基于 Markdown 的一种纯文本的书写格式。语法和标准语法大致，简化了部分语法，并且加入了一些github平台适用的特性。
+
+### 段落
+
+标准语法中，在行尾加两个空格才表示换行；GFM中，多行可以是一个段落，使用空行来分割段落。
+
+### 语法高亮
+
+标准语法中，使用一对"\`\`\`\`"来表示代码块；GFM也支持这种语法，同时还支持"\`\`\`" + 编程语言的语法，支持自动缩进和语法高亮：
+
+````
+```javascript
+function fancyAlert(arg) {
+ if(arg) {
+   $.facebox({div:'#foo'})
+ }
+}
+```
+````
+
+### 任务列表
+
+GFM支持把列表变成带勾选框的任务列表(ToDoList)，格式为`- [ ]`或`- [x]`：
+
+```
+- [ ] 未完成
+- [x] 已完成
+```
+
+### 表格
+
+GFM支持表格，使用`-`和`|`来分割行和列
+
+```
+| Header One     | Header Two     |
+| :------------- | :------------- |
+| Item One       | Item Two       |
+```
+
+### 自动链接网址
+
+在GFM语法中，任何URL(比如http://www.github.com/)将会被自动转换为可链接的地址。
+
+### 删除线
+
+在GFM语法中，使用一对`~~`包裹的文字会被划掉，对应HTML里面的`<del></del>`标签。
+
+### 平台特性
+
+GFM还支持一些和github平台相关的特性，在非github环境下使用并没有什么意义。
+
+- SHA引用，git仓库commit的sha1值将会自动被转换为github上对应commit的链接。
+- issue引用，使用`#`+issue编号或者pull request编号，将被自动转换为对应的issue或pull request的链接地址。(与"标题语法不一样的是，#和后面的数字中间没有空格")
+- 提及用户或团队，使用`@`+用户名或团队名，就可以通知该用户或团队。
+- emoji表情，通过输入`:EMOJICODE:`可以添加emoji表情。
+
+```
+16c999e8c71134401a78d4d46435517b2271d6ac
+mojombo@16c999e8c71134401a78d4d46435517b2271d6ac
+mojombo/github-flavored-markdown@16c999e8c71134401a78d4d46435517b2271d6ac
+
+#1
+mojombo#1
+mojombo/github-flavored-markdown#1
+
+@legolas
+@github/support
+
+:+1:
+:shipit:
+```
+
+## Jekyll配置
+
+Jekyll支持多种Markdown解释器，例如RedCarpet和Kramdown，默认使用Kramdown。我们想使用指定解释器，需要在`_config.yml`配置文件中指定：
+
+```
+markdown: kramdown
+kramdown:
+    input: GFM
+highlighter: rouge
+```
+
+上面的配置，指定Markdown解释器为kramdown，声明kramdown的语法格式为GFM，并且使用rouge插件实现语法高亮。这些配置可以根据个人喜好来修改。
