@@ -24,21 +24,11 @@
                 <li>
                     <a href="{{ '/tags' | prepend: site.baseurl }}">Tags</a>
                 </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ '/about/' | prepend: site.baseurl }}">About</a>
-                        </li>
-                        <li>
-                            <a href="{{ '/about/feed.xml' | prepend: site.baseurl }}">Rss</a>
-                        </li>
-                        <li>
-                            <a rel="nofollow" target="_blank" href="{{site.github}}">Github</a>
-                        </li>
-                    </ul>
+                <li>
+                    <a href="{{ '/feed.xml' | prepend: site.baseurl }}">Rss</a>
+                </li>
+                <li>
+                    <a href="{{ '/about/' | prepend: site.baseurl }}">About</a>
                 </li>
             </ul>
         </nav>
