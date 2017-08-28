@@ -9,7 +9,7 @@ excerpt:    "**流量限制**(rate-limiting)，是Nginx中一个非常实用，�
 
 2017/06/18
 
-> 半夜醒了，看了篇文章《[Rate Limiting with NGINX and NGINX Plus](https://www.nginx.com/blog/rate-limiting-nginx/)》。
+> 半夜醒了，看了篇文章<<[Rate Limiting with NGINX and NGINX Plus](https://www.nginx.com/blog/rate-limiting-nginx/)>>。
 
 2017/08/27
 
@@ -59,11 +59,34 @@ server {
 
 现在每个IP地址被限制为每秒只能请求10次`/login/`，更准确地说，在前一个请求的100毫秒内不能请求该URL。
 
-## 未完待续
+## 处理突发情况
 
-### 处理突发情况
+如果我们在100毫秒内接收到2个请求，怎么办？对于第二个请求，Nginx将给客户端返回状态码503。这可能并不是我们想要的结果，因为应用本质上趋向于突发性。相反地，我们希望缓冲任何超额的请求，然后及时地处理它们。我们更新下配置，在`limit_req`中使用`burst`参数：
+
+```
+location /login/ {
+	limit_req zone=mylimit burst=20;
+	proxy_pass http://my_upstream;
+}
+```
+
+`burst`参数定义了超出zone指定速率的情况下(示例中的`mylimit`区域，速率限制在每秒10个请求，或每100毫秒一个请求)，客户端还能发起多少请求。上一个请求100毫秒内到达的请求将会被放入队列，我们将队列大小设置为20。这意味着，如果从一个给定IP地址发送21个请求，Nginx会立即将第一个请求发送到上游服务器群，然后将余下20个请求放在队列中。然后每100毫秒转发一个排队的请求，只有当传入请求使队列中排队的请求数超过10时，Nginx才会向客户端返回503。
 
 ### 无延迟的排队
+
+配置`burst`参数将会使通讯更流畅，但是可能会不太实用，因为该配置会使站点看起来很慢。在上面的示例中，队列中的第20个包需要等待2秒才能被转发，此时返回给客户端的响应可能不再有用。要解决这个情况，可以在`burst`参数后添加`nodelay`参数：
+
+```
+location /login/ {
+	limit_req zone=mylimit burst=20 nodelay;
+
+	proxy_pass http://my_upstream;
+}
+```
+
+使用`nodelay`参数，Nginx仍将根据`burst`参数和配置的速率限制来分配队列中的转发，队列中等待的请求不会被转发。
+
+## 未完待续
 
 ### 高级配置示例
 
