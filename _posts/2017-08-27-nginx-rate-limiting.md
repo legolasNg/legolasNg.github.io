@@ -9,7 +9,7 @@ excerpt:    "**流量限制**(rate-limiting)，是Nginx中一个非常实用，�
 
 2017/06/18
 
-> 半夜醒了，看了篇文章<<[Rate Limiting with NGINX and NGINX Plus](https://www.nginx.com/blog/rate-limiting-nginx/)>>。
+> 半夜醒了，看了篇关于“Nginx流量控制”的文章，之前工作的时候有粗浅地研究过，觉得这篇内容很翔实，所以想翻译分享出来。
 
 2017/08/27
 
@@ -43,7 +43,7 @@ server {
 }
 ```
 
-`limit_req_zone`指令定义了流量限制相关的参数，而`limit_req`指令在出现的上下文中启用流量限制(示例中，对于"/login/"的所有请求)。
+[`limit_req_zone`](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req_zone)指令定义了流量限制相关的参数，而[`limit_req`](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req)指令在出现的上下文中启用流量限制(示例中，对于"/login/"的所有请求)。
 
 `limit_req_zone`指令通常在HTTP块中定义，使其可在多个上下文中使用，它需要以下三个参数：
 
@@ -59,7 +59,7 @@ server {
 
 现在每个IP地址被限制为每秒只能请求10次`/login/`，更准确地说，在前一个请求的100毫秒内不能请求该URL。
 
-## 处理突发情况
+## 处理突发
 
 如果我们在100毫秒内接收到2个请求，怎么办？对于第二个请求，Nginx将给客户端返回状态码503。这可能并不是我们想要的结果，因为应用本质上趋向于突发性。相反地，我们希望缓冲任何超额的请求，然后及时地处理它们。我们更新下配置，在`limit_req`中使用`burst`参数：
 
@@ -70,9 +70,9 @@ location /login/ {
 }
 ```
 
-`burst`参数定义了超出zone指定速率的情况下(示例中的`mylimit`区域，速率限制在每秒10个请求，或每100毫秒一个请求)，客户端还能发起多少请求。上一个请求100毫秒内到达的请求将会被放入队列，我们将队列大小设置为20。这意味着，如果从一个给定IP地址发送21个请求，Nginx会立即将第一个请求发送到上游服务器群，然后将余下20个请求放在队列中。然后每100毫秒转发一个排队的请求，只有当传入请求使队列中排队的请求数超过10时，Nginx才会向客户端返回503。
+`burst`参数定义了超出zone指定速率的情况下(示例中的`mylimit`区域，速率限制在每秒10个请求，或每100毫秒一个请求)，客户端还能发起多少请求。上一个请求100毫秒内到达的请求将会被放入队列，我们将队列大小设置为20。这意味着，如果从一个给定IP地址发送21个请求，Nginx会立即将第一个请求发送到上游服务器群，然后将余下20个请求放在队列中。然后每100毫秒转发一个排队的请求，只有当传入请求使队列中排队的请求数超过20时，Nginx才会向客户端返回503。
 
-### 无延迟的排队
+## 无延迟的排队
 
 配置`burst`参数将会使通讯更流畅，但是可能会不太实用，因为该配置会使站点看起来很慢。在上面的示例中，队列中的第20个包需要等待2秒才能被转发，此时返回给客户端的响应可能不再有用。要解决这个情况，可以在`burst`参数后添加`nodelay`参数：
 
@@ -84,12 +84,133 @@ location /login/ {
 }
 ```
 
-使用`nodelay`参数，Nginx仍将根据`burst`参数和配置的速率限制来分配队列中的转发，队列中等待的请求不会被转发。
+使用`nodelay`参数，Nginx仍将根据`burst`参数分配队列中的转发，并应用已配置的速率限制，但是队列中等待转发的请求会被清理。
 
-## 未完待续
+**注意：** 对于大部分部署，我们建议使用`burst`和`nodelay`参数来配置`limit_req`指令。
 
-### 高级配置示例
+## 高级配置示例
 
-### 配置相关功能
+通过将基本的“流量限制”与其他Nginx功能配合使用，我们可以实现更细粒度的流量限制。
 
-### 总结
+### 白名单
+
+下面这个例子将展示，如何对任何不在白名单内的请求强制执行“流量限制”：
+
+```
+geo $limit {
+	default 		1;
+	10.0.0.0/8 		0;
+	192.168.0.0/64 	0;
+}
+
+map $limit $limit_key {
+	0 "";
+	1 $binary_remote_addr;
+}
+
+limit_req_zone $limit_key zone=req_zone:10m rate=5r/s;
+
+server {
+	location / {
+		limit_req zone=req_zone burst=10 nodelay;
+
+		# ...
+	}
+}
+```
+
+这个例子同时使用了[`geo`](http://nginx.org/en/docs/http/ngx_http_geo_module.html#geo)和[`map`](http://nginx.org/en/docs/http/ngx_http_map_module.html#map)指令。`geo`块将给在白名单中的IP地址对应的`$limit`变量分配一个值0，给其它不在白名单中的分配一个值1。然后我们使用一个映射将这些值转为key，如下：
+
+ - 如果`$limit`变量的值是0，`$limit_key`变量将被赋值为空字符串
+ - 如果`$limit`变量的值是1，`$limit_key`变量将被赋值为客户端二进制形式的IP地址
+
+两个指令配合使用，白名单内IP地址的`$limit_key`变量被赋值为空字符串，不在白名单内的被赋值为客户端的IP地址。当`limit_req_zone`后的第一个参数是空字符串时，不会应用“流量限制”，所以白名单内的IP地址(10.0.0.0/8和192.168.0.0/24 网段内)不会被限制。其它所有IP地址都会被限制到每秒5个请求。
+
+`limit_req`指令将限制应用到**/**的location块，允许在配置的限制上最多超过10个数据包的突发，并且不会延迟转发。
+
+### location包含多`limit_req`指令
+
+我们可以在一个location块中配置多个`limit_req`指令。符合给定请求的所有限制都被应用时，意味着将采用最严格的那个限制。例如，多个指令都制定了延迟，将采用最长的那个延迟。同样，请求受部分指令影响被拒绝，即使其他指令允许通过也无济于事。
+
+扩展前面将“流量限制”应用到白名单内IP地址的例子：
+
+```
+http {
+	# ...
+
+	limit_req_zone $limit_key zone=req_zone:10m rate=5r/s;
+	limit_req_zone $binary_remote_addr zone=req_zone_wl:10m rate=15r/s;
+
+	server {
+		# ...
+		location / {
+			limit_req zone=req_zone burst=10 nodelay;
+			limit_req zone=req_zone_wl burst=20 nodelay;
+			# ...
+		}
+	}
+}
+```
+
+白名单内的IP地址不会匹配到第一个“流量限制”，而是会匹配到第二个`req_zone_wl`，并且被限制到每秒15个请求。不在白名单内的IP地址两个限制能匹配到，所以应用限制更强的那个：每秒5个请求。
+
+## 配置相关功能
+
+### 日志记录
+
+默认情况下，Nginx会在日志中记录由于流量限制而延迟或丢弃的请求，如下所示：
+
+```
+2015/06/13 04:20:00 [error] 120315#0: *32086 limiting requests, excess: 1.000 by zone "mylimit", client: 192.168.1.2, server: nginx.com, request: "GET / HTTP/1.0", host: "nginx.com"
+```
+
+日志条目中包含的字段：
+
+ - *limiting requests* - 表明日志条目记录的是被“流量限制”请求
+ - *excess* - 每毫秒超过对应“流量限制”配置的请求数量
+ - *zone* - 定义实施“流量限制”的区域
+ - *client* - 发起请求的客户端IP地址
+ - *server* - 服务器IP地址或主机名
+ - *request* - 客户端发起的实际HTTP请求
+ - *host* - HTTP报头中host的值
+
+默认情况下，Nginx以`error`级别来记录被拒绝的请求，如上面示例中的`[error]`所示(Ngin以较低级别记录延时请求，一般是`info`级别)。如要更改Nginx的日志记录级别，需要使用[`limit_req_log_level`](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req_log_level)指令。这里，我们将被拒绝请求的日志记录级别设置为`warn`：
+
+```
+location /login/ {
+	limit_req zone=mylimit burst=20 nodelay;
+	limit_req_log_level warn;
+	
+	proxy_pass http://my_upstream;
+} 
+```
+
+### 发送到客户端的错误代码
+
+一般情况下，客户端超过配置的流量限制时，Nginx响应状态码为**503(Service Temporarily Unavailable)**。可以使用[`limit_req_status`](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req_status)指令来设置为其它状态码(例如下面的**444**状态码):
+
+```
+location /login/ {
+	limit_req zone=mylimit burst=20 nodelay;
+	limit_req_status 444;
+}
+```
+
+### 指定`location`拒绝所有请求
+
+如果你想拒绝某个指定URL地址的所有请求，而不是仅仅对其限速，只需要在[`location`](http://nginx.org/en/docs/http/ngx_http_core_module.html#location)块中配置[`deny`](http://nginx.org/en/docs/http/ngx_http_access_module.html#deny) **all**指令：
+
+```
+location /foo.php {
+	deny all;
+}
+``` 
+
+## 总结
+
+前文已经涵盖了Nginx和Nginx Plus提供的“流量限制”的很多功能，包括为HTTP请求的不同loation设置请求速率，给“流量限制”配置`burst`和`nodelay`参数。还涵盖了针对客户端IP地址的白名单和黑名单应用不同“流量限制”的高级配置，阐述了如何去日志记录被拒绝和延时的请求。
+
+----
+来源:
+
+[Rate Limiting with NGINX and NGINX Plus](https://www.nginx.com/blog/rate-limiting-nginx/)
