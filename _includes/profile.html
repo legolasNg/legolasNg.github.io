@@ -28,7 +28,7 @@
         <h4>{{ site.meta_description }}</h4>
 
         <div class="btn-group">
-            <a type="button" href="{{ site.weibo }}" class="btn col-md-2" title="weibo">
+            <!-- <a type="button" href="{{ site.weibo }}" class="btn col-md-2" title="weibo">
                 <i class="fa fa-weibo"></i>
             </a>
             <a type="button" href="{{ site.facebook }}" class="btn col-md-2" title="facebook">
@@ -44,6 +44,15 @@
                 <i class="fa fa-linkedin"></i>
             </a>
             <a type="button" href="{{ site.email | | prepend: 'mailto:' }}" class="btn col-md-2" title="email">
+                <i class="fa fa-envelope"></i>
+            </a> -->
+            <a type="button" href="{{ site.twitter }}" class="btn col-md-4" title="twitter">
+                <i class="fa fa-twitter"></i>
+            </a>
+            <a type="button" href="{{ site.github }}" class="btn col-md-4" title="github">
+                <i class="fa fa-github"></i>
+            </a>
+            <a type="button" href="{{ site.email | | prepend: 'mailto:' }}" class="btn col-md-4" title="email">
                 <i class="fa fa-envelope"></i>
             </a>
         </div>

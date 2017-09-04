@@ -29,7 +29,7 @@ github_username: legolasNg
 markdown: kramdown
 kramdown:
     input: GFM
-highlighter: rouge
+#highlighter: rouge
 
 # 评论区设置
 FB:
@@ -37,10 +37,3 @@ FB:
     provider : disqus
     disqus :
         short_name : legolasng
-    # duoshuo:
-    #     short_name : legolas
-    # facebook :
-    #   appid : 123
-    #   num_posts: 5
-    #   width: 580
-    #   colorscheme: light
