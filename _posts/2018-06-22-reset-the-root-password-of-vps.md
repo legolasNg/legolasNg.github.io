@@ -4,7 +4,7 @@ title:      "修改vps的root密码"
 date:       2018-06-22 22:15:36 +0800
 category:   "linux"
 tags:       ["password", "single-user-mode"]
-excerpt:    ""
+excerpt:    "之前初始化主机之后，以非root用户身份通过密钥来ssh登陆主机，然后在需要提权到root权限时，通过sudo或者su来执行。很不幸，root密码不知道怎么就找不到了，由于之前生成的是随机密码，完全记不住那个密码，于是有了这次的修改vps密码。"
 ---
 
 之前初始化主机之后，以非root用户身份通过密钥来ssh登陆主机，然后在需要提权到root权限时，通过sudo或者su来执行。很不幸，root密码不知道怎么就找不到了，由于之前生成的是随机密码，完全记不住那个密码，于是有了这次的修改vps密码。
