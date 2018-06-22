@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "修改vps的root密码"
-date:       2017-08-27 17:21:00 +0800
+date:       2018-06-22 22:15:36 +0800
 category:   "linux"
 tags:       ["password", "single-user-mode"]
 excerpt:    ""
