@@ -4,7 +4,7 @@ title:      "使用nginx反向代理wordpress"
 date:       2018-06-26 21:30:00 +0800
 category:   "nginx"
 tags:       ["nginx", "wordpress", "reverse-proxy"]
-excerpt:    "**流量限制**(rate-limiting)，是Nginx中一个非常实用，却经常被错误理解和错误配置的功能。我们可以用来限制用户在给定时间内HTTP请求的数量。请求，可以是一个简单网站首页的GET请求，也可以是登录表单的POST请求。"
+excerpt:    "去年定制开发wordpress时，部署的时候碰到了一些比较大的麻烦，拖到现在分享下自己的解决方案，希望对大家有用。"
 ---
 
 去年定制开发wordpress时，部署的时候碰到了一些比较大的麻烦，拖到现在分享下自己的解决方案，希望对大家有用。
