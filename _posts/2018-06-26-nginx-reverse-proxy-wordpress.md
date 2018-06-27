@@ -337,3 +337,31 @@ yum install php-gd
 [php-gd]
 extension = gd.so
 ````
+
+## 文件上传限制
+
+默认wordpress上传文件限制为2M，如果上传较大的文件，就会报错。我们需要将php和nginx的配置修改，来调整上传文件限制。
+
+先修改php配置，编辑`/etc/php.ini`，将下面参数修改成自己需要的值：
+
+````ini
+post_max_size = 100M        # post请求大小限制
+upload_max_filesize = 50M   # 文件上传大小限制
+````
+
+然后修改nginx配置，如果做了反向代理的，最好修改前端服务的配置:
+
+````nginx
+server {
+    listen 80;
+    ...
+
+    location / {
+        ...
+        proxy_pass http://service_api;
+        client_max_body_size    50M;    # 请求body的最大值
+        client_body_buffer_size 256k;   # 请求缓存区大小
+        ...
+    }
+}
+````
