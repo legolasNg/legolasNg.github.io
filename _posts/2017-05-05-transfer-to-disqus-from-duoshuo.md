@@ -46,9 +46,8 @@ comments :
 
 在响应的页面模版中，添加代码来显示评论插件
 
-{% highlight liquid linenos%}
-{% raw %}
-{% if page.comments %}
+```liquid
+\{\% if page.comments \%\}
     <div id="disqus_thread"></div>
     <script>
     /*
@@ -67,9 +66,8 @@ comments :
     })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-{% endif %}
-{% endraw %}
-{% endhighlight %}
+\{\% endif \%\}
+```
 
 ### 多说评论转换为Disqus
 
