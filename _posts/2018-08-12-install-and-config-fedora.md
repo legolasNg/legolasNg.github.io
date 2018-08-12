@@ -311,6 +311,8 @@ sudo dnf install google-chrome-stable
 
 ### 3.安装steam
 
+`steam`是vavle公司的游戏分发平台，在上面可以购买很多PC游戏，随着vavle的steamos推进，vavle自己以及很多游戏厂商的游戏都出了linux版(大部分是原生支持，少数是wine模拟的，但是也不需要自己解决wine的兼容问题):
+
 ```bash
 sudo dnf install fedora-workstation-repositories
 
@@ -320,6 +322,8 @@ sudo dnf install steam
 ```
 
 ### 4.安装gnome-tweaks
+
+一款对gnome界面調整的软件，可以修改主题、字体、gnome扩展、窗口、开机自启动等:
 
 ```bash
 sudo dnf install gnome-tweaks
@@ -354,6 +358,8 @@ sudo dnf install menulibre
 - Windows list
 
 ### 5.安装nautilus插件
+
+在文件管理器中，加入右键"在终端打开":
 
 ```bash
 sudo dnf install gnome-terminal-nautilus nautilus-search-tool
@@ -448,6 +454,8 @@ sudo dnf install adobe-source-han-sans-cn-fonts
 
 ### 12.安装网易云音乐
 
+网易云和deepin合作，开发了linux版的网易云音乐和有道云词典，但是只对deepin和ubuntu打了包，所以debian系发行版基本上可以直接安装。红帽系发行版，需要自己手动解决:
+
 ```bash
 ## 安装解码器
 sudo dnf install gstreamer-plugins-base gstreamer1-plugins-base gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer1-plugins-ugly gstreamer-plugins-good-extras gstreamer1-plugins-good-extras gstreamer1-plugins-bad-freeworld ffmpeg gstreamer-ffmpeg ffmpeg-libs xvidcore libdvdread libdvdnav lsdvd libmpg123
@@ -470,6 +478,8 @@ sudo cp -r usr/* /usr/
 
 ### 13.安装Clion
 
+`Clion`是Jetbrain公司开发的C/C++语言的IDE，该公司基本所有产品都有linux版而且安装简单，其他产品安装步骤雷同:
+
 ```bash
 ## 从jetbrains下载最新的clion包
 wget https://download.jetbrains.com/cpp/CLion-2018.2.tar.gz
@@ -486,6 +496,10 @@ sudo cp -R ./clion-2018.2 /opt/
 
 ### 14.安装telegram
 
+微信没有linux版本，但是可以使用网页版，据说有人开发了第三方的Electron版微信 -- [weweChat](https://github.com/trazyn/weweChat)。个人有洁癖，除非没得选，不然绝对不用Electron客户端，太臃肿！
+
+当然还有其他原因，因为微信会屏蔽聊天消息，对聊天体验造成极大影响，所以尽量不用微信。`telegram`是端对端加密，而且不受国内管制，所以我选择telegram(题外话:steam新出的IM也是端对端，功能齐全，可以考虑)。
+
 ```bash
 sudo dnf install telegram-desktop
 ```
@@ -493,6 +507,8 @@ sudo dnf install telegram-desktop
 Notes: __国内使用telegram需要配合代理使用__
 
 ### 15.删除不必要的软件
+
+gnome自带了很多软件，由于个人有洁癖，所以卸载掉没用的软件(还有部分因为和gnome强依赖，卸载会导致卸载掉gnome，所以放弃了):
 
 ```bash
 ## 删除gnome自带
