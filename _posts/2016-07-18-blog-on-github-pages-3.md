@@ -26,9 +26,9 @@ Jekyll是使用Ruby语言编写，安装Jekyll最好方式是使用`RubyGems`。
 
 ```bash
 # 红帽系发行版下安装gem
-yum install ruby rubygems
+yum install ruby rubygems ruby-devel
 # debian系发行版下安装gem
-apt-get install ruby rubygems
+apt-get install ruby rubygems ruby-dev redhat-rpm-config
 
 # 使用gem安装jekyll
 gem install jekyll
