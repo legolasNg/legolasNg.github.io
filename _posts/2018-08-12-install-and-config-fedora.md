@@ -4,10 +4,10 @@ title:     "fedora的安装和配置"
 date:      2018-08-12 18:00:00 +0800
 category:  "linux"
 tags:      ["linux", "Fedora"]
-excerpt:   "其实这个也不算是教程，只是自己换电脑之后安装fedora的记录，避免下次重新安装系统时会有遗漏，分享出来给人参考。linux内核现在已经更新到4.17.14版本了，现在linux发行版易用性也原没有远古时期那么难用，如果你选择一个社区繁荣的发行版，绝对会发现一点也不反人类。推荐的linux发行版有Ubuntu、Fedora、Arch，绝对不要去使用所谓的'国产操作系统'，大部分无非是国外流行发行版的分支，然后自定义了一些主题、工具，反而出现很多问题之后没有技术支持。"
+excerpt:   "其实这个也不算是教程，只是自己换电脑之后安装fedora的记录，避免下次重新安装系统时会有遗漏，分享出来给人参考。linux内核现在已经更新到4.17.14版本了，现在linux发行版易用性也原没有远古时期那么难用，如果你选择一个社区繁荣的发行版，绝对会发现一点也不反人类。推荐的linux发行版有 **Ubuntu**、**Fedora**、**Arch**，绝对不要去使用所谓的'国产操作系统'，大部分无非是国外流行发行版的分支，然后自定义了一些主题、工具，反而出现很多问题之后没有技术支持。"
 ---
 
-其实这个也不算是教程，只是自己换电脑之后安装fedora的记录，避免下次重新安装系统时会有遗漏，分享出来给人参考。linux内核现在已经更新到4.17.14版本了，现在linux发行版易用性也原没有远古时期那么难用，如果你选择一个社区繁荣的发行版，绝对会发现一点也不反人类。推荐的linux发行版有Ubuntu、Fedora、Arch，绝对不要去使用所谓的'国产操作系统'，大部分无非是国外流行发行版的分支，然后自定义了一些主题、工具，反而出现很多问题之后没有技术支持。
+其实这个也不算是教程，只是自己换电脑之后安装fedora的记录，避免下次重新安装系统时会有遗漏，分享出来给人参考。linux内核现在已经更新到4.17.14版本了，现在linux发行版易用性也原没有远古时期那么难用，如果你选择一个社区繁荣的发行版，绝对会发现一点也不反人类。推荐的linux发行版有 **Ubuntu**、**Fedora**、**Arch**，绝对不要去使用所谓的'国产操作系统'，大部分无非是国外流行发行版的分支，然后自定义了一些主题、工具，反而出现很多问题之后没有技术支持。
 
 关于linux的使用途径：由于桌面发行版在市场上的的占有份额，国内外很多软硬件厂商并没有开发对应的软件或者硬件驱动，即使有也仅仅能用且功能不全。虽然易用性和兼容性已经很好的得到了进步和发展，但是使用中难免会遇到很多问题，还是不建议日常使用。如果想使用linux学习科研，你会获得很多社区资源;如果是娱乐，linux上面的软件也只能满足一些基本需求;如果是游戏，不好意思Nvidia和AMD的驱动支持，游戏厂商的软件支持，远没有达到Windows平台的程度(虽然情况在好转)。
 
@@ -389,6 +389,8 @@ sudo dnf config-manager --set-enabled fedora-cisco-openh264
 sudo dnf install gstreamer-plugins-base gstreamer1-plugins-base gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer1-plugins-ugly gstreamer-plugins-good-extras gstreamer1-plugins-good-extras gstreamer1-plugins-bad-freeworld ffmpeg gstreamer-ffmpeg ffmpeg-libs xvidcore libdvdread libdvdnav lsdvd libmpg123 gstreamer1-plugin-openh264 gstreamer1-libav
 ```
 
+也可以在安装好的fedy中，点击`Multimedia codecs`解决方案来安装。
+
 ### 8.安装音频组件
 
 ```bash
@@ -450,7 +452,7 @@ sudo dnf install adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-s
 sudo dnf install adobe-source-han-sans-cn-fonts
 ```
 
-安装字体和主题后，通过`gnome-tweaks`来设置字体和主题
+安装字体和主题后，通过`gnome-tweaks`来设置字体和主题。更多的主题，可以在fedy选择你想要的，然后安装。
 
 ### 12.安装网易云音乐
 
@@ -496,7 +498,7 @@ sudo cp -R ./clion-2018.2 /opt/
 
 ### 14.安装telegram
 
-微信没有linux版本，但是可以使用网页版，据说有人开发了第三方的Electron版微信 -- [weweChat](https://github.com/trazyn/weweChat)。个人有洁癖，除非没得选，不然绝对不用Electron客户端，太臃肿！
+微信没有linux版本，但是可以使用网页版，据说有人开发了第三方的Electron版微信 -- [weweChat](https://github.com/trazyn/weweChat) 和 [electronic-wechat](https://github.com/geeeeeeeeek/electronic-wechat)。个人有洁癖，除非没得选，不然绝对不用Electron客户端，太臃肿！
 
 当然还有其他原因，因为微信会屏蔽聊天消息，对聊天体验造成极大影响，所以尽量不用微信。`telegram`是端对端加密，而且不受国内管制，所以我选择telegram(题外话:steam新出的IM也是端对端，功能齐全，可以考虑)。
 
