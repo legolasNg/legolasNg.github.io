@@ -13,7 +13,7 @@ excerpt:   "其实这个也不算是教程，只是自己换电脑之后安装fe
 
 ## 安装fedora
 
-访问[Fedora官网](https://getfedora.org/zh_CN/)，下载最新版Fedora Workstation的ISO镜像。
+访问[Fedora官网](https://getfedora.org/)，下载最新版Fedora Workstation的ISO镜像。
 
 如果你是linux用户，将IOS镜像直接写入U盘即可
 
@@ -64,7 +64,7 @@ sudo dnf install fedora-workstation-repositories
 sudo dnf config-manager --set-enabled
 ```
 
-### 2.官方源替换ustc源
+### 2.替换官方软件源
 
 官方软件源一般架设在国外，国内获取速度较慢，所以一般需要手动将官方软件源切换到国内对应的镜像软件源，这里推荐中科大的ustc镜像源、清华的tuna镜像源。
 
@@ -514,7 +514,7 @@ sudo dnf autoremove ibus-m17n
 
 ### 16.安装zsh
 
-发行版自带的shell一般是bash，如果想体验更现代化的shell，建议试试zsh或者fish，对命令补全和命令行扩展更好。
+发行版自带的shell一般是bash，如果想体验更现代化的shell，建议试试`zsh`或者`fish`，对命令补全和命令行扩展更好。
 
 ```bash
 # 安装zsh
@@ -525,7 +525,7 @@ chsh -s /bin/zsh
 sudo chsh -s /bin/zsh
 ```
 
-我们可以选择性安装powerline字体，可以为zsh提供一些状态和提示效果:
+我们可以选择性安装`powerline`字体，可以为zsh提供一些状态和提示效果:
 
 ```bash
 git clone https://github.com/powerline/fonts.git
@@ -533,7 +533,7 @@ cd fonts
 ./install.sh
 ```
 
-还可以选择性安装awesome-powerline字体，使命令行提供更酷炫的效果:
+还可以选择性安装`awesome-powerline`字体，使命令行提供更酷炫的效果:
 
 ```bash
 git clone https://github.com/gabrielelana/awesome-terminal-fonts.git
@@ -541,7 +541,7 @@ cd  awesome-terminal-fonts
 ./install.sh
 ```
 
-安装zsh之后，必须要安装 **oh-my-zsh** ，这是一个开源的社区zsh配置框架，自带了很多有用的功能、插件、主题，可以让我们上手即用:
+安装zsh之后，必须要安装`oh-my-zsh`，这是一个开源的社区zsh配置框架，自带了很多有用的功能、插件、主题，可以让我们上手即用:
 
 ```bash
 ## 克隆oh-my-zsh仓库
@@ -571,13 +571,17 @@ POWERLEVEL9K_MODE='awesome-fontconfig'
 
 ## 加载zsh插件，前提是已经安装在~/.oh-my-zsh/plugins目录下
 plugins=(autojump dnf git pip systemd)
+
+## 我们还可以在zshrc配置中，添加自己自定义的方法、命令别名
+alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
+alias unsetproxy="unset ALL_PROXY"
 ```
 
 执行`source ~/.zshrc`使配置生效。
 
 ### 17.安装Vim
 
-Vim是终端编辑器，具有强大的功能和海量扩展。我们可以通过vim-plug、vundle来管理插件，为Vim添加我们需要的功能:
+Vim是终端编辑器，具有强大的功能和海量扩展。我们可以通过`vim-plug`、`vundle`来管理插件，为Vim添加我们需要的功能:
 
 ```bash
 ## 安装vim
@@ -587,7 +591,7 @@ sudo dnf install vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
 
-首先我们编辑Vim配置文件，让Vim加载`vim-plug`插件管理器:
+首先我们编辑Vim配置文件`~/.vimrc`，让Vim加载`vim-plug`插件管理器:
 
 ```vimrc
 " 加载vim-plug插件管理器
