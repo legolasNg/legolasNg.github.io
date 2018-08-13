@@ -266,7 +266,7 @@ root        ALL=(ALL)       ALL
 sudo usermod -aG wheel [USERNAME]
 ```
 
-### 5.将主目录文件夹由中文切换为英文
+### 5.家目录文件夹切换为英文
 
 ```bash
 ## 修改系统当前语言
