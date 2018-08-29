@@ -96,3 +96,26 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 # 指定计划任务执行完成后，发送邮件给指定用户
 MAILTO=root
 ```
+
+***
+> [**2018/08/29**] 今天同事提了一个类似的问题，所以放这里讲一下。
+
+Nodejs服务A有不同的运行环境，对应不同的环境配置。同事写了n份配置，然后在不同机器的`/etc/profile`上面设置`export NODE_ENV=alpha`环境变量，然后在代码里面加载对应的配置。设置好之后，ssh登录到服务器上通过pm2启动，代码能正确加载对应的配置。但是通过jenkins的脚本部署，环境变量却不起作用了。
+
+这是为什么呢？原因是，jenkins的脚本部署本质是通过ssh协议在指定服务器远程执行命令或者脚本，执行命令时以nologin的shell去执行一个bash脚本，所以设置在/etc/profile中的`NODE_ENV`变量没有加载。
+
+linux中的shell其实分为两种:
+
+- login用户，可以登录系统、启动会话，加载用户对应配置；
+
+- nologin用户，只能启动服务，不能登录系统。
+
+linux中的环境变量也分为两种，login用户会加载Session级别和System级别的环境变量，nologin用户只会加载System级别的环境变量:
+
+- Session级别的环境变量，加载优先级为: /etc/profile(全局会话) => /etc/profile.d/*.sh => /etc/bashrc(登录shell全局会话) => ~/.bash_profile(登录shell用户会话) => ~/.bashrc
+
+- System级别的环境变量，加载优先级为: /etc/environment
+
+当我们将环境变量`NODE_ENV`在System级别加载，执行脚本或代码就能获取到对应的环境变量。或者将脚本头加上`#!/bin/bash -il`来保证环境变量的加载，i代表交互式shell，l代表login shell。
+
+同理，在执行crontab定时任务时，因为nologin用户执行代码之前没有加载Session级别的环境变量，导致获取不到PATH变量。
