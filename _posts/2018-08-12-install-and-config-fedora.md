@@ -343,13 +343,19 @@ sudo dnf install menulibre
 
 - Dash to dock
 
+- Drop down terminal
+
 - Launch new instance
 
 - Media player indicator
 
+- Openweather
+
 - Places Status Indicator
 
 - Removable Drive Menu
+
+- Sound input & output device chooser
 
 - Topicons
 
