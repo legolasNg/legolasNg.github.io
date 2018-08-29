@@ -443,8 +443,15 @@ sudo dnf install numix-gtk-theme
 sudo dnf install numix-icon-theme numix-icon-theme-circle
 
 ## 安装paper图标
-sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:snwh:paper/Fedora_25/home:snwh:paper.repo
-sudo dnf install paper-icon-theme
+sudo dnf config-manager --set-enabled user501254-Paper
+sudo dnf install paper-gtk-theme paper-icon-theme
+
+## 安装materia主题
+sudo dnf copr enable tcg/themes
+sudo dnf install materia-theme
+
+## 安装evopop主题和图标
+sudo dnf install evopop-gtk-theme evopop-icon-theme
 
 ## 安装思源字体(等宽、衬线)
 sudo dnf install adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts
