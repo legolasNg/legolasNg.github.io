@@ -697,3 +697,42 @@ set smartcase
 ```
 
 配置完vimrc，同`vim`命令进入vim，然后输入`:PlugInstall`指令来安装插件，等待插件安装完成，我们就可以使用了(当然插件也是可配置的，在vimrc文件后面添加即可)。
+
+### 18.安装jdk
+
+fedora默认安装了openjdk，如果需要替换成官方jdk可以通过以下操作。先去[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/index.html)下载最新版本的JDK和JRE:
+
+```bash
+## 解压压缩包
+tar xzvf jre-10.0.2_linux-x64_bin.tar.gz
+tar xzvf jdk-10.0.2_linux-x64_bin.tar.gz
+
+## 新建目录，将文件复制到制定路径
+sudo mkdir -p /usr/local/java
+sudo cp -r jdk-10.0.2_linux-x64_bin/jdk-10.0.2 /usr/local/java/
+sudo cp -r jre-10.0.2_linux-x64_bin/jre-10.0.2 /usr/local/java/
+```
+
+编辑`/etc/profile`文件，将所需要的环境变量添加进来:
+
+```bash
+JAVA_HOME=/usr/local/java/jdk-10.0.2
+JRE_HOME=/usr/local/java/jre-10.0.2
+CLASS_PATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_HOME JRE_HOME CLASS_PATH PATH
+```
+
+然后通过一下命令将jdk版本切换到制定的Oracle版本:
+
+```bash
+sudo update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/jdk-10.0.2/bin/java" 1
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/local/java/jdk-10.0.2/bin/javac" 1
+sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/local/java/jdk-10.0.2/bin/javaws" 1
+
+sudo update-alternatives --set java /usr/local/java/jdk-10.0.2/bin/java
+sudo update-alternatives --set javac /usr/local/java/jdk-10.0.2/bin/javac
+sudo update-alternatives --set javaws /usr/local/java/jdk-10.0.2/bin/javaws
+```
+
+然后通过`source /etc/profile`使环境变量生效
