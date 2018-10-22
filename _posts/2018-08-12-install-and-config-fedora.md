@@ -459,6 +459,10 @@ sudo dnf install materia-theme
 ## 安装evopop主题和图标
 sudo dnf install evopop-gtk-theme evopop-icon-theme
 
+## 安装yaru主题
+sudo dnf copr enable deadmozay/yaru-theme
+sudo dnf install yaru-gtk3
+
 ## 安装思源字体(等宽、衬线)
 sudo dnf install adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts
 ## 安装思源黑体(建议中文字体使用这个)
