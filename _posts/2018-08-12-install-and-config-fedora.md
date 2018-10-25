@@ -187,7 +187,31 @@ sudo flatpak uninstall flathub com.valvesoftware.Steam
 sudo flatpak update
 ```
 
-### 4.添加fedy源
+### 4.snap包支持
+
+snap包是Canonical公司维护的一种新的打包系统，类似于红帽维护的flatpak。
+
+```bash
+sudo dnf install snap
+
+## 安装软件中心的snap插件
+sudo dnf install gnome-software-snap
+```
+
+在 [snapcraft](https://snapcraft.io/store) 找相应的app，可以安装snap软件，也可以通过软件中心来安装:
+
+```bash
+##  查找app
+sudo snap find "vlc"
+
+## 安装app
+sudo snap install "vlc"
+
+## 卸载app
+sudo snap remove "vlc"
+```
+
+### 5.添加fedy源
 
 fedy源可以方便在fedora上安装第三方软件，fedy为使用者准备了很多集成解决方案(比如mp3、Oracle Java)，依赖于RPMFusion源。
 
@@ -195,6 +219,14 @@ fedy源可以方便在fedora上安装第三方软件，fedy为使用者准备了
 sudo dnf install https://dl.folkswithhats.org/fedora/$(rpm -E %fedora)/RPMS/fedy-release.rpm
 
 sudo dnf install fedy
+```
+
+### 6.解决方案
+
+如果软件中心打开后，长时间无响应或者处于"正在加载软件目录"的状态，可以重建rpm数据库:
+
+```bash
+sudo rpmdb -v --rebuilddb
 ```
 
 ## 配置修改
@@ -512,6 +544,8 @@ sudo cp -R ./clion-2018.2 /opt/
 ## 执行clion安装脚本
 /opt/clion-2018.2/bin/clion.sh
 ```
+
+最近发现Jetbrain公司还有个产品 -- `Toolbox`，可以用来管理该公司旗下的所有产品，用起来很方便。可以通过Fedy来安装`Toolbox`，r然后再通过`Toolbox`安装其他IDE。
 
 ### 14.安装telegram
 
