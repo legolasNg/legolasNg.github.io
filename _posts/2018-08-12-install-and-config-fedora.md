@@ -774,3 +774,32 @@ sudo update-alternatives --set javaws /usr/local/java/jdk-10.0.2/bin/javaws
 ```
 
 然后通过`source /etc/profile`使环境变量生效
+
+### 19.系统升级
+
+新版本发布后，在"软件"商店的更新中找到新版本安装的提示。也可以通过命令行来升级:
+
+```bash
+## 安装dnf插件
+sudo dnf install dnf-plugin-system-upgrade
+
+## 确认软件都是当前版本最新
+sudo dnf upgrade --refresh
+
+## 安装指定版本的系统
+## 指定参数为--best时，如果有未解决的依赖，将会取消更新。想忽略问题继续更新，则需要替换成‐‐allowerasing参数
+sudo dnf system-upgrade download --refresh --releasever=$releasever --best
+
+## 安装完更新，重启电脑
+## sudo dnf system-upgrade reboot
+```
+
+如果在更新之后，出现rpm-gpg校验错误，可以使用以下命令来导入仓库密钥:
+
+```bash
+sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-x86_64
+
+## 如果上面不起作用，则导入下面的部分
+sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-primary
+sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+```
