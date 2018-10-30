@@ -61,7 +61,7 @@ sudo dnf install http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree
 
 ```bash
 sudo dnf install fedora-workstation-repositories
-sudo dnf config-manager --set-enabled
+sudo dnf config-manager --set-enabled [repository]
 ```
 
 ### 2.替换官方软件源
@@ -221,14 +221,6 @@ sudo dnf install https://dl.folkswithhats.org/fedora/$(rpm -E %fedora)/RPMS/fedy
 sudo dnf install fedy
 ```
 
-### 6.解决方案
-
-如果软件中心打开后，长时间无响应或者处于"正在加载软件目录"的状态，可以重建rpm数据库:
-
-```bash
-sudo rpmdb -v --rebuilddb
-```
-
 ## 配置修改
 
 ### 1.修改dnf配置
@@ -249,6 +241,12 @@ fastestmirror=true
 deltarpm=true
 ; 最大并发下载数量
 max_parallel_downloads=6
+```
+
+如果想使用dnf的图形化前端，可以安装dnfdragora:
+
+```bash
+sudo dnf install dnfdragora
 ```
 
 ### 2.修改SELinux配置
@@ -802,4 +800,34 @@ sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-x86_64
 ## 如果上面不起作用，则导入下面的部分
 sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-primary
 sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+```
+
+安装新版本之后，可能部分应用的配置也会修改，rpm包管理器会创建新文件`.rpmnew`或者重命名旧文件`.rpmsave`，我们可以通过`rpmconf`这个软件来统一修改:
+
+```bash
+## 安装rpmconf
+sudo dnf install rpmconf
+
+## 搜索被修改的配置文件
+sudo rpmconf -a
+## 在交互中，Y是将配置更新，N是保留旧配置，D是显示差异
+```
+
+安装新版本之后，可能存在破损或者重复的包，可以通过下面的命令进行处理:
+
+```bash
+## 查看损坏的包
+sudo dnf check
+
+## 查看多余的包
+sudo dnf list extra
+
+## 删除不再需要的包
+sudo dnf autoremove
+```
+
+如果包管理器在使用时出现问题，可能是数据库由于某些原因损坏。比如软件中心打开后，长时间无响应或者处于"正在加载软件目录"的状态，可以重建rpm数据库:
+
+```bash
+sudo rpm --rebuilddb
 ```
