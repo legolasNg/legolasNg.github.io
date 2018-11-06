@@ -525,6 +525,13 @@ tar -xvf data.tar.xz
 sudo cp -r usr/* /usr/
 ```
 
+也可以使用社区打包的copr源:
+
+```bash
+sudo dnf copr enable vitzy/netease-cloud-music
+sudo dnf install netease-cloud-music
+```
+
 ### 13.安装Clion
 
 `Clion`是Jetbrain公司开发的C/C++语言的IDE，该公司基本所有产品都有linux版而且安装简单，其他产品安装步骤雷同:
