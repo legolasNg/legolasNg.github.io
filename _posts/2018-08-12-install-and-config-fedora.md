@@ -838,3 +838,41 @@ sudo dnf autoremove
 ```bash
 sudo rpm --rebuilddb
 ```
+
+## 20.更换文件管理器
+
+Gnome从3.28开始放弃了对桌面图标的支持，虽然有扩展可以实现类似的功能，但是还是太简陋。所以我采用了Nautilus开发者在[Remove desktop support](https://gitlab.gnome.org/GNOME/nautilus/issues/158#alternative-solution)中的建议，将nemo设置成默认的文件管理器，因为Nautilus的桌面图标支持被开发者移除了。
+
+```bash
+## 安装nemo及其插件
+sudo dnf install nemo nemo-fileroller nemo-preview
+
+## 将nemo设置为默认的文件管理器
+xdg-mime default nemo.desktop inode/directory
+
+## 将桌面图标处理，从nautilus切换成nemo
+gsettings set org.gnome.desktop.background show-desktop-icons false
+gsettings set org.nemo.desktop show-desktop-icons true
+```
+
+将nemo加入开启自启动，新增文件`~/.config/autostart/nemo-autostart.desktop`:
+
+```ini
+[Desktop Entry]
+Type=Application
+Name=Nemo
+Comment=Start Nemo desktop at log in
+Exec=nemo-desktop
+OnlyShowIn=GNOME;
+AutostartCondition=GSettings org.nemo.desktop show-desktop-icons
+X-GNOME-AutoRestart=true
+NoDisplay=true
+```
+
+将想要展示的图标(在`/usr/share/applications/`目录中)复制到`~/Desktop`目录下，我们就可以在桌面看到对应的图标了。
+
+如果想完全去除Nautilus，只需要执行命令:
+
+```bash
+sudo dnf autoremove nautilus
+```
