@@ -486,6 +486,9 @@ sudo dnf install paper-gtk-theme paper-icon-theme
 sudo dnf copr enable tcg/themes
 sudo dnf install materia-theme
 
+## 安装papirus图标
+sudo dnf install papirus-icon-theme
+
 ## 安装evopop主题和图标
 sudo dnf install evopop-gtk-theme evopop-icon-theme
 
