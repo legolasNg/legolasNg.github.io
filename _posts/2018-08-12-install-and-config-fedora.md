@@ -842,7 +842,7 @@ sudo dnf autoremove
 sudo rpm --rebuilddb
 ```
 
-## 20.更换文件管理器
+### 20.更换文件管理器
 
 Gnome从3.28开始放弃了对桌面图标的支持，虽然有扩展可以实现类似的功能，但是还是太简陋。所以我采用了Nautilus开发者在[Remove desktop support](https://gitlab.gnome.org/GNOME/nautilus/issues/158#alternative-solution)中的建议，将nemo设置成默认的文件管理器，因为Nautilus的桌面图标支持被开发者移除了。
 
