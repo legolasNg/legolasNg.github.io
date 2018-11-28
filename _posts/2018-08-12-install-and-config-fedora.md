@@ -921,4 +921,13 @@ sudo rabbitmq-plugins enable rabbitmq_management
 
 ## 安装火焰截图
 sudo dnf install flameshot
+
+## 安装emacs
+sudo dnf install emacs
+
+## 安装latex编辑器
+sudo dnf install latexila
+
+## 安装文件对比软件
+sudo dnf install meld
 ```
