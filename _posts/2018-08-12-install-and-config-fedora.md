@@ -879,3 +879,46 @@ NoDisplay=true
 ```bash
 sudo dnf autoremove nautilus
 ```
+
+### 21. 其它
+
+```bash
+## 安装ftp客户端
+sudo dnf install filezilla
+
+## 安装远程客户端
+sudo snap install remmina
+
+## 安装spotify
+sudo snap install spotify
+
+## 安装typora
+git clone https://github.com/RPM-Outpost/typora.git
+cd typora
+./create-package.sh x64
+
+##  安装xmind
+sudo dnf copr enable thozza/XMind
+sudo dnf install xmind
+
+## 安装mysql
+sudo dnf install community-mysql community-mysql-server
+sudo systemctl enable mysqld
+sudo systemctl start mysqld
+
+## 安装redis
+sudo dnf install redis
+sudo systemctl enable redis
+sudo systemctl start redis
+## 安装redis客户端
+sudo snap install redis-desktop-manager
+
+## 安装rabbitmq
+sudo dnf install rabbitmq-server
+sudo systemctl enable rabbitmq-server.service
+sudo systemctl start rabbitmq-server.service
+sudo rabbitmq-plugins enable rabbitmq_management
+
+## 安装火焰截图
+sudo dnf install flameshot
+```
