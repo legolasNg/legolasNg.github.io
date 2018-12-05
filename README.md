@@ -9,3 +9,27 @@
 - 修改自[luoyan35714](https://github.com/luoyan35714)的[LessOrMore](https://github.com/luoyan35714/LessOrMore)主题
 
 - 借鉴了[PanosSakkos](https://github.com/PanosSakkos)的[personal](https://github.com/PanosSakkos/personal-jekyll-theme)主题的一些创意
+
+## 运行
+
+先在本地机器上安装`ruby`和`rubygem`:
+
+```bash
+## debian系
+sudo apt-get install ruby rubygem ruby-dev
+
+## rhel系
+sudo dnf install ruby rubygems ruby-devel
+```
+
+然后通过`gem`安装`jekyll`及其插件
+
+```bash
+gem install jekyll jekyll jekyll-paginate
+```
+
+然后运行命令:
+
+```bash
+jekyll serve
+```
