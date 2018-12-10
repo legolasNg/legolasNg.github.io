@@ -880,7 +880,49 @@ NoDisplay=true
 sudo dnf autoremove nautilus
 ```
 
-### 21. 其它
+### 21.安装grub主题
+
+可以将grub的启动界面替换成一些酷炫的主题，比如可以安装`deepin-grub2-themes`或者`grub2-breeze-theme`
+
+```bash
+sudo dnf install grub2-breeze-theme
+sudo dnf install deepin-grub2-themes
+```
+
+也可以去网上下载自己喜欢的主题，比如[grub2-themes](https://github.com/vinceliuice/grub2-themes)仓库中的`grub-theme-vimix`和`grub-theme-stylishdark`。
+
+1.将主题解压之后的文件夹复制到指定目录
+
+```bash
+sudo cp -R Vimix /boot/grub2/themes/
+```
+
+2.修改默认配置文件
+
+```bash
+sudo vim /etc/default/grub
+```
+
+添加`GRUB_THEME`配置项，设置为主题的`theme.txt`文件所在路径；将`GRUB_TERMINAL_OUTPUT`配置项从`console`修改成`gfxterm`，并设置分辨率，也可以注释掉这个配置项:
+
+```ini
+GRUB_THEME="/boot/grub2/themes/Vimix/theme.txt"
+# GRUB_TERMINAL_OUTPUT="console"
+GRUB_TERMINAL_OUTPUT="gfxterm"
+GRUB_GFXMODE=2560x1440
+```
+
+3.更新grub
+
+```bash
+## 如果是uefi
+sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+
+## 如果是mbr
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+```
+
+### 22. 其它
 
 ```bash
 ## 安装ftp客户端
