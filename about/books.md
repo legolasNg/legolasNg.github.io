@@ -1,7 +1,7 @@
 ---
 layout:   about
-t
-itle:    Books
+title:    Books
+header:   Books
 ---
 
 ### 2019年
