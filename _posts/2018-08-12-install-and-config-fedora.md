@@ -553,7 +553,7 @@ sudo cp -R ./clion-2018.2 /opt/
 /opt/clion-2018.2/bin/clion.sh
 ```
 
-最近发现Jetbrain公司还有个产品 -- `Toolbox`，可以用来管理该公司旗下的所有产品，用起来很方便。可以通过Fedy来安装`Toolbox`，r然后再通过`Toolbox`安装其他IDE。
+最近发现Jetbrain公司还有个产品 -- `Toolbox`，可以用来管理该公司旗下的所有产品，用起来很方便。可以通过Fedy来安装`Toolbox`，然后再通过`Toolbox`安装其他IDE。
 
 ### 14.安装telegram
 
