@@ -922,7 +922,39 @@ sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
 
-### 22. 其它
+### 22.安装openresty
+
+去[官网](https://openresty.org/en/download.html)下载最新的源码包:
+
+```bash
+wget -P ~/Downloads/ https://openresty.org/download/openresty-1.15.8.2.tar.gz
+cd ~/Downloads/
+tar zxvf openresty-1.15.8.2.tar.gz
+
+./configure --prefix=/opt/openresty --with-pcre-jit --without-http_redis2_module --with-http_iconv_module -j8
+make -j8
+sudo make install
+```
+
+编辑`/etc/profile`文件，添加环境变量:
+
+```bash
+## openresty
+OPENRESTY_HOME=/opt/openresty
+LUAJIT_HOME=/opt/openresty/luajit
+export PATH=$PATH:$OPENRESTY_HOME/bin:$LUAJIT_HOME/bin
+```
+
+然后通过`source /etc/profile`使环境变量生效，通过命令`openresty -v`查看是否安装成功。
+
+也可以使用官方的rpm仓库来安装二进制包:
+
+```bash
+sudo dnf install -y dnf-plugins-core
+sudo dnf config-manager --add-repo https://openresty.org/package/fedora/openresty.repo
+```
+
+### 22.其它
 
 ```bash
 ## 安装ftp客户端
