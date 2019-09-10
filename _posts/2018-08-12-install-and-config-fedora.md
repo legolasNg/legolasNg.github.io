@@ -656,6 +656,15 @@ alias unsetproxy="unset ALL_PROXY"
 
 执行`source ~/.zshrc`使配置生效。
 
+在vscode编辑器中的终端，可以通过修改配置来使用zsh主题:
+
+```json
+{
+    "terminal.integrated.shell.linux": "zsh",
+    "terminal.integrated.fontFamily": "'Noto Mono for Powerline', 'fontawesome'"
+}
+```
+
 ### 17.安装Vim
 
 Vim是终端编辑器，具有强大的功能和海量扩展。我们可以通过`vim-plug`、`vundle`来管理插件，为Vim添加我们需要的功能:
