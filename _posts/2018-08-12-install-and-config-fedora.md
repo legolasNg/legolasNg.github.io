@@ -963,7 +963,7 @@ sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://openresty.org/package/fedora/openresty.repo
 ```
 
-### 22.其它
+### 23.其它
 
 ```bash
 ## 安装ftp客户端
