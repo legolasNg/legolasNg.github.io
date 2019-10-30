@@ -464,6 +464,9 @@ sudo dnf install shadowsocks-qt5
 ## 出现libbotan-2.so.5 was missing的问题，是由于libbotan版本过高，做个软链接即可解决
 sudo ln -s /usr/lib64/libbotan-2.so.7 /usr/lib64/libbotan-2.so.5
 
+## 出现libqrencode.so.3: cannot open shared object file的问题，是由于libqrencode版本过高，做个软链接即可解决
+sudo ln -s /usr/lib64/libqrencode.so.4.0.2 /usr/lib64/libqrencode.so.3
+
 ## 命令行使用代理，只需要设置环境变量即可，协议名与开放端口协议一致:
 export http_proxy="socks5://127.0.0.1:1080"
 export https_proxy="socks5://127.0.0.1:1080"
