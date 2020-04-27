@@ -4,10 +4,10 @@ title:     "第三方校验"
 date:      2020-04-21 19:49:00 +0800
 category:  "server"
 tags:      ["third-party-auth", "oauth"]
-excerpt:   "由于GFW以及API文档的语言，最近在对接海外的第三方平台的时候遇到了点麻烦。所以记录下这次google和facebook的对接案例。"
+excerpt:   "由于GFW以及API文档的语言，最近在对接海外的第三方平台的时候遇到了点麻烦。所以记录下这次google和facebook的对接案例，希望能给需要的人些许帮助。"
 ---
 
-由于GFW以及API文档的语言，最近在对接海外的第三方平台的时候遇到了点麻烦。所以记录下这次google和facebook的对接案例。
+由于GFW以及API文档的语言，最近在对接海外的第三方平台的时候遇到了点麻烦。所以记录下这次google和facebook的对接案例，希望能给需要的人些许帮助。
 
 
 ## Facebook登陆校验
