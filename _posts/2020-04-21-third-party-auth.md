@@ -12,7 +12,7 @@ excerpt:   "由于GFW以及API文档的语言，最近在对接海外的第三�
 
 ## Facebook登陆校验
 
-### 获取应用口令 -- access_token
+### 获取应用口令
 
 服务端向facebook请求时，需要带上应用口令access_token。应用口令的获取方式:
 
@@ -32,7 +32,7 @@ GET "https://graph.facebook.com/oauth/access_token?client_id={your-app-id}&clien
 access_token={APP_ID}|{APP_SECRET}
 ```
 
-### 校验凭据 -- token
+### 校验凭据
 
 当我们拿到客户端获取的用户令牌 -- input_token之后，通过请求facebook服务端可以校验用户令牌的合法性（例如令牌的有效期、用户的权限等）:
 
