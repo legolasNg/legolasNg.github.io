@@ -1,10 +1,10 @@
 ---
 layout:    post
 title:     "CRA中的import"
-date:      2020-14-14 00:56:00 +0800
+date:      2020-12-14 00:56:00 +0800
 category:  "webapck"
 tags:      ["webpack", "create-react-app"]
-excerpt:   "最近使用react开发一个前端项目，项目是使用`Create-React-App`创建的。前几天一个页面需要代码编辑器，在github上搜索了一番，决定使用 [React-Ace](https://github.com/securingsincity/react-ace) 。在使用过程中遇到了一些问题，记录下解决方案，希望能帮到需要的人"
+excerpt:   "最近使用react开发一个前端项目，项目是使用`Create-React-App`创建的。前几天一个页面需要代码编辑器，在github上搜索了一番，决定使用 [React-Ace](https://github.com/securingsincity/react-ace) 。在使用过程中遇到了一些问题，记录下解决方案，希望能帮到需要的人。"
 ---
 
 
