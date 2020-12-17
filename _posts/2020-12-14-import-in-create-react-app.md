@@ -138,7 +138,7 @@ loader让webpack能够去处理那些非JavaScript文件(webpack 自身只理解
 
  - `babel-loader` : 使项目能编译(transpile)js文件
 
-在项目中，我们有三种使用loader的方式：
+在项目中，我们可以通过三种方式来使用使用loader：
 
  - 配置: 在 `webpack.config.js` 文件中指定 `loader`
 
@@ -148,11 +148,11 @@ loader让webpack能够去处理那些非JavaScript文件(webpack 自身只理解
 
 ### 修改配置
 
-在 `Webpack` 的配置中 `loader` 有两个目标：
+在 `Webpack` 的配置中, `loader` 有两个属性可以配置：
 
-1. `test` 属性，用于标识出应该被对应的 `loader` 进行转换的某个或某些文件。
+1. `test` : 用于标识出应该被对应的 `loader` 进行转换的某个或某些文件。
 
-2. `use` 属性，表示进行转换时，应该使用哪个 `loader` 。
+2. `use` : 表示进行转换时，应该使用哪个 `loader` 。
 
 如果我们能修改 `Webpack` 配置，将我们需要加载的文件的正则模式指定给 `test` 属性, 将我们需要用到的file-loader 指定给 `loader` 属性，那我们就可以在代码中使用 `import xxx from "file-loader!xxxpath"`。
 
