@@ -221,7 +221,7 @@ import jsonWorkerUrl from "ace-builds/src-noconflict/worker-json";
 
 #### rewire
 
-如果不想暴露全部配置，也不想大幅修改默认配置，只想修改部分webpack配置呢？我们可以通过安装`react-app-rewired`来实现。
+如果不想暴露全部配置，也不想大幅修改默认配置，只想修改部分webpack配置呢？我们可以通过安装 `react-app-rewired` 注入需要修改的那部分配置。
 
 ````shell
 npm install react-app-rewired --save-dev
