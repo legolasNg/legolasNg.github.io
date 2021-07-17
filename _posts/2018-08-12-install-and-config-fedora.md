@@ -367,7 +367,7 @@ sudo dnf install menulibre
 
 通过上面安装浏览器插件之后，我们可以访问[gnome扩展](https://extensions.gnome.org/)来安装所需要的插件，推荐常见的gnome扩展插件:
 
-- Alternative tab (*Deprecated*)
+- ~~Alternative tab~~ (*Deprecated*)
 
 - Applications menu
 
@@ -375,17 +375,17 @@ sudo dnf install menulibre
 
 - Clipboard Indicator
 
-- Dash to dock (*Deprecated*)
+- ~~Dash to dock~~ (*Deprecated*)
 
 - Dash to Panel
 
 - ddterm
 
-- Drop down terminal (*Deprecated*)
+- ~~Drop down terminal~~ (*Deprecated*)
 
 - Launch new instance
 
-- Media player indicator (*Deprecated*)
+- ~~Media player indicator~~ (*Deprecated*)
 
 - Openweather
 
@@ -399,7 +399,7 @@ sudo dnf install menulibre
 
 - Sound Input & Output Device Chooser
 
-- Topicons (*Deprecated*)
+- ~~Topicons~~ (*Deprecated*)
 
 - Tray Icons: Reloaded
 
