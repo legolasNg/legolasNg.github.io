@@ -60,6 +60,6 @@ fi
 
 ## 找到症结
 
-上网搜索了一下类似的案例，只需要修改BIOS里面的存储设置，将`IDE`或者`RAID`修改成`AHCI`模式，就可以识别到nvme接口的SSD磁盘了。
+上网搜索了一下类似的案例，只需要修改BIOS里面的存储设置，将`IDE`或者`RAID`修改成`AHCI`模式，就可以识别到nvme接口的SSD磁盘了。应该是最近更新BOIS固件，把对应的设置项还原了。
 
 修改完BIOS，重新进入fedora执行`fdisk -l`，能正确识别到对应的磁盘。这时候就不需要手动修改grub配置了，执行重新执行`sudo grub2-mkconfig -o /boot/grub2/grub.cfg`命令，windows系统的启动项就添加到grub菜单里面了。
