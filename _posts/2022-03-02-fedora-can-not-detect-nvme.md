@@ -2,8 +2,8 @@
 layout:    post
 title:     "Fedora检测不到Nvme"
 date:      2022-03-02 20:22:00 +0800
-category:  "linux"
-tags:      ["fedora", "Grub"]
+category:  "Nvme"
+tags:      ["Nvme", "AHCI"]
 excerpt:   "昨天晚上本来想着更新一下Grub主题，没成想Grub主题生效之后，识别不到Windows启动分区了。折腾了好几天，才修复多系统引导。"
 ---
 
