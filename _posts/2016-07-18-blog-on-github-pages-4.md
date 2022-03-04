@@ -4,7 +4,7 @@ title:      "使用Github Pages搭建博客(4) -- Markdown"
 date:       2016-07-18 01:00:00 +0800
 category:   "blog"
 tags:       ["gh-pages", "Markdown"]
-excerpt:    "未完待续"
+excerpt:    "`Markdown`是轻量级标记语言，语法简单，样式漂亮。我本人非常喜欢使用`Markdown`，特别是用来记录东西、写文章，本文也是使用`Markdown`书写。"
 ---
 
 `Markdown`是轻量级标记语言，语法简单，样式漂亮。我本人非常喜欢使用`Markdown`，特别是用来记录东西、写文章，本文也是使用`Markdown`书写。
@@ -24,8 +24,11 @@ excerpt:    "未完待续"
 `Markdown`语法规则很简单，常用的标签就10来个。`Markdown`语言细节标准比较模糊，导致不同的`Markdown`语法解析器渲染的结果，可能会有部分差异；部分解析器还扩展了`Markdown`语法，使其支持更多实用的功能，这也造成了语法解析器的渲染结果有部分差异。对于不同的`Markdown`语法解析器，大部分语法还是一致，只是少量细节有点差异，不会对使用造成影响，建议使用Github风格的Markdown语法 -- `GFM`。
 
 - [创始人John Gruber的Markdown语法说明](http://daringfireball.net/projects/markdown/syntax)
+
 - [Markdown语法说明(简体中文版)](http://wowubuntu.com/markdown/)
+
 - [Github的Markdown语法说明](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)
+
 - [基本写作和格式化语法](https://help.github.com/articles/basic-writing-and-formatting-syntax/)
 
 ### 标题
