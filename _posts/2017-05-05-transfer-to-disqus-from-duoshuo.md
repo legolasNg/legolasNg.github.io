@@ -39,14 +39,14 @@ excerpt:    "在搭建这个站点时候，由于考虑到国内无法访问`Dis
 
 在jekyll的配置文件`config.yaml`新增一项配置，用来控制模版中评论的显示
 
-```
+````yaml
 comments :
     short_name : test
-```
+````
 
 在响应的页面模版中，添加代码来显示评论插件
 
-```liquid
+````yaml
 {% raw %}
 {% if page.comments %}
     <div id="disqus_thread"></div>
@@ -69,7 +69,7 @@ comments :
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 {% endif %}
 {% endraw %}
-```
+````
 
 ### 多说评论转换为Disqus
 

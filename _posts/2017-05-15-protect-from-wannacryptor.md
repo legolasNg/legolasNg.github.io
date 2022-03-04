@@ -54,34 +54,34 @@ windows上会默认开启NetBIOS服务，一个网络基本的输入/输出系�
 
 通过`netstat`命令可以查看机器上是否开启对应端口:
 
-```bat
+````bat
 netstat -ano | findstr [port]
-```
+````
 
 ### 关闭135端口
 
 关闭135端口最有效的办法是禁用RPC服务:
 
-```
+````text
 控制面板 => 管理工具 => 服务 => Remote Procedure Call => 右键属性 => 修改启动类型设置"禁用"
 
 # 重启RPC
 运行 => regedit.exe => HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcSs => Start项的键值设置为"0x02" => 重启系统
-```
+````
 
 但是很多服务器功能依赖RPC，比如数据库查询、远程拨号、outlook等，我们只需要禁用DOM，同样会达到禁用RPC的效果，实现间接关闭135端口的目的。
 
-```
+````text
 运行 => 组件服务\计算机\我的电脑 => 右键属性 => 默认属性 => 去掉勾选"在此计算机上启用分布式DOM" => 重启系统
-```
+````
 
 ### 关闭137、138、139端口
 
 禁用基于TCP/IP协议下的NetBIOS服务:
 
-```
+````text
 控制面板 => 网络和共享中心 => 更改适配器设置 => 正在使用的网络 => 右键属性 => 去掉勾选"" => Internet协议版本4(TCP/IPv4) => 属性 => 高级 => WINS => 勾选"禁用TCP/IP上的NetBIOS" => 重启系统
-```
+````
 
 ### 关闭445端口
 
@@ -89,16 +89,16 @@ netstat -ano | findstr [port]
 
 #### 1.禁用共享服务lanmanserver
 
-```bat
+````bat
 sc config lanmanserver start= disabled
 net stop srv
-```
+````
 
 禁用Server服务之后，SMB会话就无法建立了。但是已连接的连接和监听端口还是会出现在netstat输出中，我们可以通过下面的操作:
 
-```
+````text
 运行 => regedit.exe => HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters => "TransportBindName"项的键值"Device"删除，置空 => 重启系统
-```
+````
 
 重启之后通过`netstat -ano`看不到445端口，但是客户端SMB机制也被取消了。
 
@@ -106,65 +106,66 @@ net stop srv
 
 彻底禁用了系统的SMB机制，客户端和服务端支持都被取消了。
 
-```bat
+````bat
 # 停止NetBT驱动，需要先关掉相应服务
 # rdr对应lanmanworkstation服务，srv对应lanmanserver服务
 net stop rdr
 net stop srv
 net stop netbt
-```
+````
 
 "NetBios over Tcpip"驱动可以手工停止，但不能手工启动，只能重启才可恢复。为了阻止NetBT驱动在重启OS时自动加载，必须将启动类型由缺省的1改成4:
 
-```
+````text
 运行 => regedit.exe => HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT => 修改"Start"项的键值为"00000004"(dword类型，即十六进制)
 
 sc config netbt start= disabled
-```
+````
 
 #### 3.修改注册表
+
  第一种禁用了服务端和客户端的SMB支持，但是客户端SMB机制的支持有时候还是需要的。通过修
 改注册表可以实现禁用由TCP层直接承载的SMB协议，但继续启用NetBT。
 
-```
+````text
 运行 => regedit.exe => HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters => 新建DWORD类型的"SmbDeviceEnabled"，值为00000000 => 重启系统
-```
+````
 
 #### 4.禁用设备
 
 这将彻底禁用系统中的SMB机制，客户端、服务端支持均被取消。
 
-```
+````text
 运行 => devmgmt.msc => 查看 => 显示隐藏设备=> 非即插即用驱动程序 => NETBT => 右键属性 => 启动类型修改为"已禁用" => 重启系统
-```
+````
 
 #### 5.修改监听的端口
 
 逆向分析netbt.sys之后，发现可以通过注册表改变445/TCP、445/UDP:
 
-```
+````text
 运行 => regedit.exe => HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Smb => 将"SessionPort"项键值修改为dword类型的"00000000"，将"DatagramPort"项键值修改为dword类型的"00000000" => 重启系统
-```
+````
 
 重启系统之后，系统自动处理成1/TCP、1/UDP。如将SessionPort指定成135/TCP，在争夺中原EPM功能将丧失，SMB功能争夺成功。
 
 如果开启了ipv6之后需要额外修改注册表，达到相同效果。
 
-```
+````text
 运行 => regedit.exe
     => HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters => 修改"UseNewSmb"项的键值为dword类型的"00000000"
     => HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Smb => 将"SessionPort"项键值修改为dword类型的"000001bd"，将"DatagramPort"项键值修改为dword类型的"000001bd"
     => 重启系统
-```
+````
 
 系统启动IPv6之后，增加了一个驱动smb.sys，处理IPv6下的SMB协议。UseNewSmb非0时将使用smb.sys，该驱动中固化了445/TCP。
 
 ## 4.开启防火墙
 
-```
+````text
 控制面板 => Windows防火墙 => 打开或关闭Windows 防火墙 => 启用防火墙 => 确认
                          => 高级设置 => 入站规则 => 新建规则 => 端口 => TCP 特定本地端口 445 => 阻止连接 => "域"、"专用"、"计算机"全部勾选 => 输入名称，确认
-```
+````
 
 ----
 引用:

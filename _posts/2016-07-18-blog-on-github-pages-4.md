@@ -32,45 +32,45 @@ excerpt:    "未完待续"
 
 `Markdown`使用`#`来定义大纲标题，有几个`#`就代表是几级标题:
 
-```
+````text
 # 一级标题(对应<h1>标签)
 ## 二级标题(对应<h2>标签)
 ...
 ###### 六级标题(对应<h6>标签)
-```
+````
 
 ### 强调
 
 `Markdown`使用`*`和`_`作为标记强调文字的符号，使用标记符号将文字包围:
 
-```
+````text
 *test*  斜体(对应<em>标签)
 _test_  斜体(对应<em>标签)
 
 **test line**   粗体(对应<strong>标签)
 __test line__   粗体(对应<strong>标签)
-```
+````
 
 ### 列表
 
 `Markdown`支持有序列表和无序列表，无序列表使用`*`、`+`和`-`，有序列表使用数字后接一个英文句点:
 
-```
+````text
 * red 无序列表(对应<ul><li>...</li></ul>标签)
 + red
 - red
 
 1. red 有序列表(对应<ol><li>...</li></ol>标签)
-```
+````
 
 如果想嵌套使用列表，只需要被嵌套的列表相对缩进一个单位。
 
-```
+````text
 - red
     - apple
     - sun
 - green
-```
+````
 
 ### 图片
 
@@ -78,18 +78,18 @@ __test line__   粗体(对应<strong>标签)
 
 行内式，以`!`开始，接着一个`[]`里面放图片的替代文字，接着一个`()`里面放图片的网址(小括号内的网址后，还可以使用引号包住加上图片title)：
 
-```
+````text
 ![Alt text](/path/to/img.jpg)   行内式(对应<img>标签)
 ![Alt text](/path/to/img.jpg "title")   
-```
+````
 
 参考式，以`!`开始，接着一个`[]`里面放图片的替代文字，接着一个`[]`里面放图片的参考名称；然后在另一行`[]`里面放图片的参考名称，后接一个`:`后面跟着图片的网址和标题:
 
-```
+````text
 ![Alt text][id]
 
 [id]: /path/to/img.jpg "title"  参考式(对应<img>标签)
-```
+````
 
 `Markdown`不能指定图片的宽度和高度，以及更复杂的样式，如果需要的话，可以使用html的`<img>`标签。
 
@@ -99,17 +99,17 @@ __test line__   粗体(对应<strong>标签)
 
 行内式，`[]`里面放链接描述，后接`()`里面放链接地址(小括号内的网址后，还可以使用引号包住加上链接title):
 
-```
+````text
 [This link](http://example.net/)    行内式(对应<a href="" title="">...</a>)
-```
+````
 
 参考式，`[]`里面放链接描述，后接`[]`里面放链接的参考名称或标识；然后在另一行`[]`里面放链接的参考名称或标识，后接一个`:`后面跟着链接的地址和标题:
 
-```
+````text
 [an example][id]
 
 [id]: http://example.com/  "title"  参考式(对应<a href="" title="">...</a>)
-```
+````
 
 不管是链接还是图片，如果我们想使用同主机的资源，只需要将图片网址或链接地址替换为相对路径即可。
 
@@ -117,18 +117,18 @@ __test line__   粗体(对应<strong>标签)
 
 `Markdown`标记区块引用`>`符号，可以在每行文字前加`>`，也可以在段落第一行前加`>`；如果想嵌套使用区块引用，可以根据层次使用不同数量的`>`:
 
-```
+````text
 > test article  区块引用(对应<blockquote>标签)
 
 > first line
 >> second line
-```
+````
 
 ### 代码
 
 在文本中使用" \` "包裹的内容，会被识别成行内代码；使用" \`\`\` "包裹的多行内容，会被识别成代码：
 
-````
+````text
  `document.getElementById()`
 
  ```
@@ -142,9 +142,9 @@ __test line__   粗体(对应<strong>标签)
 
 有时候，我们需要使用Markdown语法中的几个关键字，但是会被识别成Markdown语法。我们只需要在Markdown字符前使用`\`来转义即可
 
-```
+````text
 Let's rename \*our-new-project\* to \*our-old-project\*.
-```
+````
 
 ## GFM语法
 
@@ -158,7 +158,7 @@ GFM(GitHub Flavored Markdown)，也就是github风格的markdown格式，是Gith
 
 标准语法中，使用一对"\`\`\`\`"来表示代码块；GFM也支持这种语法，同时还支持"\`\`\`" + 编程语言的语法，支持自动缩进和语法高亮：
 
-````
+````text
 ```javascript
 function fancyAlert(arg) {
  if(arg) {
@@ -172,24 +172,24 @@ function fancyAlert(arg) {
 
 GFM支持把列表变成带勾选框的任务列表(ToDoList)，格式为`- [ ]`或`- [x]`：
 
-```
+````text
 - [ ] 未完成
 - [x] 已完成
-```
+````
 
 ### 表格
 
 GFM支持表格，使用`-`和`|`来分割行和列
 
-```
+````text
 | Header One     | Header Two     |
 | :------------- | :------------- |
 | Item One       | Item Two       |
-```
+````
 
 ### 自动链接网址
 
-在GFM语法中，任何URL(比如http://www.github.com/)将会被自动转换为可链接的地址。
+在GFM语法中，任何URL(比如`http://www.github.com/`)将会被自动转换为可链接的地址。
 
 ### 删除线
 
@@ -204,7 +204,7 @@ GFM还支持一些和github平台相关的特性，在非github环境下使用�
 - 提及用户或团队，使用`@`+用户名或团队名，就可以通知该用户或团队。
 - emoji表情，通过输入`:EMOJICODE:`可以添加emoji表情。
 
-```
+````text
 16c999e8c71134401a78d4d46435517b2271d6ac
 mojombo@16c999e8c71134401a78d4d46435517b2271d6ac
 mojombo/github-flavored-markdown@16c999e8c71134401a78d4d46435517b2271d6ac
@@ -218,17 +218,17 @@ mojombo/github-flavored-markdown#1
 
 :+1:
 :shipit:
-```
+````
 
 ## Jekyll配置
 
 Jekyll支持多种Markdown解释器，例如RedCarpet和Kramdown，默认使用Kramdown。我们想使用指定解释器，需要在`_config.yml`配置文件中指定：
 
-```
+````text
 markdown: kramdown
 kramdown:
     input: GFM
 highlighter: rouge
-```
+````
 
 上面的配置，指定Markdown解释器为kramdown，声明kramdown的语法格式为GFM，并且使用rouge插件实现语法高亮。这些配置可以根据个人喜好来修改。

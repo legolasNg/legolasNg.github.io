@@ -52,9 +52,7 @@ $ echo {"id": 1, "name": "kenneth"} | git hash-object -w --stdin
 初使化Git仓库时，Git初始化了`objects`目录，同时在该目录下创建了`pack`和`info`子目录，但是该目录下没有其他常规文件。通过底层命令`hash-object`将数据保存在`.git`目录并返回表示这些数据的键值。
 
 > `hash-object`是一个git管道命令(plumbing command)，接收内容、将其存储在数据、然后返回键值。
-
 > 参数`-w`(write)指示`hash-object`命令存储(数据)对象，若不指定这个参数该命令只会返回键值。参数`-t`指示对象的类型(默认是"blob")。
-
 > `--stdin`指定从标准输入设备(stdin)来读取内容，若不指定这个参数则需指定一个要存储的文件的路径。
 
 该命令输出长度为40个字符的校验和。这是个`SHA-1`哈希值--其值为要存储的数据加上一种头信息的校验和。如果你按照上面的命令在你机器上执行，将会返回相同的sha-1哈希值。
@@ -81,11 +79,8 @@ $ git cat-file -t da95f8264a0ffe3df10e94eed6371ea83aee9a4d
 *简单描述下Git的四种对象类型:`blob`、`tree`、`commit`和`tag`:*
 
 > `blobs`，每个blob代表一个(版本的)文件，blob只包含文件的数据，而忽略文件的其他元数据，如名字、路径、格式等。
-
 > `trees`，每个tree代表了一个目录的信息，包含了此目录下的blobs，子目录(对应于子trees)，文件名、路径等元数据。因此，对于有子目录的目录，git相当于存储了嵌套的trees。
-
 > `commits`，每个commit记录了提交一个更新的所有元数据，如指向的tree，父commit，作者、提交者、提交日期、提交日志等。每次提交都只指向一个tree对象，记录了当次提交时的目录信息。一个commit可以有多个(至少一个)父commits。
-
 > `tags`，tag来标记某一个提交(commit)的方法。
 
 ## Git中BLOB对象
@@ -150,17 +145,11 @@ $ git write-tree
 *Git根据某一时刻暂存区(即`index`区域,下同)所表示的状态创建并记录一个对应的树对象,如此重复便可依次记录(某个时间段内)一系列的树对象。*
 
 > 通过底层命令`update-index`为一个单独文件的某个版本创建一个暂存区。
-
 > 必须指定`--add`选项，因为此前该文件并不在暂存区中。
-
 > 必需的还有`--cacheinfo`选项，将要添加的文件位于Git数据库中,而不是位于当前目录下
-
 > 需要指定文件模式、SHA-1哈希值与文件名
-
 > 文件模式为`100644`,表明这是一个普通文件；文件模式为`100755`,表示一个可执行文件;`120000`,表示一个符号链接。Git文件(即数据对象)的合法模式(当然,还有其他一些模式,但用于目录项和子模块)
-
 > 通过`write-tree`命令将暂存区内容写入一个树对象。
-
 > 无需指定`-w`选项--如果某个树对象此前并不存在的话,当调用`write-tree`命令时,它会根据当前暂存区状态自动创建一个新的树对象。
 
 ## Git中commit对象
@@ -191,22 +180,22 @@ $ echo "Commit 2nd version" | git commit-tree 2c59068 -p 05c1cec5
 
 现在我们已经建立了关于这个文件的完整历史记录。使用任何git客户端打开这个仓库，都将看到1.json文件被正确跟踪。为了正面这一点，我们来看运行`git log`的输出:
 
-```bash
+````bash
 $ git log --stat 9918e46
-=>	9918e46dfc4241f0782265285970a7c16bf499e4 "Commit 2nd version"
-		1.json     | 1 +
-		1 file changed, 1 insertions(+)
-	05c1cec5685bbb84e806886dba0de5e2f120ab2a "Commit 1st version"
-		1.json | 1 +
-		1 file changed, 1 insertion(+)
-```
+=>  9918e46dfc4241f0782265285970a7c16bf499e4 "Commit 2nd version"
+        1.json     | 1 +
+        1 file changed, 1 insertions(+)
+    05c1cec5685bbb84e806886dba0de5e2f120ab2a "Commit 1st version"
+        1.json | 1 +
+        1 file changed, 1 insertion(+)
+````
 
 我们可以这样获得文件内容:
 
-```bash
+````bash
 $ git show 9918e46:1.json
-=>	{"id": 1, "name": "kenneth truyers"}
-```
+=>  {"id": 1, "name": "kenneth truyers"}
+````
 
 这仍然没有达到要求，因为我们还是需要记住最后一次commit的哈希值。到目前为止，我们创建的所有对象都是git对象数据库的一部分，该数据库的特征是只存储不可变对象。一旦你写入一个blob、tree或者commit，我们并不能在不改变key的情况下修改该value。你也不能删除这些对象(至少不是直接删除他们，`git gc`命令可以删除悬空的(dangling)对象)。
 
@@ -214,15 +203,15 @@ $ git show 9918e46:1.json
 
 更进一步，是Git引用(references)。references不是对象数据库的一部分，它们是引用数据库(reference database)的一部分，并且是可变的。Git拥有不同类型的reference，例如branches、tags和remotes。它们本质相同，但是有一点细微的差异。现在，我们来研究下branches。分支(branch)是一个指向commit的指针。我们可以通过创建一条新的分支(branch)，将commit的哈希值写入文件系统:
 
-```bash
-$ echo "05c1cec5685bbb84e806886dba0de5e2f120ab2a" > .git/refs/heads/master
-```
+````bash
+echo "05c1cec5685bbb84e806886dba0de5e2f120ab2a" > .git/refs/heads/master
+````
 
 现在我们已经创建好了一个新分支(branch)，指向我们的第一条commit。想要移动分支(branch)，我们可以执行下面的命令:
 
-```bash
-$ git update-ref refs/heads/master 9918e46
-```
+````bash
+git update-ref refs/heads/master 9918e46
+````
 
 现在我们就得到下面这样的图像:
 
@@ -230,10 +219,10 @@ $ git update-ref refs/heads/master 9918e46
 
 最后，我们可以读取该文件的当前状态:
 
-```bash
+````bash
 $ git show master:1.json
 =>  {"id": 1, "name": "kenneth truyers"}
-```
+````
 
 即使我们添加新版本的文件、一系列的tree和commit，只要我们将branch指针指向最新的commit，上面的命令仍将继续有效。
 
@@ -259,19 +248,19 @@ Git用来存储数据时效率是非常高的。如前所述，相同内容的bl
 
 我们可以免费获得完整的版本控制系统。这样的版本控制具有不删除数据的优点。我们在SQL数据库中见过这样的例子:
 
-```
+````text
 id  |   name    |   deleted
 1   |   kenneth |   1
-```
+````
 
 像这样的简单记录是没问题的，但是这通常只是冰山一角。数据可能对其他数据有依赖关系(是否是外键只是一个实现细节)，当你想要恢复数据时，可能在隔离数据上存在风险。对于gi而言，只是一系列指向不同的commit的分支，能以数据库级别而不是记录级别将数据恢复到正确状态。
 
 我们来看另外一个:
 
-```
+````text
 id  |   street  |   lastUpdate
 1   |   town rd |   20161012
-```
+````
 
 这种例子很少碰到:你知道它已经被更新，但是没有任何信息关于实际更新内容以及以前的数值。每当你更新数据，你其实是在删除数据，并且插入了一条新的数据，旧的数据就永远丢失了。使用Git，你可以对于任何文件运行`git log`，可以看到什么被修改，谁修改了它，什么时候修改，以及为什么修改。
 
@@ -356,7 +345,7 @@ $ git push replica
 
 ![tree_sizes_1](/styles/images/git_as_a_nosql_database/tree_sizes_1.png)
 
-第二种情况，有四个层次的tree，每个节点有10个子树，在最后层次每个节点对应10个blob(10 * 10 * 10 * 10 = 10000个文件)。
+第二种情况，有四个层次的tree，每个节点有10个子树，在最后层次每个节点对应10个blob(10 \* 10 \* 10 \* 10 = 10000个文件)。
 
 ![tree_sizes_2](/styles/images/git_as_a_nosql_database/tree_sizes_2.png)
 

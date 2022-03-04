@@ -72,7 +72,7 @@ innodb引擎支持的文件格式包括`Antelope`(羚羊)、`Barracuda`(梭子�
 
 `Barracuda`格式的innodb引擎，当ROW_FORMAT设置为DYNAMIC只使用一个20字节的指针作为可变长度类型，并且优先选择较小的字段存储在innodb page上。并且可以给blob增加前缀索引(prefix index)，将前缀索引建立在page外的blob上而不是page内。ROW_FORMAT设置为COMPRESSED时，innodb引擎的对可变长度字段的存储策略类似，并且总是压缩不在page内的数据，即使没有设置KEY_BLOCK_SIZE，也没有启用正常数据和索引的压缩。
 
-*innodb在存储blob时，page内部和外部的blob其实时不共享的。每个blob在页外都有16k分配，即使blob只有1个字节大小。如果每行有多个blob，可能会导致数据库效率比较低。所以最好是一行只定义一个blob来组合数据，并且压缩改数据，text类型同理*
+\*\* *innodb在存储blob时，page内部和外部的blob其实时不共享的。每个blob在页外都有16k分配，即使blob只有1个字节大小。如果每行有多个blob，可能会导致数据库效率比较低。所以最好是一行只定义一个blob来组合数据，并且压缩改数据，text类型同理*
 
 ## 解决方案1 -- Dynamic
 

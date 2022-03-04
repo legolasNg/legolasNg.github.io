@@ -11,18 +11,18 @@ excerpt:    "一般来说，`sudo`会忽略通过`.bashrc`文件、`.bash_aliase
 
 比如，我们经常将`ll`用作`ls -lh`命令的别名。然后，我们输入`ll`，终端将会返回一个关于当前目录的长列表。但是，当我们输入`sudo ll`时，终端将会返回:
 
-```bash
+````bash
 $ sudo ll
-=>	sudo: ll: command not found
-```
+=>  sudo: ll: command not found
+````
 
 ## 解决方案
 
 我们给`shutdown`命令创建一个别名，当`rotorrent`运行的时候尝试输入这个别名去关机，我们可以看到系统不会关机。想要运行`/sbin/shutdown`需要root权限，然而`sudo`会完全忽略`shutdown`的这个别名。解决办法是，我们需要添加另一个别名:
 
-```bash
-$ alias sudo='sudo '
-```
+````bash
+alias sudo='sudo '
+````
 
 `sudo`后面的那个空格将会告诉`bash`，去检查跟在空格后面的命令是否也是一个别名。bash手册(通过`man bash`查看)上面是这么描述的:
 
@@ -31,7 +31,7 @@ $ alias sudo='sudo '
 
 下面是我机器`.bash_aliases`文件中的一些别名设置(因为系统才安装，可能以后会加更多别名设置):
 
-```bash
+````bash
 # Shortcuts
 alias ll='ls -lh'
 alias la='ls -lhA'
@@ -45,7 +45,7 @@ alias shutdown='/home/james/scripts/safe.shutdown.sh'
 
 # When using sudo, use alias expansion (otherwise sudo ignores your aliases)
 alias sudo='sudo '
-```
+````
 
 ----
 来源:
