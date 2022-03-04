@@ -582,7 +582,7 @@ sudo cp -R ./clion-2018.2 /opt/
 sudo dnf install telegram-desktop
 ```
 
-Notes: __国内使用telegram需要配合代理使用__
+Notes: **国内使用telegram需要配合代理使用**
 
 ### 15.删除不必要的软件
 

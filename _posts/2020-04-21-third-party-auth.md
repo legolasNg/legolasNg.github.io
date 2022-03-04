@@ -9,7 +9,6 @@ excerpt:   "由于GFW以及API文档的语言，最近在对接海外的第三�
 
 由于GFW以及API文档的语言，最近在对接海外的第三方平台的时候遇到了点麻烦。所以记录下这次google和facebook的对接案例，希望能给需要的人些许帮助。
 
-
 ## Facebook登陆校验
 
 ### 获取应用口令
@@ -43,29 +42,29 @@ GET https://graph.facebook.com/debug_token?input_token={input-token}&access_toke
 {
 
     "error": {
-		"code": 190,
-		"message": "You cannot access the app till you log in to www.facebook.com and follow the instructions given.",
-		"subcode": 459
-	}
+        "code": 190,
+        "message": "You cannot access the app till you log in to www.facebook.com and follow the instructions given.",
+        "subcode": 459
+    }
 }
 
 >>
 {
     "data": {
-		"app_id": "{APP_ID}",
-		"type": "USER",
-		"application": "{APP_NAME}",
-		"data_access_expires_at": 1595230436,
-		"expires_at": 1592638436,
-		"is_valid": true,
-		"issued_at": 1587454436,
-		"metadata": {
-			"auth_type": "rerequest",
-			"sso": "android"
-		},
-		"scopes": ["public_profile"],
-		"user_id": "{user_id}"
-	}
+        "app_id": "{APP_ID}",
+        "type": "USER",
+        "application": "{APP_NAME}",
+        "data_access_expires_at": 1595230436,
+        "expires_at": 1592638436,
+        "is_valid": true,
+        "issued_at": 1587454436,
+        "metadata": {
+            "auth_type": "rerequest",
+            "sso": "android"
+        },
+        "scopes": ["public_profile"],
+        "user_id": "{user_id}"
+    }
 }
 ```
 
@@ -73,11 +72,9 @@ GET https://graph.facebook.com/debug_token?input_token={input-token}&access_toke
 
 **注意事项:** 校验用户令牌时，请求参数必须要带access_token，否则没法访问该接口，API会返回400的http状态码。
 
-
 ## Google登陆校验
 
 google的登陆校验可以通过引入对应官方库来进行校验，比如nodejs就可以安装`google-auth-library`:
-
 
 ```javascript
 const {OAuth2Client} = require('google-auth-library');
@@ -131,7 +128,7 @@ GET https://accounts.google.com/o/oauth2/v2/auth?client_id={your_client_id}&resp
 
 访问这个地址之后，经过账号授权和一些列跳转，我们可以发现最后跳转到类似这种页面: `http://{your_redirect_uri}/?code=xxxxxxx&scope=https://www.googleapis.com/auth/androidpublisher`，跳转终点url参数里面code就是我们需要的校验码。
 
-**注意事项：** 
+**注意事项：**
 
 1. 一个client_id只能获取一次校验码，后面再请求会返回错误码，所以我们需要将这个校验码记下来。这个码虽然只用一次，但是是永久有效的。
 
@@ -161,7 +158,7 @@ code: {your_authorization_code}
 
 返回的结果里面，我们可以获取到刷新令牌 -- `refresh_token`和访问令牌 -- `access_token`。访问令牌可以用来校验订单，刷新令牌可以在访问令牌失效之后，再次获取新的访问令牌。
 
-**注意事项：** 
+**注意事项：**
 
 1. 一个校验码只能请求一次刷新令牌，后面再次请求会返回错误码，所以我们需要记下返回的`refresh_token`。当访问令牌失效时，我们就需要通过刷新令牌来重新获取新的访问令牌了。
 
@@ -171,8 +168,7 @@ code: {your_authorization_code}
 
 上面的请求虽然可以获取到访问令牌，但是刷新令牌 -- `refresh_token`是唯一的，只能获取一次。当访问令牌失效之后，我们就需要通过刷新令牌来获取新的访问令牌。
 
-
-```http
+````http
 POST https://www.googleapis.com/oauth2/v4/token
 
 client_id: {your_client_id}
@@ -187,7 +183,7 @@ refresh_token: {your_refresh_token}
     "token_type":"Bearer",
     "expires_in":3600,
 }
-```
+````
 
 ### 订单校验
 
@@ -232,7 +228,7 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
 
 4. 服务器向google校验订单，根据返回结果校验购买状态`purchaseState`、透传参数`developerPayload`
 
-**注意事项：** 
+**注意事项：**
 
 1. 订单校验的url是拼接的
 
@@ -280,7 +276,6 @@ https://console.developers.google.com/apis/api/androidpublisher.googleapis.com/o
 3. `The current user has insufficient permissions to perform the requested operation`，这个错误是因为服务器使用的accessToken对应的账户没有对应的权限，去后台[console](https://play.google.com/apps/publish)的“用户与权限”添加下账号的“查看财务信息”权限。
 
 为了避免google平台的API限制，最好在申请凭证之后，在google后台[console](https://console.developers.google.com/apis/credentials/domainverification)添加校验服务器对应网域。如果网域之前没有认证过，将平台生成的校验文件放置在网站根目录即可，待google平台自己抓取验证。
-
 
 ## Google订阅
 
@@ -338,7 +333,7 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
 
 6. 管理后续的订阅状态，例如暂停订阅、保留订阅、取消订阅、续费订阅等状态。具体细节在后面的 [Cloud Pub/Sub](/2020/04/21/third-party-auth/###Cloud%20Pub/Sub) 中讲述
 
-**注意事项：** 
+**注意事项：**
 
 1. 订单校验的url是拼接的
 
@@ -349,7 +344,6 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
 4. `your_token`是玩家支付成功之后平台返回给客户端的订单token
 
 5. `access_token`是上面操作获取到的访问口令。
-
 
 ### Cloud Pub/Sub
 
@@ -436,20 +430,19 @@ app.post('/pubsub/authenticated-push', jsonBodyParser, async (req, res) => {
 
 ```json
 {
-	"version": "1.0",
-	"packageName": "{your_package_name}",
-	"eventTimeMillis": "1606731151744",
-	"subscriptionNotification": {
-		"version": "1.0",
-		"notificationType": 2,
-		"purchaseToken": "{your_purchase_token}",
-		"subscriptionId": "{your_subscription_product}"
-	}
+    "version": "1.0",
+    "packageName": "{your_package_name}",
+    "eventTimeMillis": "1606731151744",
+    "subscriptionNotification": {
+        "version": "1.0",
+        "notificationType": 2,
+        "purchaseToken": "{your_purchase_token}",
+        "subscriptionId": "{your_subscription_product}"
+    }
 }
-
 ```
 
-**注意事项：** 
+**注意事项：**
 
 1. 因为我们需要在玩家订阅发生变动的时候，谷歌能及时通知我们该变动，所以要将传送类型设置为推送
 
@@ -461,7 +454,7 @@ app.post('/pubsub/authenticated-push', jsonBodyParser, async (req, res) => {
 
 5. `Pub/Sub` 服务只能将订阅商品的变动消息(订阅状态、购买令牌、商品id)传递到搭建的服务器，具体订阅信息的校验和获取还是需要之前提到的 `订阅校验` 接口
 
-6. `启用身份验证` 其实只是在回调请求的头部带了一个jwt的签名，然后结合之前申请的访问令牌即可完成校验。因为回调处理之后，我们还需要 `订阅校验` ，在某些情况下为了简化回调处理其实可以取消 `启用身份验证` 
+6. `启用身份验证` 其实只是在回调请求的头部带了一个jwt的签名，然后结合之前申请的访问令牌即可完成校验。因为回调处理之后，我们还需要 `订阅校验` ，在某些情况下为了简化回调处理其实可以取消 `启用身份验证`
 
 ---
 来源:

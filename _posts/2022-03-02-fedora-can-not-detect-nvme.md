@@ -1,6 +1,6 @@
 ---
 layout:    post
-title:     "grub引导修复"
+title:     "Fedora检测不到Nvme"
 date:      2022-03-02 20:22:00 +0800
 category:  "linux"
 tags:      ["fedora", "grub"]
@@ -40,19 +40,19 @@ GRUB_DISABLE_OS_PROBER=false
 
 ````bash
 if [ "${grub_platform}" == "efi" ]; then
-	menuentry "Microsoft Windows 10 UEFI/GPT" {
-		insmod part_gpt
-		insmod fat
-		insmod chain
-		search --no-floppy --fs-uuid --set=root $hints_string $fs_uuid
-		chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-	}
+    menuentry "Microsoft Windows 10 UEFI/GPT" {
+        insmod part_gpt
+        insmod fat
+        insmod chain
+        search --no-floppy --fs-uuid --set=root $hints_string $fs_uuid
+        chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+    }
 fi
 ````
 
 配置里面的`$hints_string`和`$fs_uuid`需要根据本机的实际情况手动指定。通过`blkid`命令确定windows系统对应的EFI分区UUID。
 
-````
+````text
 --hint-efi=nvmexxx,gpt1 xxxx-xxxx-xxxx
 ````
 

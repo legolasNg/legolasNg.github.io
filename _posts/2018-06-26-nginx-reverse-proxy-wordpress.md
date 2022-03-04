@@ -110,7 +110,7 @@ location /api/ {
 ##  "/api/a/" => "/test/a/"
 ````
 
- - 如果`proxy_pass`没有使用URI，传送到后端服务器的请求一般来说就是原始URI，如果nginx修改了请求URI(比如使用`rewrite`指令)，则传送的URI是nginx修改后完整的规范化URI。
+- 如果`proxy_pass`没有使用URI，传送到后端服务器的请求一般来说就是原始URI，如果nginx修改了请求URI(比如使用`rewrite`指令)，则传送的URI是nginx修改后完整的规范化URI。
 
 ````nginx
 location /api/ {

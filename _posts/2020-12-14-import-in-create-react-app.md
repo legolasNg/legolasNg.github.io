@@ -10,7 +10,6 @@ excerpt:   "最近使用react开发一个前端项目，项目是使用 `Create-
 
 最近使用react开发一个前端项目，项目是使用 `Create-React-App` 创建的。前几天一个页面需要代码编辑器，在github上搜索了一番，决定使用 [React-Ace](https://github.com/securingsincity/react-ace) 。但是在文件加载上遇到了一些问题，下面是我解决问题的思路。
 
-
 ## Ace编辑器
 
 ### 简单例子
@@ -45,7 +44,7 @@ export default AceJsonEditor;
 
 很快我们就能在界面上看到一个所见即所得的代码编辑器，但是检查浏览器控制台会发现有两行错误:
 
-````
+````bash
 Refused to execute script from 'http://localhost:4001/worker-json.js' because its MIME type ('text/html') is not executable.
 Uncaught DOMException: Failed to execute 'importScripts' on 'WorkerGlobalScope': The script at 'http://localhost:4001/worker-json.js' failed to load.
 ````
@@ -114,37 +113,37 @@ ace.config.setModuleUrl("ace/mode/json_worker", jsonWorkerUrl);
 
 经过查看 [Webpack](https://webpack.js.org/concepts/) 文档和谷歌搜索，终于到了一丝头绪。文档原文如下：
 
-```
+````text
 loader让webpack能够去处理那些非JavaScript文件(webpack 自身只理解 JavaScript)。loader可以将所有类型的文件转换为webpack能够处理的有效模块，然后你就可以利用webpack的打包能力，对它们进行处理。
-```
+````
 
 在 `Webpack` 中经常使用的loader有:
 
- - `style-loader` : 创建style标签，将css注入到DOM
+- `style-loader` : 创建style标签，将css注入到DOM
 
- - `css-loader` : 通过import或require引入css文件，得到的是一个css对象数组，需要配合 `style-loader` 使用
+- `css-loader` : 通过import或require引入css文件，得到的是一个css对象数组，需要配合 `style-loader` 使用
 
- - `js-loader` : 通过import或require引入js文件及其依赖
+- `js-loader` : 通过import或require引入js文件及其依赖
 
- - `ts-loader` : 通过import或require引入ts文件及其依赖
+- `ts-loader` : 通过import或require引入ts文件及其依赖
 
- - `file-loader` : 将文件解析为url，并引入到代码中
+- `file-loader` : 将文件解析为url，并引入到代码中
 
- - `url-loader` : 与 `file-loader` 类似，将文件解析为一个base64格式的url
+- `url-loader` : 与 `file-loader` 类似，将文件解析为一个base64格式的url
 
- - `raw-loader` : 将文件解析为string，并引入到代码
+- `raw-loader` : 将文件解析为string，并引入到代码
 
- - `eslint-loader` : 将eslint加载到代码
+- `eslint-loader` : 将eslint加载到代码
 
- - `babel-loader` : 使项目能编译(transpile)js文件
+- `babel-loader` : 使项目能编译(transpile)js文件
 
 在项目中，我们可以通过三种方式来使用使用loader：
 
- - 配置: 在 `webpack.config.js` 文件中指定 `loader`
+- 配置: 在 `webpack.config.js` 文件中指定 `loader`
 
- - 内联: 在每个 `import` 或者 `require` 语句中显式指定 `loader`
+- 内联: 在每个 `import` 或者 `require` 语句中显式指定 `loader`
 
- - CLI: 在 shell 命令中指定 `loader`
+- CLI: 在 shell 命令中指定 `loader`
 
 ### 修改配置
 
@@ -158,7 +157,7 @@ loader让webpack能够去处理那些非JavaScript文件(webpack 自身只理解
 
 `Create-React-App` 为我们搭建开发环境带来了便利，但同时也因为隐藏了很多细节，导致我们不能对整个开发环境进行定制。所以在原始状态下，我们根据就找不到`Webpack` 的配置文件。
 
-####  eject
+#### eject
 
 如果我们想要修改webpack配置，需要在命令行使用 `npm run eject` 或者 `yarn eject` 来暴露原本隐藏在背后的一些配置，实际上是通过你的包管理器执行了 `react-scripts eject` 。eject操作时不可逆的，我们没法回滚到之前的简洁模式的，虽然这样我们可以对构建工具和配置选项完全自定义。
 
@@ -215,9 +214,9 @@ module.exports = {
 
 这样配置之后，我们可以直接import，而不需要使用 `xxx-loader!` 这种内联方式:
 
-```
+````js
 import jsonWorkerUrl from "ace-builds/src-noconflict/worker-json";
-```
+````
 
 #### rewire
 
@@ -265,11 +264,11 @@ module.exports = (config, env) => {
 
 `Webpack` 是原生支持通过内联的方式来指定loader来加载文件的(只要项目中依赖了`xxx-loader` )。内联方式和上面修改配置是等效的:
 
-````
-## 使用!将loader和指定资源分开
+````js
+// 使用!将loader和指定资源分开
 import "file-loader!ace-builds/src-noconflict/worker-json";
 
-## 还可以通过qs格式或者json格式传递参数,
+// 还可以通过qs格式或者json格式传递参数,
 import "file-loader?esModule=false!./src-noconflict/worker-json.js"
 import "file-loader?{"esModule":false}!./src-noconflict/worker-json.js"
 ````
