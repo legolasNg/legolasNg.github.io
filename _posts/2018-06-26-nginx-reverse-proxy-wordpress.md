@@ -328,11 +328,11 @@ define('FORCE_SSL_ADMIN', true);
 
 ````shell
 yum install php-gd
-```
+````
 
 在`php.ini`配置中添加一项，开启php-gd扩展：
 
-```
+````ini
 [php-gd]
 extension = gd.so
 ````

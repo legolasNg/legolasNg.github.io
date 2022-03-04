@@ -11,7 +11,7 @@ excerpt:    "`cron`是类UNIX系统中，用于设置周期性被执行的指令
 
 计划任务表达式(cron schedule expression)规则如下:
 
-```bash
+````bash
     .-------------------分钟(0 - 59)
     |   .---------------小时(0 - 23)
     |   |   .-----------天(1 - 31)
@@ -26,20 +26,20 @@ excerpt:    "`cron`是类UNIX系统中，用于设置周期性被执行的指令
 # "-" 代表以横杠间隔的整数范围
 # 运行用户(user-name)可以不设置，默认为当前设置定时任务的用户
 # 命令(command)可以是shell内置命令，也可以是其他可执行文件
-```
+````
 
 ## 命令使用
 
 使用`crontab`命令来管理定时任务。
 
-```bash
+````bash
 # 将指定文件中的计划任务表达式添加到`cron`计划任务。可以使用`-u user`指定用户，默认为当前用户。
 crontab [-u user] file
-```
+````
 
 原理：将文件交给cron进程，创建一个该文件的副本，保存在`/var/spool/cron/`下，文件名为指定用户。
 
-```bash
+````bash
 # 查看指定用户计划任务
 crontab [-u user] -l
 # 删除指定用户的计划任务
@@ -48,7 +48,7 @@ crontab [-u user] -r
 crontab [-u user] -e
 # 可以使用`-u user`指定用户，默认为当前用户
 还可以配合`-i`使用，在删除或者编辑前提示用户
-```
+````
 
 原理：删除/查看`/var/spool/cron/`目录下指定用户的计划任务文件；或者使用编辑器创建一个临时文件，编辑完成以后交给cron进程，将文件保存在`/var/spool/cron/`下。
 
@@ -62,10 +62,10 @@ crontab [-u user] -e
 
 使用`crontab -e`创建一个计划任务:
 
-```bash
+````bash
 # 每分钟输出一次PATH环境变量到test文件中
 * * * * * echo $PATH >> /root/test.txt
-```
+````
 
 一分钟后，我们可以看到`/root/test.txt`文件中出现"/usr/bin:/bin"，也就是说在crontab运行的所有命令中，环境变量`$PATH`的值为"/usr/bin:/bin"。
 
@@ -79,23 +79,23 @@ crontab [-u user] -e
 
 在我们的shell脚本中，头两行指定PATH变量的值，指定shell环境。(shell和PATH，根据你的系统而定)
 
-```bash
+````bash
 #!/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
-```
+````
 
 ### 解决方案3 -- 修改配置
 
 我们可以修改crontab的配置文件`/etc/crontab`，修改对应配置。
 
-```bash
+````bash
 # 指定crontab运行的shell环境
 SHELL=/bin/bash
 # 指定crontab运行时的PATH变量
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 # 指定计划任务执行完成后，发送邮件给指定用户
 MAILTO=root
-```
+````
 
 ***
 > [**2018/08/29**] 今天同事提了一个类似的问题，所以放这里讲一下。

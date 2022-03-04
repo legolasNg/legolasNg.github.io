@@ -36,7 +36,7 @@ excerpt:    "`Shadowsocks`是一种安全的sock5代理软件，需要先将服�
 
 通过之前获得root密码和SSH端口，我们可以访问服务器。windows下可以下载putty或者Xshell来访问，Linux下直接通过ssh命令行访问。由于我们服务器在公网，建议不要通过root进行ssh连接，也不要使用密码登录。
 
-```bash
+````bash
 # 连接服务器
 ssh root@[your_ip_addr] -p [your_ssh_port]
 # 创建新用户和用户组
@@ -50,11 +50,11 @@ chmod 0700 /home/[new_user]/.ssh/
 cat id_rsa.pub >> /home/[new_user]/.ssh/authorized_keys
 chmod 0600 /home/[new_user]/.ssh/authorized_keys
 chown -R [new_user]:[new_group] /home/[new_user]/.ssh/
-```
+````
 
 编辑`/etc/ssh/sshd_config`，来修改ssh端口和登录配置。搬瓦工在安装系统时就配置了非默认端口，所以我们也可以不修改端口。修改端口和登录方式的原因是，防止被人通过默认端口和密码暴力破解。
 
-```conf
+````conf
 # 修改ssh端口
 port [new_ssh_port]
 
@@ -64,28 +64,28 @@ PermitRootLogin no
 UsePAM yes
 # 不允许密码登录
 PasswordAuthentication no
-```
+````
 
 重启sshd服务，使修改后的sshd配置生效。
 
-```bash
+````bash
 systemctl restart sshd
-```
+````
 
 然后，我们就可以使用工具或者ssh，在本地通过密钥登录了。
 
-```bash
+````bash
 # 这个操作是在本地机器，来连接远程服务器
 ssh -i id_rsa -p [your_ssh_port] [your_user]@[your_ip_addr]
 # 如果连接失败，提示"Permissions 0664 for '***' are too open."，可能是你私钥文件的权限过大导致
 chmod 600 id_rsa
-```
+````
 
 ### 3.安装防火墙
 
 因为我们部署Shadowsocks服务需要开启几个我们指定的端口，为了安全起见，我们最好是安装上防火墙(可以安装firewall或者iptables)，避免其余的端口被人访问。
 
-```bash
+````bash
 # 安装firewalld
 yum install firewalld
 # 使用systemd托管firewalld，开机自启动
@@ -95,17 +95,17 @@ systemctl start firewalld
 firewall-cmd --zone=public --add-port=[ss_port]/tcp --permanent
 # 重启firewalld，使配置生效
 firewall-cmd --reload
-```
+````
 
 firewalld安装之后，默认开启了dhcpv6-client和ssh两个服务，但是我们可能还是不能在本地ssh访问服务器。为什么呢？主要是因为firewalld的service配置是通过文件配置的，ssh的service配置里面端口是22，而我们又修改了端口，导致无法访问。
 
-```bash
+````bash
 # 将默认service文件复制到/etc下
 cp /usr/lib/firewalld/services/ssh.xml /etc/firewalld/services/ssh.xml
 # 编辑ssh对应的service文件，将port修改成我们之前制定的sshport
 vi /etc/firewalld/services/ssh.xml
 systemctl restart sshd
-```
+````
 
 ## 部署Shadowsocks服务端
 
@@ -113,22 +113,22 @@ systemctl restart sshd
 
 ### 1.安装Shadowsocks
 
-```bash
+````bash
 # 安装python的包管理器
 yum install python python-pip
 # 安装shadowsocks
 pip install shadowsocks
-```
+````
 
 可以安装gevent来提高Shadowsock性能
 
-```bash
+````bash
 # 安装依赖
 yum install libevent
 pip install greenlet
 # 安装gevent
 pip install gevent
-```
+````
 
 ### 2.编辑配置文件
 
@@ -143,7 +143,7 @@ pip install gevent
 
 如果只开单个端口:
 
-```json
+````json
 {
     "server":"[your_ip_addr]",
     "server_port":[ss_port],
@@ -152,11 +152,11 @@ pip install gevent
     "method":"aes-256-cfb",
     "fast_open": false
 }
-```
+````
 
 如果想开多个端口:
 
-```json
+````json
 {
     "server":"[your_ip_addr]",
     "port_password": {
@@ -167,18 +167,18 @@ pip install gevent
     "method":"aes-256-cfb",
     "fast_open": false
 }
-```
+````
 
 ### 3.启动Shadowsocks
 
 可以使用Shadowsocks的服务端以守护进程启动(切记，不要使用root用户去运行shadowsocks，可以切换到之前创建的用户下运行)
 
-```bash
+````bash
 # 启动
 ssserver -c /etc/shadowsocks.json -d start
 # 关闭
 ssserver -c /etc/shadowsocks.json -d stop
-```
+````
 
 ### 4.托管Shadowsocks
 
@@ -188,7 +188,7 @@ ssserver -c /etc/shadowsocks.json -d stop
 
 编辑`/etc/systemd/system/multi-user.target.wants/shadowsocks.service`配置文件(文件不存在就创建一个)，写入以下内容：
 
-```conf
+````conf
 [Unit]
 Description=shaowsocks daemon
 After=network.target
@@ -208,15 +208,15 @@ RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
-```
+````
 
 编辑完成之后，我们就可以通过systemd来托管`Shadowsocks`了:
 
-```bash
+````bash
 # 重新加载systemd配置
 systemctl daemon-reload
 systemctl start shadowsocks.service
-```
+````
 
 ## Shadowsocks客户端
 
@@ -231,14 +231,20 @@ systemctl start shadowsocks.service
 在本地机器上安装完客户端之后，将我们部署的SS服务的地址、密码和加密方式填入，启动后会建立一个本地端口(127.0.0.1:1080)。可以通过修改配置来更改监听地址和端口。仅以sslocal客户端为例，编辑本地的`/etc/shadowsocks.json`：
 
 - `server`，ss服务端的IP地址
+
 - `server_port`，ss服务端的端口
+
 - `password`，ss密码
+
 - `method`，ss服务端的加密方式
+
 - `local_address`，本地客户端监听地址，默认是127.0.0.1
+
 - `local_port`，本地客户端监听端口，默认是1080
+
 - `timeout`，超时时间
 
-```json
+````json
 {
     "server":"[your_ss_ip]",
     "server_port":[your_ss_port],
@@ -248,13 +254,13 @@ systemctl start shadowsocks.service
     "local_port":1080,
     "timeout":300,
 }
-```
+````
 
 配置完成之后，启动本地客户端
 
-```bash
+````bash
 sslocal -c /etc/shadowsocks.json
-```
+````
 
 ### 1.浏览器使用
 
@@ -268,9 +274,9 @@ Firefox下的代理插件推荐"pan"，Chrome下的代理插件推荐"SwitchyOme
 
 有时候，我们在命令行也需要下载或者安装软件，但是有些仓库也被墙了。其实，我们也可以通过代理软件连接Shadowsocks来实现终端FQ。
 
-```bash
+````bash
 # 在系统的shell配置中加上一行http_proxy配置，如果是bash则编辑~/.bashrc，如果是zsh则编辑~/.zshrc
 export http_proxy="http://127.0.0.1:1080"
 # 修改shell配置之后，使其生效
 source ~/.zshrc
-```
+````

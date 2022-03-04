@@ -77,7 +77,7 @@ comments :
 
 当然我们可以根据两个格式的差异，将数据一一对应转换为我们需要的格式，但是有人已经做了转换工具[**duoshuo-migrator**](https://github.com/JamesPan/duoshuo-migrator)，我们就不需要自己麻烦了。
 
-```bash
+````bash
 # 克隆git仓库到本地
 $ git clone https://github.com/JamesPan/duoshuo-migrator.git
 # 安装依赖(需要先安装python和pip)
@@ -86,6 +86,6 @@ $ sudo pip install lxml
 $ cd duoshuo-migrator
 # 将之前的export.json转换为我们需要的disqus.xml
 python duoshuo-migrator.py -i ../export.json -o disqus.xml
-```
+````
 
 登陆disqus后台，在`https://<shortname>.disqus.com/admin/discussions/import/platform/wordpress/`页面选择我们转换好的`disqus.xml`文件，然后导入。如果导入的数据比较少，我们马上就能在站点上看到导入的评论；如果导入数据比较多，disqus会在后台队列依次导入，等待一段时间即可。

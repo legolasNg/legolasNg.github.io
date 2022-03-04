@@ -17,9 +17,9 @@ excerpt:   "其实这个也不算是教程，只是自己换电脑之后安装fe
 
 如果你是linux用户，将IOS镜像直接写入U盘即可
 
-```bash
+````bash
 dd bs=4M if=/path/to/fedora.iso of=/dev/sdx status=progress && sync
-```
+````
 
 如果是Windows用户，在官网下载[Fedora Media Writer](https://getfedora.org/fmw/FedoraMediaWriter-win32-4.1.1.exe)，将ISO镜像刻录到U盘即可。刻录完成之后，插上U盘重启电脑，修改BOIS启动项通过U盘启动，就可以进入Fedora的安装界面，整个过程很简单。
 
@@ -47,22 +47,22 @@ dd bs=4M if=/path/to/fedora.iso of=/dev/sdx status=progress && sync
 
 一般发行版为了版权纠纷，在安装完成后的系统中会自带官方的软件源，官方软件源中包含自由软件和厂商自己开发的非自由软件。如果我们想获取一些非自由软件(部分受版权保护的解码器、商业软件)，就需要手动配置第三方的软件源。
 
-```bash
+````bash
 ## free仓库
 sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 
 ## non-free仓库
 sudo dnf install http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-```
+````
 
 最后运行`sudo dnf makecache`生成缓存。
 
 当然Fedora也慢慢开始向官方仓库添加第三方的非自由软件支持，主要包括`phracek-PyCharm`、`google-chrome`、`rpmfusion-nonfree-nvidia-driver`、`rpmfusion-nonfree-steam`，默认都不开启，需要手动开启:
 
-```bash
+````bash
 sudo dnf install fedora-workstation-repositories
 sudo dnf config-manager --set-enabled [repository]
-```
+````
 
 ### 2.替换官方软件源
 
@@ -70,7 +70,7 @@ sudo dnf config-manager --set-enabled [repository]
 
 将以下保存为`fedora.repo`:
 
-```ini
+````ini
 [fedora]
 name=Fedora $releasever - $basearch - ustc
 failovermethod=priority
@@ -109,11 +109,11 @@ type=rpm
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 skip_if_unavailable=False
-```
+````
 
 将以下保存为`fedora-updates.repo`:
 
-```ini
+````ini
 [updates]
 name=Fedora $releasever - $basearch - Updates - ustc
 failovermethod=priority
@@ -152,7 +152,7 @@ gpgcheck=1
 metadata_expire=6h
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 skip_if_unavailable=False
-```
+````
 
 最后运行`sudo dnf makecache`生成缓存
 
@@ -160,7 +160,7 @@ skip_if_unavailable=False
 
 在类UNIX系统中，一个版本的软件只会存在系统中一份，依赖于该软件的其他软件在安装时，需要先解决依赖安装上所有对应的依赖包(很多软件发行还依赖于linux发行版的不同版本)。如果你想像Windows下一样，一个软件打包好所有的资源和依赖，各个软件之间独立存在，我想你需要flatpak。flatpak之类的打包方式在linux中还属于新事物，很多软件都还没有支持，所以能安装的软件不多，一般都是一些商业软件。
 
-```bash
+````bash
 sudo dnf install flatpak
 
 ## 添加flatpak的remote
@@ -168,11 +168,11 @@ sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub
 
 ## 删除remote
 sudo flatpak remote-delete flathub
-```
+````
 
 在 [flathub](https://flathub.org/home) 找相应的app，可以安装flatpak软件:
 
-```bash
+````bash
 ## 安装flatpak包
 sudo flatpak install flathub com.valvesoftware.Steam
 sudo flatpak install flathub com.visualstudio.code
@@ -185,22 +185,22 @@ sudo flatpak uninstall flathub com.valvesoftware.Steam
 
 ## 更新apps
 sudo flatpak update
-```
+````
 
 ### 4.snap包支持
 
 snap包是Canonical公司维护的一种新的打包系统，类似于红帽维护的flatpak。
 
-```bash
+````bash
 sudo dnf install snap
 
 ## 安装软件中心的snap插件
 sudo dnf install gnome-software-snap
-```
+````
 
 在 [snapcraft](https://snapcraft.io/store) 找相应的app，可以安装snap软件，也可以通过软件中心来安装:
 
-```bash
+````bash
 ##  查找app
 sudo snap find "vlc"
 
@@ -209,17 +209,17 @@ sudo snap install "vlc"
 
 ## 卸载app
 sudo snap remove "vlc"
-```
+````
 
 ### 5.添加fedy源
 
 fedy源可以方便在fedora上安装第三方软件，fedy为使用者准备了很多集成解决方案(比如mp3、Oracle Java)，依赖于RPMFusion源。
 
-```bash
+````bash
 sudo dnf install https://dl.folkswithhats.org/fedora/$(rpm -E %fedora)/RPMS/fedy-release.rpm
 
 sudo dnf install fedy
-```
+````
 
 ## 配置修改
 
@@ -227,7 +227,7 @@ sudo dnf install fedy
 
 修改`/etc/dnf/dnf.conf`配置文件
 
-```ini
+````ini
 [main]
 ; 是否开启gpg校验
 gpgcheck=1
@@ -241,13 +241,13 @@ fastestmirror=true
 deltarpm=true
 ; 最大并发下载数量
 max_parallel_downloads=6
-```
+````
 
 如果想使用dnf的图形化前端，可以安装dnfdragora:
 
-```bash
+````bash
 sudo dnf install dnfdragora
-```
+````
 
 ### 2.修改SELinux配置
 
@@ -255,21 +255,21 @@ selinux是红帽系发行版自带的安全子系统，对于桌面版用户这�
 
 查看SELinux状态:
 
-```bash
+````bash
 /usr/sbin/sestatus -v
-```
+````
 
 如果状态是enabled，则代表SELinux开启，需要修改`/etc/selinux/config`配置文件，将SELINUX修改为disabled:
 
-```ini
+````ini
 SELINUX=disabled
-```
+````
 
 ### 3.设置root密码和主机名
 
 linux系统中最高权限用户是root，类似于Windows系统中的administrator。因为权限过高，不建议在root权限下操作，不要加入"root敢死队"。Fedora安装之后，以普通用户启动并且没有设置root密码，默认给安装时设置的用户赋予了sudo权限，如果我们想修改root密码，按照下面操作即可。我们也可以给其他用户赋予sudo权限。
 
-```bash
+````bash
 ## 切换到root
 sudo su
 ## 修改密码
@@ -277,28 +277,28 @@ passwd root
 
 ## 设置主机名
 sudo hostnamectl --static set-hostname [localhost]
-```
+````
 
 ### 4. 修改sudo配置
 
 修改`/etc/sudoers`配置文件，使普通用户通过sudo命令临时获得root权限:
 
-```bash
+````bash
 root        ALL=(ALL)       ALL
 
 %wheel      ALL=(ALL)       ALL
 [USERNAME]  ALL=(ALL)       ALL
-```
+````
 
 或者其他需要sudo的用户，可以将用户添加到wheel组，将wheel添加到sudo配置中:
 
-```bash
+````bash
 sudo usermod -aG wheel [USERNAME]
-```
+````
 
 ### 5.家目录文件夹切换为英文
 
-```bash
+````bash
 ## 修改系统当前语言
 export LANG=en_US
 
@@ -307,7 +307,7 @@ xdg-user-dirs-gtk-update
 
 ## 将语言环境修改回中文
 export LANG=zh_CN.UTF-8
-```
+````
 
 还可以通过修改`~/.config/user-dirs.dirs`配置文件;
 再或者通过"设置"=>"Region & Language"=>"语言"，将语言修改为英文后注销，重新登陆后会弹出窗口修改主目录文件夹，修改完之后将语言修改回中文，然后再注销登陆一次，弹出窗口选择不更改。
@@ -316,7 +316,7 @@ export LANG=zh_CN.UTF-8
 
 ### 1.常用软件
 
-```bash
+````bash
 sudo dnf install htop
 sudo dnf install screenfetch
 sudo dnf install vim git
@@ -324,11 +324,11 @@ sudo dnf install zsh
 sudo dnf install gcc gcc-c++ gdb
 sudo dnf install mpv
 sudo dnf install unrar unzip
-```
+````
 
 ### 2.安装chrome
 
-```bash
+````bash
 ## 安装第三方软件源
 sudo dnf install fedora-workstation-repositories
 
@@ -337,25 +337,25 @@ sudo dnf config-manager --set-enabled google-chrome
 
 ## 安装
 sudo dnf install google-chrome-stable
-```
+````
 
 ### 3.安装steam
 
 `steam`是vavle公司的游戏分发平台，在上面可以购买很多PC游戏，随着vavle的steamos推进，vavle自己以及很多游戏厂商的游戏都出了linux版(大部分是原生支持，少数是wine模拟的，但是也不需要自己解决wine的兼容问题):
 
-```bash
+````bash
 sudo dnf install fedora-workstation-repositories
 
 sudo dnf config-manager --set-enabled rpmfusion-nonfree-steam
 
 sudo dnf install steam
-```
+````
 
 ### 4.安装gnome-tweaks
 
 一款对gnome界面調整的软件，可以修改主题、字体、gnome扩展、窗口、开机自启动等:
 
-```bash
+````bash
 sudo dnf install gnome-tweaks
 
 ## 安装浏览器gnome扩展组件
@@ -363,7 +363,7 @@ sudo dnf install chrome-gnome-shell
 
 ## 安装菜单编辑器
 sudo dnf install menulibre
-```
+````
 
 通过上面安装浏览器插件之后，我们可以访问[gnome扩展](https://extensions.gnome.org/)来安装所需要的插件，推荐常见的gnome扩展插件:
 
@@ -411,13 +411,13 @@ sudo dnf install menulibre
 
 在文件管理器中，加入右键"在终端打开":
 
-```bash
+````bash
 sudo dnf install gnome-terminal-nautilus nautilus-search-tool
-```
+````
 
 ### 6.安装vscode
 
-```bash
+````bash
 ## 导入密钥
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 
@@ -427,47 +427,47 @@ sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.m
 ## 安装vscode
 sudo dnf check-update
 sudo dnf install code
-```
+````
 
 ### 7.安装non-free解码器
 
-```bash
+````bash
 ## 开启openh264仓库
 sudo dnf config-manager --set-enabled fedora-cisco-openh264
 
 ## 安装解码器
 sudo dnf install gstreamer-plugins-base gstreamer1-plugins-base gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer1-plugins-ugly gstreamer-plugins-good-extras gstreamer1-plugins-good-extras gstreamer1-plugins-bad-freeworld ffmpeg gstreamer-ffmpeg ffmpeg-libs xvidcore libdvdread libdvdnav lsdvd libmpg123 gstreamer1-plugin-openh264 gstreamer1-libav
-```
+````
 
 也可以在安装好的fedy中，点击`Multimedia codecs`解决方案来安装。
 
 ### 8.安装音频组件
 
-```bash
+````bash
 sudo dnf install pulseaudio
-```
+````
 
 如果系统没有声音，可能是alsamixer配置问题，默认是静音。通过命令`alsamixer`启动，按下`F6`选择声卡，将`Auto-Mute Mod`一项修改为"disabled"。
 
 ### 9.安装fcitx
 
-```bash
+````bash
 sudo dnf install fcitx fcitx-cloudpinyin fcitx-configtool fcitx-gtk2 fcitx-gtk3
-```
+````
 
 如果使用的是`Wayland`显示管理器，在`/etc/environment`中加入:
 
-```bash
+````bash
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
-```
+````
 
 由于系统自带ibus输入法，ibus和gnome依赖关系，卸载ibus可能会删除gnome。只需要在设置"Region & Language" => "输入源"中删除中文相关的输入源，只保留英语(美国)即可。
 
 ### 10.安装shadowsocks-qt5
 
-```bash
+````bash
 ## 添加shadowsocks的Copr源
 sudo dnf copr enable librehat/shadowsocks
 
@@ -484,11 +484,11 @@ sudo ln -s /usr/lib64/libqrencode.so.4.0.2 /usr/lib64/libqrencode.so.3
 ## 命令行使用代理，只需要设置环境变量即可，协议名与开放端口协议一致:
 export http_proxy="socks5://127.0.0.1:1080"
 export https_proxy="socks5://127.0.0.1:1080"
-```
+````
 
 ### 11.安装字体和主题
 
-```bash
+````bash
 ## 安装numix主题
 sudo dnf install numix-gtk-theme
 
@@ -517,7 +517,7 @@ sudo dnf install yaru-gtk3
 sudo dnf install adobe-source-code-pro-fonts adobe-source-sans-pro-fonts adobe-source-serif-pro-fonts
 ## 安装思源黑体(建议中文字体使用这个)
 sudo dnf install adobe-source-han-sans-cn-fonts
-```
+````
 
 安装字体和主题后，通过`gnome-tweaks`来设置字体和主题。更多的主题，可以在fedy选择你想要的，然后安装。
 
@@ -525,7 +525,7 @@ sudo dnf install adobe-source-han-sans-cn-fonts
 
 网易云和deepin合作，开发了linux版的网易云音乐和有道云词典，但是只对deepin和ubuntu打了包，所以debian系发行版基本上可以直接安装。红帽系发行版，需要自己手动解决:
 
-```bash
+````bash
 ## 安装解码器
 sudo dnf install gstreamer-plugins-base gstreamer1-plugins-base gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer1-plugins-ugly gstreamer-plugins-good-extras gstreamer1-plugins-good-extras gstreamer1-plugins-bad-freeworld ffmpeg gstreamer-ffmpeg ffmpeg-libs xvidcore libdvdread libdvdnav lsdvd libmpg123
 ## 安装依赖(1.1版本的网易云音乐将很多库都打包了，所以需要手动解决的依赖很少)
@@ -543,20 +543,20 @@ tar -xvf data.tar.xz
 
 ## 复制文件到/usr
 sudo cp -r usr/* /usr/
-```
+````
 
 也可以使用社区打包的copr源:
 
-```bash
+````bash
 sudo dnf copr enable vitzy/netease-cloud-music
 sudo dnf install netease-cloud-music
-```
+````
 
 ### 13.安装Clion
 
 `Clion`是Jetbrain公司开发的C/C++语言的IDE，该公司基本所有产品都有linux版而且安装简单，其他产品安装步骤雷同:
 
-```bash
+````bash
 ## 从jetbrains下载最新的clion包
 wget https://download.jetbrains.com/cpp/CLion-2018.2.tar.gz
 
@@ -568,7 +568,7 @@ sudo cp -R ./clion-2018.2 /opt/
 
 ## 执行clion安装脚本
 /opt/clion-2018.2/bin/clion.sh
-```
+````
 
 最近发现Jetbrain公司还有个产品 -- `Toolbox`，可以用来管理该公司旗下的所有产品，用起来很方便。可以通过Fedy来安装`Toolbox`，然后再通过`Toolbox`安装其他IDE。
 
@@ -578,9 +578,9 @@ sudo cp -R ./clion-2018.2 /opt/
 
 当然还有其他原因，因为微信会屏蔽聊天消息，对聊天体验造成极大影响，所以尽量不用微信。`telegram`是端对端加密，而且不受国内管制，所以我选择telegram(题外话:steam新出的IM也是端对端，功能齐全，可以考虑)。
 
-```bash
+````bash
 sudo dnf install telegram-desktop
-```
+````
 
 Notes: **国内使用telegram需要配合代理使用**
 
@@ -588,7 +588,7 @@ Notes: **国内使用telegram需要配合代理使用**
 
 gnome自带了很多软件，由于个人有洁癖，所以卸载掉没用的软件(还有部分因为和gnome强依赖，卸载会导致卸载掉gnome，所以放弃了):
 
-```bash
+````bash
 ## 删除gnome自带
 sudo dnf autoremove simple-scan
 sudo dnf autoremove cheese
@@ -604,40 +604,40 @@ sudo dnf autoremove ibus-libzhuyin
 sudo dnf autoremove ibus-hangul
 sudo dnf autoremove ibus-kkc
 sudo dnf autoremove ibus-m17n
-```
+````
 
 ### 16.安装zsh
 
 发行版自带的shell一般是bash，如果想体验更现代化的shell，建议试试`zsh`或者`fish`，对命令补全和命令行扩展更好。
 
-```bash
+````bash
 # 安装zsh
 sudo dnf install zsh
 # 将zsh设置为当前用户的默认shell
 chsh -s /bin/zsh
 # 将zsh设置为root用户的默认shell
 sudo chsh -s /bin/zsh
-```
+````
 
 我们可以选择性安装`powerline`字体，可以为zsh提供一些状态和提示效果:
 
-```bash
+````bash
 git clone https://github.com/powerline/fonts.git
 cd fonts
 ./install.sh
-```
+````
 
 还可以选择性安装`awesome-powerline`字体，使命令行提供更酷炫的效果:
 
-```bash
+````bash
 git clone https://github.com/gabrielelana/awesome-terminal-fonts.git
 cd  awesome-terminal-fonts
 ./install.sh
-```
+````
 
 安装zsh之后，必须要安装`oh-my-zsh`，这是一个开源的社区zsh配置框架，自带了很多有用的功能、插件、主题，可以让我们上手即用:
 
-```bash
+````bash
 ## 克隆oh-my-zsh仓库
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
@@ -649,11 +649,11 @@ cp ~/.zshrc ~/.zshrc.backup
 
 ## 使用oh-my-zsh提供的配置模板
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-```
+````
 
 通过`vim ~/.zshrc`修改配置，自定义我们想要的内容:
 
-```zsh
+````zsh
 ## 设置主题
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
@@ -669,34 +669,34 @@ plugins=(autojump dnf git pip systemd)
 ## 我们还可以在zshrc配置中，添加自己自定义的方法、命令别名
 alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
 alias unsetproxy="unset ALL_PROXY"
-```
+````
 
 执行`source ~/.zshrc`使配置生效。
 
 在vscode编辑器中的终端，可以通过修改配置来使用zsh主题:
 
-```json
+````json
 {
     "terminal.integrated.shell.linux": "zsh",
     "terminal.integrated.fontFamily": "'Noto Mono for Powerline', 'fontawesome'"
 }
-```
+````
 
 ### 17.安装Vim
 
 Vim是终端编辑器，具有强大的功能和海量扩展。我们可以通过`vim-plug`、`vundle`来管理插件，为Vim添加我们需要的功能:
 
-```bash
+````bash
 ## 安装vim
 sudo dnf install vim
 
 ## 安装Vim插件管理
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-```
+````
 
 首先我们编辑Vim配置文件`~/.vimrc`，让Vim加载`vim-plug`插件管理器:
 
-```vimrc
+````vim
 " 加载vim-plug插件管理器
 call plug#begin('~/.vim/plugged')
 
@@ -766,7 +766,7 @@ set expandtab
 set hlsearch
 set incsearch
 set smartcase
-```
+````
 
 配置完vimrc，同`vim`命令进入vim，然后输入`:PlugInstall`指令来安装插件，等待插件安装完成，我们就可以使用了(当然插件也是可配置的，在vimrc文件后面添加即可)。
 
@@ -774,7 +774,7 @@ set smartcase
 
 fedora默认安装了openjdk，如果需要替换成官方jdk可以通过以下操作。先去[Oracle官网](https://www.oracle.com/technetwork/java/javase/downloads/index.html)下载最新版本的JDK和JRE:
 
-```bash
+````bash
 ## 解压压缩包
 tar xzvf jre-10.0.2_linux-x64_bin.tar.gz
 tar xzvf jdk-10.0.2_linux-x64_bin.tar.gz
@@ -783,21 +783,21 @@ tar xzvf jdk-10.0.2_linux-x64_bin.tar.gz
 sudo mkdir -p /usr/local/java
 sudo cp -r jdk-10.0.2_linux-x64_bin/jdk-10.0.2 /usr/local/java/
 sudo cp -r jre-10.0.2_linux-x64_bin/jre-10.0.2 /usr/local/java/
-```
+````
 
 编辑`/etc/profile`文件，将所需要的环境变量添加进来:
 
-```bash
+````bash
 JAVA_HOME=/usr/local/java/jdk-10.0.2
 JRE_HOME=/usr/local/java/jre-10.0.2
 CLASS_PATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
 PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 export JAVA_HOME JRE_HOME CLASS_PATH PATH
-```
+````
 
 然后通过一下命令将jdk版本切换到制定的Oracle版本:
 
-```bash
+````bash
 sudo update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/jdk-10.0.2/bin/java" 1
 sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/local/java/jdk-10.0.2/bin/javac" 1
 sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/local/java/jdk-10.0.2/bin/javaws" 1
@@ -805,7 +805,7 @@ sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/local/java/j
 sudo update-alternatives --set java /usr/local/java/jdk-10.0.2/bin/java
 sudo update-alternatives --set javac /usr/local/java/jdk-10.0.2/bin/javac
 sudo update-alternatives --set javaws /usr/local/java/jdk-10.0.2/bin/javaws
-```
+````
 
 然后通过`source /etc/profile`使环境变量生效
 
@@ -813,7 +813,7 @@ sudo update-alternatives --set javaws /usr/local/java/jdk-10.0.2/bin/javaws
 
 新版本发布后，在"软件"商店的更新中找到新版本安装的提示。也可以通过命令行来升级:
 
-```bash
+````bash
 ## 安装dnf插件
 sudo dnf install dnf-plugin-system-upgrade
 
@@ -826,32 +826,32 @@ sudo dnf system-upgrade download --refresh --releasever=$releasever --best
 
 ## 安装完更新，重启电脑
 ## sudo dnf system-upgrade reboot
-```
+````
 
 如果在更新之后，出现rpm-gpg校验错误，可以使用以下命令来导入仓库密钥:
 
-```bash
+````bash
 sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-x86_64
 
 ## 如果上面不起作用，则导入下面的部分
 sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-primary
 sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
-```
+````
 
 安装新版本之后，可能部分应用的配置也会修改，rpm包管理器会创建新文件`.rpmnew`或者重命名旧文件`.rpmsave`，我们可以通过`rpmconf`这个软件来统一修改:
 
-```bash
+````bash
 ## 安装rpmconf
 sudo dnf install rpmconf
 
 ## 搜索被修改的配置文件
 sudo rpmconf -a
 ## 在交互中，Y是将配置更新，N是保留旧配置，D是显示差异
-```
+````
 
 安装新版本之后，可能存在破损或者重复的包，可以通过下面的命令进行处理:
 
-```bash
+````bash
 ## 查看损坏的包
 sudo dnf check
 
@@ -860,19 +860,19 @@ sudo dnf list extra
 
 ## 删除不再需要的包
 sudo dnf autoremove
-```
+````
 
 如果包管理器在使用时出现问题，可能是数据库由于某些原因损坏。比如软件中心打开后，长时间无响应或者处于"正在加载软件目录"的状态，可以重建rpm数据库:
 
-```bash
+````bash
 sudo rpm --rebuilddb
-```
+````
 
 ### 20.更换文件管理器
 
 Gnome从3.28开始放弃了对桌面图标的支持，虽然有扩展可以实现类似的功能，但是还是太简陋。所以我采用了Nautilus开发者在[Remove desktop support](https://gitlab.gnome.org/GNOME/nautilus/issues/158#alternative-solution)中的建议，将nemo设置成默认的文件管理器，因为Nautilus的桌面图标支持被开发者移除了。
 
-```bash
+````bash
 ## 安装nemo及其插件
 sudo dnf install nemo nemo-fileroller nemo-preview
 
@@ -882,11 +882,11 @@ xdg-mime default nemo.desktop inode/directory
 ## 将桌面图标处理，从nautilus切换成nemo
 gsettings set org.gnome.desktop.background show-desktop-icons false
 gsettings set org.nemo.desktop show-desktop-icons true
-```
+````
 
 将nemo加入开启自启动，新增文件`~/.config/autostart/nemo-autostart.desktop`:
 
-```ini
+````ini
 [Desktop Entry]
 Type=Application
 Name=Nemo
@@ -896,63 +896,63 @@ OnlyShowIn=GNOME;
 AutostartCondition=GSettings org.nemo.desktop show-desktop-icons
 X-GNOME-AutoRestart=true
 NoDisplay=true
-```
+````
 
 将想要展示的图标(在`/usr/share/applications/`目录中)复制到`~/Desktop`目录下，我们就可以在桌面看到对应的图标了。
 
 如果想完全去除Nautilus，只需要执行命令:
 
-```bash
+````bash
 sudo dnf autoremove nautilus
-```
+````
 
 ### 21.安装grub主题
 
 可以将grub的启动界面替换成一些酷炫的主题，比如可以安装`deepin-grub2-themes`或者`grub2-breeze-theme`
 
-```bash
+````bash
 sudo dnf install grub2-breeze-theme
 sudo dnf install deepin-grub2-themes
-```
+````
 
 也可以去网上下载自己喜欢的主题，比如[grub2-themes](https://github.com/vinceliuice/grub2-themes)仓库中的`grub-theme-vimix`和`grub-theme-stylishdark`。
 
 1.将主题解压之后的文件夹复制到指定目录
 
-```bash
+````bash
 sudo cp -R Vimix /boot/grub2/themes/
-```
+````
 
 2.修改默认配置文件
 
-```bash
+````bash
 sudo vim /etc/default/grub
-```
+````
 
 添加`GRUB_THEME`配置项，设置为主题的`theme.txt`文件所在路径；将`GRUB_TERMINAL_OUTPUT`配置项从`console`修改成`gfxterm`，并设置分辨率，也可以注释掉这个配置项:
 
-```ini
+````ini
 GRUB_THEME="/boot/grub2/themes/Vimix/theme.txt"
 # GRUB_TERMINAL_OUTPUT="console"
 GRUB_TERMINAL_OUTPUT="gfxterm"
 GRUB_GFXMODE=2560x1440
-```
+````
 
 3.更新grub
 
-```bash
+````bash
 ## 如果是uefi
 sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
 ## 如果是mbr
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
-```
+````
 
 ### 22.安装openresty
 
 去[官网](https://openresty.org/en/download.html)下载最新的源码包:
 
-```bash
+````bash
 wget -P ~/Downloads/ https://openresty.org/download/openresty-1.15.8.2.tar.gz
 cd ~/Downloads/
 tar zxvf openresty-1.15.8.2.tar.gz
@@ -960,29 +960,29 @@ tar zxvf openresty-1.15.8.2.tar.gz
 ./configure --prefix=/opt/openresty --with-pcre-jit --without-http_redis2_module --with-http_iconv_module -j8
 make -j8
 sudo make install
-```
+````
 
 编辑`/etc/profile`文件，添加环境变量:
 
-```bash
+````bash
 ## openresty
 OPENRESTY_HOME=/opt/openresty
 LUAJIT_HOME=/opt/openresty/luajit
 export PATH=$PATH:$OPENRESTY_HOME/bin:$LUAJIT_HOME/bin
-```
+````
 
 然后通过`source /etc/profile`使环境变量生效，通过命令`openresty -v`查看是否安装成功。
 
 也可以使用官方的rpm仓库来安装二进制包:
 
-```bash
+````bash
 sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://openresty.org/package/fedora/openresty.repo
-```
+````
 
 ### 23.其它
 
-```bash
+````bash
 ## 安装ftp客户端
 sudo dnf install filezilla
 
@@ -1030,4 +1030,4 @@ sudo dnf install latexila
 
 ## 安装文件对比软件
 sudo dnf install meld
-```
+````

@@ -9,9 +9,9 @@ excerpt:    "Nodejs的大部分对象(比如HTTP requests、responses和stream)�
 
 Nodejs的大部分对象(比如HTTP requests、responses和stream)继承(implement)自`EventEmitter`模块，从而可以发布和监听事件。
 
-```javascript
+````javascript
 const EventEmitter = require('events');
-```
+````
 
 事件驱动类型最简单的形式，就是流行的Nodejs函数的回调方式，比如`fs.readFile`。在这个例子中，当Nodejs准备好调用回调函数时，事件将会被触发一次，回调作为事件处理器。我们先来探讨这种基本形式。
 
@@ -21,7 +21,7 @@ const EventEmitter = require('events');
 
 例如，有一个函数`fileSize`，它接受一个回调函数`cb`，并且可以基于一个条件来同步或异步地被调用:
 
-```javascript
+````javascript
 function fileSize (fileName, cb) {
     if (typeof fileName !== 'String') {
         // 同步调用cb
@@ -34,11 +34,11 @@ function fileSize (fileName, cb) {
         cb(null, stats.size);
     });
 }
-```
+````
 
 请注意，这种是导致异常错误的错误示例，设计function最好始终同步或异步地使用回调。我们来探讨一个典型的异步Nodejs函数的实例，使用回调形式来书写:
 
-```javascript
+````javascript
 const readFileAsArray = function (file, cb) {
     fs.readFile(file, function (err, data) {
         if (err) {
@@ -48,7 +48,7 @@ const readFileAsArray = function (file, cb) {
         cb(null, lines);
     });
 }
-```
+````
 
 `readFileAsArray`接受一个文件路径和一个回调函数，该函数读取文件内容，并将其分割成行数组，并且调用携带该数组的回调函数。这里有个例子，假如我们将`numbers.txt`放在该目录下，文件内容如下:
 
@@ -63,14 +63,14 @@ const readFileAsArray = function (file, cb) {
 
 如果我们有个统计该文件中奇数的任务，我们可以使用`readFileAsArray`函数来简化这个操作:
 
-```javascript
+````javascript
 readFileAsArray('./numbers.txt', (err, lines) => {
     if (err) throw err;
     const numbers = lines.map(Number);
     const oddNumber = numbers.filter(n => n%2 === 1);
     console.log('Odd numbers count:', oddNumber.length);
 });
-```
+````
 
 代码将数字内容读入一个字符串数组，然后将其解析成数字，并且统计奇数个数。
 
@@ -82,7 +82,7 @@ readFileAsArray('./numbers.txt', (err, lines) => {
 
 如果`readFileAsArray`函数支持promise，我们可以这样写代码:
 
-```javascript
+````javascript
 readFileAsArray('./numbers.txt')
     .then(lines => {
         const numbers = lines.map(Number);
@@ -90,13 +90,13 @@ readFileAsArray('./numbers.txt')
         console.log('Odd numbers count:', oddNumbers.length);
     })
     .catch(console.error);
-```
+````
 
 我们这里调用`.then`函数来获取host函数的返回值，而不是传递一个回调函数。`.then`函数通常可以让我们访问和回调函数版本相同的行数组，也可以让我们像之前那么处理它。为了处理error，我们在结果上增加一个`.catch`函数调用，允许我们在error发生时访问它。
 
 在现代JavaScript中new一个Promise对象，可以使host函数更容易支持promise接口。除了已经支持的回调接口外，我们可以修改`readFileAsArray`函数来支持promise接口:
 
-```javascript
+````javascript
 const readFileAsArray = function (file, cb = () => {}) {
     return new Promise( (resolve, reject) => {
         fs.readFile(file, function (err, data) {
@@ -111,7 +111,7 @@ const readFileAsArray = function (file, cb = () => {}) {
         });
     });
 };
-```
+````
 
 为了使函数返回一个Promise对象，我们包裹`fs.readFile`异步调用。promise对象会暴露两个参数，一个resolve函数，一个reject函数。
 
@@ -123,7 +123,7 @@ const readFileAsArray = function (file, cb = () => {}) {
 
 下面是使用`async/await`来消费`readFileAsArray`函数:
 
-```javascript
+````javascript
 async function countOdd () {
     try {
         const lines = await readFileAsArray('./numbers.txt');
@@ -134,7 +134,7 @@ async function countOdd () {
         console.log(err);
     }
 }
-```
+````
 
 我们先创建一个异步函数，这只是一个`async`关键字作为前缀的普通函数。在异步函数内部，使用关键字`await`，可以让调用`readFileAsArray`函数就像返回lines变量一样。可以像`readFileAsArray`函数调用是同步一样，继续执行代码。我们执行async函数来获取运行的数据，这样非常简单，而且可读性很好。如果想处理错误，我们需要将异步调用包含在`try/catch`语句中。
 
@@ -151,23 +151,23 @@ EventEmitter是Node中促进对象通讯的模块，也是Node异步事件驱动
 
 要使用EventEmitter，我们只需要创建一个继承自EventEmitter类的子类:
 
-```javascript
+````javascript
 class MyEmitter extends EventEmitter {
 
 }
-```
+````
 
 Emitter对象是基于EventEmitter类的实例化对象:
 
-```javascript
+````javascript
 cpnst myEmitter = new MyEmitter();
-```
+````
 
 在emitter对象生命周期的任何时间，我们可以使用emit函数发布任何我们想要的命名事件:
 
-```javascript
+````javascript
 myEmitter.emit('something-happened');
-```
+````
 
 发布一个事件是发生某种情况的信号，这种情况一般是关于emitter对象的状态变化。我们可以使用`use`方法来添加监听器函数，每次emitter对象发布关联的命名事件时，这些监听器函数就会被执行。
 
@@ -175,7 +175,7 @@ myEmitter.emit('something-happened');
 
 我们来看一个例子:
 
-```javascript
+````javascript
 const EventEmitter = require('events');
 
 class WithLog extends EventEmitter {
@@ -193,7 +193,7 @@ withLog.on('begin', () => console.log('About to execute'));
 withLog.on('end', () => console.log('Done with execute'));
 
 withLog.execute(() => console.log('*** Executing task ***'));
-```
+````
 
 `WithLog`类是一个事件发布器，它定义了一个实例函数`execute`，这个`execute`函数接受一个参数--任务函数，一个包裹着log的执行语句。它会在执行之前和执行之后触发事件。
 
@@ -244,7 +244,7 @@ After executing
 
 我们现在将同步样例转换为异步代码，可以实现更多实用功能:
 
-```javascript
+````javascript
 const fs = require('fs');
 const EventEmitter = require('events');
 
@@ -269,7 +269,7 @@ withTime.on('begin', () => console.log('About to execute'));
 withTime.on('end', () => console.log('Done with execute'));
 
 withTime.execute(fs.readFile, __filename);
-```
+````
 
 `WithTime`类执行了一个`asyncFunc`函数，并且通过调用`console.time`和`console.timeEnd`来显示`asyncFunc`函数消耗的事件。在执行前后，`execute`函数发布了对应的事件序列，并且异步调用普通信号时发布了error和data事件。
 

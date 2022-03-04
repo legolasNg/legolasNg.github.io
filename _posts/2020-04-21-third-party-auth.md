@@ -15,7 +15,7 @@ excerpt:   "由于GFW以及API文档的语言，最近在对接海外的第三�
 
 服务端向facebook请求时，需要带上应用口令access_token。应用口令的获取方式:
 
-```HTTP
+````HTTP
 GET "https://graph.facebook.com/oauth/access_token?client_id={your-app-id}&client_secret={your-app-secret}&grant_type=client_credentials"
 
 >> 
@@ -23,19 +23,19 @@ GET "https://graph.facebook.com/oauth/access_token?client_id={your-app-id}&clien
     "access_token": "{session-info-access-token}",
     "token_type": "bearer"
 }
-```
+````
 
 同时还有一种方法，可以不请求API生成应用口令，直接将APP_ID和APP_SECRET拼接:
 
-```bash
+````bash
 access_token={APP_ID}|{APP_SECRET}
-```
+````
 
 ### 校验凭据
 
 当我们拿到客户端获取的用户令牌 -- input_token之后，通过请求facebook服务端可以校验用户令牌的合法性（例如令牌的有效期、用户的权限等）:
 
-```HTTP
+````HTTP
 GET https://graph.facebook.com/debug_token?input_token={input-token}&access_token={access_token}
 
 >>
@@ -66,7 +66,7 @@ GET https://graph.facebook.com/debug_token?input_token={input-token}&access_toke
         "user_id": "{user_id}"
     }
 }
-```
+````
 
 当获得请求响应之后，我们需要先判断是否有error信息。确认获取到用户信息之后，我们只需要判断`is_valid`字段是否为`true`，`user_id`字段是否和用户id一致，`app_id`字段是否一致。用户令牌的有效期可以不需要校验，如果在有效期之外接口不会返回用户信息。
 
@@ -76,7 +76,7 @@ GET https://graph.facebook.com/debug_token?input_token={input-token}&access_toke
 
 google的登陆校验可以通过引入对应官方库来进行校验，比如nodejs就可以安装`google-auth-library`:
 
-```javascript
+````javascript
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(CLIENT_ID);
 async function verify() {
@@ -88,11 +88,11 @@ async function verify() {
   const userid = payload['sub'];
 }
 verify().catch(console.error);
-```
+````
 
 如果不想引入官方的库，还可以自己通过请求API来简单校验:
 
-```HTTP
+````HTTP
 GET/POST "https://oauth2.googleapis.com/tokeninfo?id_token={id_token}"
 
 >> 
@@ -110,7 +110,7 @@ GET/POST "https://oauth2.googleapis.com/tokeninfo?id_token={id_token}"
     "iat": "1433978353",
     "exp": "1433981953",
 }
-```
+````
 
 当获得请求响应之后，我们需要先判断是否有error信息。确认获取到用户信息之后，我们还需要判断`aud`字段是否和APP_ID一致，`sub`字段是否和用户id一致。
 
@@ -122,9 +122,9 @@ Google Play的订单支付操作起来有点麻烦，实在花了点时间才把
 
 首先我们需要在google后台的"API和服务"里面创建一个凭证，下载该凭证所属的相关信息和参数。根据生成凭证里面的信息，我们拼接出一个url地址，复制到浏览器中来获取我们需要的校验码 。
 
-```http
+````http
 GET https://accounts.google.com/o/oauth2/v2/auth?client_id={your_client_id}&response_type=code&scope=https://www.googleapis.com/auth/androidpublisher&redirect_uri={your_redirect_uri}&access_type=offline
-```
+````
 
 访问这个地址之后，经过账号授权和一些列跳转，我们可以发现最后跳转到类似这种页面: `http://{your_redirect_uri}/?code=xxxxxxx&scope=https://www.googleapis.com/auth/androidpublisher`，跳转终点url参数里面code就是我们需要的校验码。
 
@@ -138,7 +138,7 @@ GET https://accounts.google.com/o/oauth2/v2/auth?client_id={your_client_id}&resp
 
 我们拿到校验码之后，就可以请求google的oauth接口，获取我们想要的"刷新令牌"和"访问令牌"。
 
-```http
+````http
 POST https://www.googleapis.com/oauth2/v4/token
 
 client_id: {your_client_id}
@@ -154,7 +154,7 @@ code: {your_authorization_code}
     "expires_in":3600,
     "refresh_token":"xxxxx"
 }
-```
+````
 
 返回的结果里面，我们可以获取到刷新令牌 -- `refresh_token`和访问令牌 -- `access_token`。访问令牌可以用来校验订单，刷新令牌可以在访问令牌失效之后，再次获取新的访问令牌。
 
@@ -189,7 +189,7 @@ refresh_token: {your_refresh_token}
 
 终于到了校验订单这一步，前面的三个操作都是为了校验订单准备的。我们需要获得访问令牌、订阅商品名称、app包名、购买令牌，然后拼接请求地址来校验订阅。
 
-```http
+````http
 GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_name}/purchases/products/{your_product_id}/tokens/{your_purchase_token}?access_token={your_access_token}
 
 >> 
@@ -203,7 +203,7 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
     "purchaseType": integer,
     "acknowledgementState": integer
 }
-```
+````
 
 返回结果里面的参数解释如下：
 
@@ -244,7 +244,7 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
 
 当订单校验无法通过时，谷歌的api接口会返回类似下面的错误结构，我们可以根据返回的报错信息来做相应的调整。
 
-```http
+````http
 >>>
 {
   "error": {
@@ -262,7 +262,7 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
     "status": "xxxx"
   }
 }
-```
+````
 
 google的api限制很多，我们需要调整好对应的设置。
 
@@ -283,7 +283,7 @@ https://console.developers.google.com/apis/api/androidpublisher.googleapis.com/o
 
 订阅商品的校验和普通商品的校验类似，区别是校验地址和校验返回值有些许不同。我们需要获得访问令牌、订阅商品名称、app包名、购买令牌，然后拼接请求地址来校验订阅。
 
-```http
+````http
 GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_name}/purchases/subscriptions/{your_product_id}/tokens/{your_purchase_token}?access_token={your_access_token}
 
 >> 
@@ -300,7 +300,7 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
     "purchaseType": integer,
     "acknowledgementState": integer,
 }
-```
+````
 
 返回结果里面的参数解释如下：
 
@@ -373,7 +373,7 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
 
 服务回调处理:
 
-```http
+````http
 {
     "message": {
         "attributes": {
@@ -384,7 +384,7 @@ GET https://www.googleapis.com/androidpublisher/v3/applications/{your_package_na
     },
    "subscription": "projects/myproject/subscriptions/mysubscription"
 }
-```
+````
 
 谷歌云 `Pub/Sub` 服务会通过post请求，向回调地址发起一次请求，请求格式是 `application/json`，需要端点服务器能解析该格式的请求。数据内容中， `subscription` 就是之前创建的订阅名称， `message` 是消息主体，我们一般只需要处理 `base64` 格式的 `message.data`内容。
 
@@ -428,7 +428,7 @@ app.post('/pubsub/authenticated-push', jsonBodyParser, async (req, res) => {
 
 对于订阅商品来说，我们可以从消息主体 `message.data` 中获取到 `订阅校验` 所需要的订阅商品名称(subscriptionId)、app包名(packageName)、购买令牌(purchaseToken)，除此之外还能获得订阅状态(notificationType)。利用这些信息，我们可以完成 `订阅校验` 来获取新的订阅信息，并保存在自己服务器上。
 
-```json
+````json
 {
     "version": "1.0",
     "packageName": "{your_package_name}",
@@ -440,7 +440,7 @@ app.post('/pubsub/authenticated-push', jsonBodyParser, async (req, res) => {
         "subscriptionId": "{your_subscription_product}"
     }
 }
-```
+````
 
 **注意事项：**
 

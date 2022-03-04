@@ -15,36 +15,36 @@ excerpt:    "使用搬瓦工几天感觉还不错，但是和几个网友交流�
 
 ### 1.查看内核版本
 
-```bash
+````bash
 # 查看内核版本
 uname -r
 # 查看发行版版本
 cat /etc/os-release
-```
+````
 
 ### 2.添加ELRepo仓库
 
-```bash
+````bash
 # 导入elrepo密钥
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 # 安装elrepo仓库
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
-```
+````
 
 ### 3.安装新版本内核
 
-```bash
+````bash
 # 查看elrepo仓库下相关内核包
 yum --disablerepo="*" --enablerepo="elrepo-kernel" list available
 # 安装最新的主线稳定内核
 yum --enablerepo=elrepo-kernel install kernel-ml
-```
+````
 
 ### 4.修改grub配置
 
 安装完`kernel-ml`之后，系统没有切换到新内核，重启之后也没有切换到新内核。我们需要将新内核成为默认启动选项，需要修改`grub`配置，将`/etc/default/grub`文件中`GRUB_DEFAULT=saved`修改为`GRUB_DEFAULT=0`:
 
-```conf
+````conf
 GRUB_TIMEOUT=5
 GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
 GRUB_DEFAULT=0
@@ -52,19 +52,19 @@ GRUB_DISABLE_SUBMENU=true
 GRUB_TERMINAL_OUTPUT="console"
 GRUB_CMDLINE_LINUX="consoleblank=0 crashkernel=auto rhgb quiet"
 GRUB_DISABLE_RECOVERY="true"
-```
+````
 
 重新生成内核配置，并重启机器:
 
-```bash
+````bash
 grub2-mkconfig -o /boot/grub2/grub.cfg
 # 重启
 halt --reboot
-```
+````
 
 重启之后，重新检查内核版本，就可以看到正在运行的内核版本是否正确:
 
-```bash
+````bash
 uname -r
     4.11.0-1.el7.elrepo.x86_64
 # 如果想要删除之前的旧内核
@@ -73,24 +73,24 @@ rpm -qa | grep kernel
 yum remove kernel-[old_kernel_version]
 # 重新生成下内核配置
 grub2-mkconfig -o /boot/grub2/grub.cfg
-```
+````
 
 ## 开启SS的fast_open
 
 在上一篇文章[大王叫我来巡山 -- Shadowsocks](/2017/05/06/shadowsocks-tutorial/)中，解释`fast_open`选项的作用。
 
-```bash
+````bash
 # 查看系统内核fast_open是否开启
 cat /proc/sys/net/ipv4/tcp_fastopen
 # 如果值是1，说明已开启(3.7+默认开启)，如果值时0，需要修改内核参数
 echo "net.ipv4.tcp_fastopen = 1" >> /etc/sysctl.conf
 # 使修改的内核配置生效
 sysctl -p
-```
+````
 
 只要我们系统内核大于3.7，就可以通过修改Shadowsocks配置文件来开启这个选项，用来降低延迟:
 
-```json
+````json
 {
     "server":"[your_ip_addr]",
     "server_port":[ss_port],
@@ -99,7 +99,7 @@ sysctl -p
     "method":"aes-256-cfb",
     "fast_open": true
 }
-```
+````
 
 ## 开启内核BBR算法
 
@@ -107,24 +107,24 @@ BBR是Google 开源的TCP拥塞控制算法，在部署了最新版内核并开�
 
 `Linux Kernel`从4.9.x版本开启支持tcp_bbr，我们需要保证安装的系统内核版本大于4.9.x即可开启TCP BBR拥塞控制算法。
 
-```bash
+````bash
 # 查看网络堆栈的默认排队机制，默认是pfifo_fast
 cat /proc/sys/net/core/default_qdisc
 # 查看本机支持的拥塞控制算法，默认是cubic和reno
 cat /proc/sys/net/ipv4/tcp_allowed_congestion_control
-```
+````
 
 编辑`/etc/sysctl.conf`文件，修改内核参数，添加以下内容(如果`/etc/sysctl.conf`文件中存在`net.ipv4.tcp_congestion_control`配置，最好是先注释掉):
 
-```conf
+````conf
 # TCP-BBR
 net.core.default_qdisc=fq
 net.ipv4.tcp_congestion_control=bbr
-```
+````
 
 修改配置文件完成后:
 
-```bash
+````bash
 # 使修改的内核配置生效
 sysctl -p
 # 查看当前网络堆栈的默认排队机制
@@ -133,7 +133,7 @@ sysctl net.core.default_qdisc
 sysctl net.ipv4.tcp_congestion_control
 # 查看tcp_bbr内核模块是否启动
 lsmod | grep bbr
-```
+````
 
 如果操作一切顺利，那么应该可以感受速度有质的提升。
 

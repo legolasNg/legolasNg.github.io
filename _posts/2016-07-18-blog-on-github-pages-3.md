@@ -24,7 +24,7 @@ excerpt:    "Jekyll是一个简单的博客形态的静态站点生成器。它�
 
 Jekyll是使用Ruby语言编写，安装Jekyll最好方式是使用`RubyGems`。
 
-```bash
+````bash
 # 红帽系发行版下安装gem
 yum install ruby rubygems ruby-devel
 # debian系发行版下安装gem
@@ -32,13 +32,13 @@ apt-get install ruby rubygems ruby-dev redhat-rpm-config
 
 # 使用gem安装jekyll
 gem install jekyll
-```
+````
 
 ### 3.快速搭建
 
 Jekyll提供命令快速创建一个站点，并生成静态页面。
 
-```bash
+````bash
 # 安装依赖
 gem install bundler
 # 创建一个简单站点
@@ -47,11 +47,11 @@ jekyll new myblog
 cd ./myblog
 # 运行jekyll，生成静态页面，并监听本地端口4000
 jekyll serve
-```
+````
 
 ### 4.命令基本用法
 
-```bash
+````bash
 # 将项目中内容转换为静态页面，并生成到./site目录下
 jekyll build
 # 指定生成目录
@@ -67,21 +67,21 @@ jekyll serve
 jekyll serve --detach
 # 检查文件修改，并自动生成静态内容
 jekyll serve --watch
-```
+````
 
 很多配置选项，既可以在命令行中作为标识设定，也可以在`.config.yml`配置文件中设定。
 
-```yaml
+````yaml
 # _config.yml配置文件内容
 source:      _source
 destination: _deploy
-```
+````
 
 等价于以下命令:
 
-```bash
+````bash
 jekyll build --source _source --destination _deploy
-```
+````
 
 ### 5.目录结构
 
@@ -107,12 +107,12 @@ jekyll build --source _source --destination _deploy
 
 任何包含`yaml`头信息的文件，都会被Jekyll当作特殊文件来处理。`yaml`头信息的基本格式是两行三虚线:
 
-```yaml
+````yaml
 ---
 layout: post
 title: My Blog
 ---
-```
+````
 
 在两行三虚线中，可以设置一些预定义的变量或者自定义变量。然后在接下来的文件、页面或者模板中，都可以通过`liquid标签`来使用这些变量。
 
