@@ -458,9 +458,9 @@ sudo dnf install fcitx fcitx-cloudpinyin fcitx-configtool fcitx-gtk2 fcitx-gtk3
 如果使用的是`Wayland`显示管理器，在`/etc/environment`中加入:
 
 ````bash
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
 ````
 
 由于系统自带ibus输入法，ibus和gnome依赖关系，卸载ibus可能会删除gnome。只需要在设置"Region & Language" => "输入源"中删除中文相关的输入源，只保留英语(美国)即可。
