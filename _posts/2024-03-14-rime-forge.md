@@ -95,13 +95,10 @@ bash rime-install Mintimate/oh-my-rime
 ## 注意事项
 
 1. `Rime`输入法的默认配置目录，用户可以根据自己需要自行调整：
-
     - MacOS
         + Squirrel(鼠须管): ~/Library/Rime/
-
     - Windows
         + Weasel(小狼毫): %APPDATA%/Rime
-
     - Linux 
         + iBus: ~/.config/ibus/rime
         + Fcitx5: ~/.local/share/fcitx5/rime
