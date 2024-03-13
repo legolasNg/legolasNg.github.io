@@ -1,7 +1,7 @@
 ---
 layout:    post
 title:     "谷歌翻译导致react崩溃"
-date:      2022-06-22 03:30:00 +0800
+date:      2023-09-11 12:30:00 +0800
 category:  "react"
 tags:      ["react-crash", "google-translator"]
 excerpt:   "最近在给项目做一个社区功能，其中客服功能会接收来自世界各地用户的聊天消息。我们的客服在在前不久反馈一个bug，在回复几个用户的消息后，页面会报错无法正常显示。"
