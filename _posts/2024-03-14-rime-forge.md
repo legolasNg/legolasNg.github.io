@@ -103,8 +103,9 @@ bash rime-install Mintimate/oh-my-rime
         + iBus: ~/.config/ibus/rime
         + Fcitx5: ~/.local/share/fcitx5/rime
 
+
 2. 首次安装完`Rime`之后，需要重启或者注销，至少也得重新打开对应的输入法。
 
 3. 导入第三方配置或者自己调整配置之后，记得点击`Rime`输入法界面的“部署”。
 
-4. 如果第三方配置有**多套输入法方案**，可以使用CTRL+~来切换输入法方案。
+4. 如果第三方配置有**多套输入法方案**，可以使用 CTRL + ~ 来切换输入法方案。
