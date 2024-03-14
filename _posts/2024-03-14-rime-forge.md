@@ -60,7 +60,7 @@ bash rime-install lotem/rime-forge@master/lotem-packages.conf
 
 ### rime-ice
 
-仓库地址：[iDvel/rime-ice](https://github.com/iDvel/rime-ice)
+仓库地址：[iDvel/rime-ice](https://github.com/iDvel/rime-ice) (**强烈推荐**⭐⭐⭐⭐⭐)
 
 ````bash
 bash rime-install iDvel/rime-ice:others/recipes/full
@@ -80,6 +80,15 @@ bash rime-install riverscn/rime-forge
 
 ````bash
 bash rime-install Iorest/rime-setting
+````
+
+### ssnhd/rime
+
+[ssnhd/rime](https://github.com/ssnhd/rime)
+
+````bash
+## 可能需要手动下载
+bash rime-install ssnhd/rime:配置文件
 ````
 
 ### oh-my-rime
@@ -103,9 +112,21 @@ bash rime-install Mintimate/oh-my-rime
         + iBus: ~/.config/ibus/rime
         + Fcitx5: ~/.local/share/fcitx5/rime
 
+![rime_settings](/styles/images/rime_forge/rime_settings.png)
 
 2. 首次安装完`Rime`之后，需要重启或者注销，至少也得重新打开对应的输入法。
 
 3. 导入第三方配置或者自己调整配置之后，记得点击`Rime`输入法界面的“部署”。
 
 4. 如果第三方配置有**多套输入法方案**，可以使用 CTRL + ~ 来切换输入法方案。
+
+---
+参考:
+
+[Rime Squirrel鼠须管输入法配置详解](https://ssnhd.github.io/2022/01/06/rime/)
+
+[从macOS到iPhone全面拥抱RIME输入法](https://www.igeekbb.com/2023/04/29/RIME)
+
+[Rime输入法配置指南](https://iorest.github.io/rime-setting/)
+
+[Rime配置：雾凇拼音](https://dvel.me/posts/rime-ice/)
