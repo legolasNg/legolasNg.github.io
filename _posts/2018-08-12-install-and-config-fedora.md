@@ -339,6 +339,19 @@ sudo dnf config-manager --set-enabled google-chrome
 sudo dnf install google-chrome-stable
 ````
 
+> 最近因为升级系统之后，不知道什么原因导致更新chrome会报错: "Error: GPG check FAILED"。
+> 在搜索过类似问题解决方案之后，在论坛上发现了解决方案，需要删除和google相关的GPG keys，然后通过安装重新导入即可。
+> 
+> ````bash
+> # 列举出所有的gpg-pubkey
+> rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n'
+> # 找到和google相关的gpg-pubkey，并且删除
+> sudo rpm --erase --allmatches gpg-pubkey-7fac5991-4615767f
+> sudo rpm --erase --allmatches gpg-pubkey-d38b4796-570c8cd3
+> # 重新安装
+> sudo dnf install google-chrome-stable
+> ````
+
 ### 3.安装steam
 
 `steam`是vavle公司的游戏分发平台，在上面可以购买很多PC游戏，随着vavle的steamos推进，vavle自己以及很多游戏厂商的游戏都出了linux版(大部分是原生支持，少数是wine模拟的，但是也不需要自己解决wine的兼容问题):
