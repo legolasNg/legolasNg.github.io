@@ -340,12 +340,12 @@ sudo dnf install google-chrome-stable
 ````
 
 > 最近因为升级系统之后，不知道什么原因导致更新chrome会报错: "Error: GPG check FAILED"。
-> 在搜索过类似问题解决方案之后，在论坛上发现了解决方案，需要删除和google相关的GPG keys，然后通过安装重新导入即可。
+> 在论坛搜索类似问题之后，找到了原因: 丢失了`/etc/cron.daily/google-chrome`文件。解决方案是：删除和google相关的GPG keys，然后通过安装重新导入gpg密钥。
 > 
 > ````bash
-> # 列举出所有的gpg-pubkey
+> # 列举出所有的gpg密钥
 > rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n'
-> # 找到和google相关的gpg-pubkey，并且删除
+> # 找到和google相关的gpg密钥，并且删除
 > sudo rpm --erase --allmatches gpg-pubkey-7fac5991-4615767f
 > sudo rpm --erase --allmatches gpg-pubkey-d38b4796-570c8cd3
 > # 重新安装
