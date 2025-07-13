@@ -66,6 +66,14 @@ bash rime-install lotem/rime-forge@master/lotem-packages.conf
 bash rime-install iDvel/rime-ice:others/recipes/full
 ````
 
+### rime-frost
+
+仓库地址：[gaboolic/rime-frost](https://github.com/gaboolic/rime-frost)
+
+````bash
+bash rime-install gaboolic/rime-frost:others/recipes/full
+````
+
 ### rime-forge
 
 仓库地址：[riverscn/rime-forge](https://github.com/riverscn/rime-forge)
