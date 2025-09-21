@@ -822,66 +822,7 @@ sudo update-alternatives --set javaws /usr/local/java/jdk-10.0.2/bin/javaws
 
 然后通过`source /etc/profile`使环境变量生效
 
-### 19.系统升级
-
-新版本发布后，在"软件"商店的更新中找到新版本安装的提示。也可以通过命令行来升级:
-
-````bash
-## 安装dnf插件
-sudo dnf install dnf-plugin-system-upgrade
-
-## 确认软件都是当前版本最新
-sudo dnf upgrade --refresh
-
-## 安装指定版本的系统
-## 指定参数为--best时，如果有未解决的依赖，将会取消更新。想忽略问题继续更新，则需要替换成‐‐allowerasing参数
-sudo dnf system-upgrade download --refresh --releasever=$releasever --best
-
-## 安装完更新，重启电脑
-## sudo dnf system-upgrade reboot
-````
-
-如果在更新之后，出现rpm-gpg校验错误，可以使用以下命令来导入仓库密钥:
-
-````bash
-sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-x86_64
-
-## 如果上面不起作用，则导入下面的部分
-sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-primary
-sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
-````
-
-安装新版本之后，可能部分应用的配置也会修改，rpm包管理器会创建新文件`.rpmnew`或者重命名旧文件`.rpmsave`，我们可以通过`rpmconf`这个软件来统一修改:
-
-````bash
-## 安装rpmconf
-sudo dnf install rpmconf
-
-## 搜索被修改的配置文件
-sudo rpmconf -a
-## 在交互中，Y是将配置更新，N是保留旧配置，D是显示差异
-````
-
-安装新版本之后，可能存在破损或者重复的包，可以通过下面的命令进行处理:
-
-````bash
-## 查看损坏的包
-sudo dnf check
-
-## 查看多余的包
-sudo dnf list extra
-
-## 删除不再需要的包
-sudo dnf autoremove
-````
-
-如果包管理器在使用时出现问题，可能是数据库由于某些原因损坏。比如软件中心打开后，长时间无响应或者处于"正在加载软件目录"的状态，可以重建rpm数据库:
-
-````bash
-sudo rpm --rebuilddb
-````
-
-### 20.更换文件管理器
+### 19.更换文件管理器
 
 Gnome从3.28开始放弃了对桌面图标的支持，虽然有扩展可以实现类似的功能，但是还是太简陋。所以我采用了Nautilus开发者在[Remove desktop support](https://gitlab.gnome.org/GNOME/nautilus/issues/158#alternative-solution)中的建议，将nemo设置成默认的文件管理器，因为Nautilus的桌面图标支持被开发者移除了。
 
@@ -919,7 +860,7 @@ NoDisplay=true
 sudo dnf autoremove nautilus
 ````
 
-### 21.安装grub主题
+### 20.安装grub主题
 
 可以将grub的启动界面替换成一些酷炫的主题，比如可以安装`deepin-grub2-themes`或者`grub2-breeze-theme`
 
@@ -961,7 +902,7 @@ sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 ````
 
-### 22.安装openresty
+### 21.安装openresty
 
 去[官网](https://openresty.org/en/download.html)下载最新的源码包:
 
@@ -993,7 +934,7 @@ sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://openresty.org/package/fedora/openresty.repo
 ````
 
-### 23.其它
+### 22.其它
 
 ````bash
 ## 安装ftp客户端
@@ -1043,4 +984,133 @@ sudo dnf install latexila
 
 ## 安装文件对比软件
 sudo dnf install meld
+````
+
+## 系统升级
+
+新版本发布后，在"软件"商店的更新中找到新版本安装的提示。也可以通过命令行来升级:
+
+````bash
+## 安装dnf插件
+sudo dnf install dnf-plugin-system-upgrade
+
+## 确认软件都是当前版本最新
+sudo dnf upgrade --refresh
+
+## 安装指定版本的系统
+## 指定参数为--best时，如果有未解决的依赖，将会取消更新。想忽略问题继续更新，则需要替换成‐‐allowerasing参数
+sudo dnf system-upgrade download --refresh --releasever=$releasever --best
+
+## 安装完更新，重启电脑
+sudo dnf system-upgrade reboot
+
+## 如果是dnf5版本
+sudo dnf5 offline reboot
+
+## 安装完成之后清理升级缓存
+sudo dnf5 offline clean
+````
+
+### 1.导入仓库密钥
+
+如果在更新之后，出现rpm-gpg校验错误，可以使用以下命令来导入仓库密钥:
+
+````bash
+sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-x86_64
+
+## 如果上面不起作用，则导入下面的部分
+sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-primary
+sudo rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+## 可以通过安装来清理过旧的密钥
+sudo dnf install clean-rpm-gpg-pubkey
+sudo clean-rpm-gpg-pubkey
+````
+
+### 2.更新系统配置
+
+安装新版本之后，可能部分应用的配置也会修改，rpm包管理器会创建新文件`.rpmnew`或者重命名旧文件`.rpmsave`，我们可以通过`rpmconf`这个软件来统一修改:
+
+````bash
+## 安装rpmconf
+sudo dnf install rpmconf
+
+## 搜索被修改的配置文件
+sudo rpmconf -a
+## 在交互中，Y是将配置更新，N是保留旧配置，D是显示差异
+````
+
+### 3.清理旧软件包
+
+安装新版本之后，可能存在破损或者重复的包，可以通过下面的命令进行处理:
+
+````bash
+## 查看重复的包
+sudo dnf repoquery --duplicates
+
+## 删除重复的包
+sudo dnf remove --duplicates
+
+## 查看损坏的包
+sudo dnf check
+
+## 查看多余的包
+sudo dnf list --extras
+
+## 删除不再需要的包
+sudo dnf remove $(sudo dnf repoquery --extras --exclude=kernel,kernel-\*,kmod-\*)
+sudo dnf autoremove
+````
+
+### 4.清理已停用的包
+
+在每个版本中，Fedora 都会停用一些软件包。原因有很多: 软件包过时了，或者上游无人维护了。
+
+````bash
+sudo dnf install remove-retired-packages
+remove-retired-packages
+
+## 如果跨版本更新的话，需要指定之前的版本
+remove-retired-packages ${old-releasever}
+````
+
+### 5.重建rpm数据库
+
+如果包管理器在使用时出现问题，可能是数据库由于某些原因损坏。比如软件中心打开后，长时间无响应或者处于"正在加载软件目录"的状态，可以重建rpm数据库:
+
+````bash
+sudo rpm --rebuilddb
+
+## 解决依赖问题
+sudo dnf distro-sync
+
+##  删除无法满足依赖的包
+sudo dnf distro-sync --allowerasing
+````
+
+### 6.更新救援内核
+
+如果救援内核已过期，可以执行以下命令来重新生成: 
+
+````bash
+sudo rm /boot/*rescue*
+
+sudo kernel-install add "$(uname -r)" "/lib/modules/$(uname -r)/vmlinuz"
+
+## 也可以通过安装dracut-config-rescue来自动处理
+sudo dnf install dracut-config-rescue
+````
+
+### 7.删除旧的符号链接
+
+升级后，文件系统中可能会有一些悬空的符号链接。可以通过安装符号链接实用程序并删除旧链接来清理悬空链接。
+
+````bash
+sudo dnf install symlinks
+
+## 查找悬空的符号链接
+sudo symlinks -r /usr | grep dangling
+
+## 验证损坏的符号链接列表后，可以删除它们
+sudo symlinks -r -d /usr
 ````
